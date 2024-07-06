@@ -11,14 +11,14 @@ class InputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(child: Padding(
 
-      padding: EdgeInsets.all(30.0),
+      padding: const EdgeInsets.all(30.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
 
 
         children: [
 
-          DecoratedBox(decoration: BoxDecoration(
+          const DecoratedBox(decoration: BoxDecoration(
               color: Color.fromRGBO(124, 58, 237, 1)
               )),
 
