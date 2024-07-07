@@ -15,8 +15,16 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
 
 
-  // final TextEditingController _usernameController = TextEditingController();
-  // final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  void login() {
+    print('Username: ${_usernameController.text}');
+    print('Password: ${_passwordController.text}');
+
+    
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,14 +87,14 @@ class _LoginPageState extends State<LoginPage> {
                 ),
 
 
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 50.0),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 50.0),
                   child: Column(
                     children: [
-                      InputField(placeholderText: 'Username'),
-                      InputField(placeholderText: 'Password'),
+                      InputField(placeholderText: 'Username', controller: _usernameController),
+                      InputField(placeholderText: 'Password', controller: _passwordController),
 
-                      Row(
+                      const Row(
                         children: [
                           Expanded(
                             child: Text(
@@ -103,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
 
-                Button(placeholderText: 'Login', backgroundColor: const Color.fromRGBO(124, 58, 237, 1), textColor: Colors.white, onPressed: () => {}),
+                Button(placeholderText: 'Login', backgroundColor: const Color.fromRGBO(124, 58, 237, 1), textColor: Colors.white, onPressed: login),
                 
                 const DividerLine(),
                 const Padding(

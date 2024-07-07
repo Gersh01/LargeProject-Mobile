@@ -13,6 +13,13 @@ class UpdatePassword extends StatefulWidget {
 class _UpdatePasswordState extends State<UpdatePassword> {
   @override
   Widget build(BuildContext context) {
+
+    final TextEditingController _passwordController = TextEditingController();
+    final TextEditingController _confirmPasswordController = TextEditingController();
+
+    void updatePassword() {
+      print('Password: ${_passwordController.text}');
+    }
     
 
     return MaterialApp(
@@ -64,10 +71,10 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                   padding: const EdgeInsets.only(bottom: 0.0),
                   child: Column(
                     children: [
-                      const InputField(placeholderText: 'Password'),
-                      const InputField(placeholderText: 'Confirm Password'),
+                      InputField(placeholderText: 'Password', controller: _passwordController),
+                      InputField(placeholderText: 'Confirm Password', controller: _confirmPasswordController),
                       const SizedBox(height: 20),
-                      Button(placeholderText: 'Login', backgroundColor: const Color.fromRGBO(124, 58, 237, 1), textColor: Colors.white, onPressed: () => {})
+                      Button(placeholderText: 'Login', backgroundColor: const Color.fromRGBO(124, 58, 237, 1), textColor: Colors.white, onPressed: updatePassword)
                     ]
                   ),
                 ),

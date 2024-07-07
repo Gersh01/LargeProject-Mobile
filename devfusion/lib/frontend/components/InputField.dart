@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 class InputField extends StatelessWidget {
 
   final String? placeholderText;
+  final TextEditingController? controller;
+
   const InputField({
-    super.key, this.placeholderText
+    super.key, this.placeholderText, this.controller
   });
 
   @override
@@ -48,6 +50,7 @@ class InputField extends StatelessWidget {
             SizedBox(
               height: 18,
               child: TextField(
+                controller: controller,
                 style: const TextStyle(
                   color: Colors.white
                 ),

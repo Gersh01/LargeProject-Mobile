@@ -13,6 +13,12 @@ class ResetPassword extends StatefulWidget {
 class _ResetPasswordState extends State<ResetPassword> {
   @override
   Widget build(BuildContext context) {
+
+    final TextEditingController _emailController = TextEditingController();
+
+    void resetPassword() {
+      print('Email: ${_emailController.text}');
+    }
     
     return MaterialApp(
         home: Scaffold(
@@ -82,9 +88,9 @@ class _ResetPasswordState extends State<ResetPassword> {
                   padding: const EdgeInsets.only(bottom: 0.0),
                   child: Column(
                     children: [
-                      const InputField(placeholderText: 'Email'),
+                      InputField(placeholderText: 'Email', controller: _emailController),
                       const SizedBox(height: 20),
-                      Button(placeholderText: 'Login', backgroundColor: const Color.fromRGBO(124, 58, 237, 1), textColor: Colors.white, onPressed: () => {})
+                      Button(placeholderText: 'Login', backgroundColor: const Color.fromRGBO(124, 58, 237, 1), textColor: Colors.white, onPressed: resetPassword)
                     ]
                   ),
                 ),
