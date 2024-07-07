@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-
 import '../components/Button.dart';
-import 'login_page.dart';
 
 class Lander extends StatelessWidget {
   const Lander({super.key});
@@ -12,9 +8,6 @@ class Lander extends StatelessWidget {
   Widget build(BuildContext context) {
     
     return MaterialApp(
-        routes: {
-          '/login': (context) => const LoginPage(),
-        },
         home: Scaffold(
         backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
 
