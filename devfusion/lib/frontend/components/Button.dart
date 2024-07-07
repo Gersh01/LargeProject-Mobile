@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import '../Standardizations/dvColors.dart';
 
 class Button extends StatelessWidget{
 
   final String? placeholderText;
+
+  final Color? backgroundColor;
+  final Color? textColor;
+  final VoidCallback? onPressed;
+
   const Button({
-    super.key, this.placeholderText
+    super.key, this.placeholderText, this.backgroundColor, this.textColor, this.onPressed
   });
 
   @override
@@ -19,19 +23,19 @@ class Button extends StatelessWidget{
             child: ElevatedButton(
 
               style: ElevatedButton.styleFrom(
-                backgroundColor:const Color.fromRGBO(124, 58, 237, 1),
-                shape:const RoundedRectangleBorder(
+                backgroundColor: backgroundColor,
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10))
                 ),
 
 
               ),
 
-              onPressed:() {},
+              onPressed: onPressed,
               child: Text(
                 placeholderText!,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: textColor,
                   fontFamily: 'League Spartan',
                   fontSize: 20,
 
