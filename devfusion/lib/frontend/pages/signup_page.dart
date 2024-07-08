@@ -22,6 +22,14 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  void signUp() {
+    print('First Name: ${_firstNameController.text}');
+    print('Last Name: ${_lastNameController.text}');
+    print('Username: ${_usernameController.text}');
+    print('Email: ${_emailController.text}');
+    print('Password: ${_passwordController.text}');
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -68,34 +76,34 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
 
-                const Row(
+                Row(
                   children: [
                     Expanded(
-                      child: InputField(placeholderText: 'First Name'),
+                      child: InputField(placeholderText: 'First Name', controller: _firstNameController),
                     ),
 
-                    SizedBox(
+                    const SizedBox(
                         width:10
                     ),
 
                     Expanded(
-                        child: InputField(placeholderText: 'Last Name')
+                        child: InputField(placeholderText: 'Last Name', controller: _lastNameController)
                     )
                   ],
                 ),
 
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 50.0),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 50.0),
                   child: Column(
                     children: [
-                      InputField(placeholderText: 'Username'),
-                      InputField(placeholderText: 'Email'),
-                      InputField(placeholderText: 'Password'),
+                      InputField(placeholderText: 'Username', controller: _usernameController),
+                      InputField(placeholderText: 'Email', controller: _emailController),
+                      InputField(placeholderText: 'Password', controller: _passwordController),
                     ]
                   ),
                 ),
 
-                Button(placeholderText: 'Sign Up', backgroundColor: Color.fromRGBO(124, 58, 237, 1), textColor: Colors.white, onPressed: () {}),
+                Button(placeholderText: 'Sign Up', backgroundColor: const Color.fromRGBO(124, 58, 237, 1), textColor: Colors.white, onPressed: signUp),
                 const Divider(),
                 InkWell(
                   child:const Text('Login Instead',
