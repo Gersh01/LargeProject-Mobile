@@ -16,9 +16,15 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
 
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
 
       //Background
@@ -27,7 +33,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
           //Login Panel
           child: Container(
-            height:520,
+            height:636,
             width:370,
             padding: const EdgeInsets.all(30),
             decoration: const BoxDecoration(
@@ -35,15 +41,15 @@ class _SignUpPageState extends State<SignUpPage> {
               borderRadius: BorderRadius.all(Radius.circular(20)),
             ),
 
-              child: Column(
+            child: Column(
+              children: [
 
-                children: [
-                  //DevFusion Text
-                  const Column(
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 50.0),
+                  child: Column(
                     children: [
                       DevFusionColoredText(),
 
-                      //Signup Text
                       Center(child: Text(
                         'login',
                         style: TextStyle(
@@ -60,44 +66,51 @@ class _SignUpPageState extends State<SignUpPage> {
                       )),
                     ],
                   ),
+                ),
 
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 10),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            InputField(placeholderText: 'First Name'),
+                const Row(
+                  children: [
+                    Expanded(
+                      child: InputField(placeholderText: 'First Name'),
+                    ),
 
-                            SizedBox(
-                              width: 10
-                            ),
+                    SizedBox(
+                        width:10
+                    ),
 
-                            InputField(placeholderText: 'Last Name')
-                          ],
-                        ),
-
-                        InputField(placeholderText: 'Username'),
-                        InputField(placeholderText: 'Email'),
-                        InputField(placeholderText: 'Password'),
-                      ],
+                    Expanded(
+                        child: InputField(placeholderText: 'Last Name')
                     )
-                  ),
+                  ],
+                ),
 
-                  const Button(placeholderText: 'Signup', backgroundColor: Color.fromRGBO(124, 58, 237, 1), textColor: Colors.white),
-
-                  const DividerLine(),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: InkWell(
-                      child: const Text('Sign Up Instead'),
-                      onTap: () {
-                        Navigator.pushNamed(context, '/signup');
-                      }
-                    )
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 50.0),
+                  child: Column(
+                    children: [
+                      InputField(placeholderText: 'Username'),
+                      InputField(placeholderText: 'Email'),
+                      InputField(placeholderText: 'Password'),
+                    ]
                   ),
-                ],
-              ),
+                ),
+
+                Button(placeholderText: 'Sign Up', backgroundColor: Color.fromRGBO(124, 58, 237, 1), textColor: Colors.white, onPressed: () {}),
+                const Divider(),
+                InkWell(
+                  child:const Text('Login Instead',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w500
+                    )),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/login');
+                  }
+                )
+              ],
+            )
+
           ),
         ),
 
