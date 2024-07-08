@@ -25,7 +25,7 @@ class Button extends StatelessWidget{
               style: ElevatedButton.styleFrom(
                 backgroundColor: backgroundColor,
                 shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10))
+                    borderRadius: BorderRadius.all(Radius.circular(10))
                 ),
 
 
@@ -33,14 +33,14 @@ class Button extends StatelessWidget{
 
               onPressed: onPressed,
               child: Text(
-                placeholderText!,
-                style: TextStyle(
-                  color: textColor,
-                  fontFamily: 'League Spartan',
-                  fontSize: 20,
+                  placeholderText!,
+                  style: TextStyle(
+                      color: textColor,
+                      fontFamily: 'League Spartan',
+                      fontSize: 20,
 
-                  fontWeight: FontWeight.bold
-                )
+                      fontWeight: FontWeight.bold
+                  )
               ),
             ),
           ),
