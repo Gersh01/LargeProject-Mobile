@@ -8,7 +8,6 @@ import '../components/InputField.dart';
 import '../components/DevFusionColoredText.dart';
 import 'package:http/http.dart' as http;
 import '../utils/utility.dart';
-import '../utils/validations.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -25,7 +24,6 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
-
 
   String? validateFirstName(String? value) {
     if (value == null || value.isEmpty) {
@@ -67,17 +65,14 @@ class _SignUpPageState extends State<SignUpPage> {
     return null;
   }
 
-
   // validate email
 
   void signUp() async {
-
     final isValid = formKey.currentState!.validate();
 
     if (!isValid) {
       return;
     }
-
 
     print('First Name: ${_firstNameController.text}');
     print('Last Name: ${_lastNameController.text}');
@@ -142,50 +137,54 @@ class _SignUpPageState extends State<SignUpPage> {
                         ],
                       ),
                     ),
-
                     Form(
-                      key: formKey,
-
-                      child: Column(children: [
-
-                        Row(
+                        key: formKey,
+                        child: Column(
                           children: [
-                            Expanded(
-                              child: InputField(
-                                  placeholderText: 'First Name',
-                                  controller: _firstNameController, validator: validateUsername),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: InputField(
+                                      placeholderText: 'First Name',
+                                      controller: _firstNameController,
+                                      validator: validateUsername),
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                    child: InputField(
+                                        placeholderText: 'Last Name',
+                                        controller: _lastNameController,
+                                        validator: validateUsername))
+                              ],
                             ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                                child: InputField(
-                                    placeholderText: 'Last Name',
-                                    controller: _lastNameController, validator: validateUsername))
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 50.0),
+                              child: Column(children: [
+                                InputField(
+                                    placeholderText: 'Username',
+                                    controller: _usernameController,
+                                    validator: validateUsername),
+                                InputField(
+                                    placeholderText: 'Email',
+                                    controller: _emailController,
+                                    validator: validateEmail),
+                                InputField(
+                                    placeholderText: 'Password',
+                                    controller: _passwordController,
+                                    validator: validatePassword),
+                              ]),
+                            ),
                           ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 50.0),
-                          child: Column(children: [
-                              InputField(
-                                  placeholderText: 'Username',
-                                  controller: _usernameController,
-                                  validator: validateUsername),
-                              InputField(
-                                  placeholderText: 'Email',
-                                  controller: _emailController,
-                                  validator: validateEmail),
-                              InputField(
-                                  placeholderText: 'Password',
-                                  controller: _passwordController,
-                                  validator: validatePassword),
-                          ]),
-                        ),
-                    ],)
-                    ),
+                        )),
                     Button(
                         placeholderText: 'Sign Up',
                         backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
                         textColor: Colors.white,
-                        onPressed: signUp),
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            signUp();
+                          }
+                        }),
                     const Divider(),
                     InkWell(
                         child: const Text('Login Instead',

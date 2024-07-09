@@ -8,7 +8,6 @@ import '../components/InputField.dart';
 import '../components/DevFusionColoredText.dart';
 import 'package:http/http.dart' as http;
 import '../utils/utility.dart';
-import '../utils/validations.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -40,13 +39,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void login() async {
-
     final isValid = formKey.currentState!.validate();
 
     if (!isValid) {
       return;
     }
-
 
     print('Username: ${_usernameController.text}');
     print('Password: ${_passwordController.text}');
@@ -107,47 +104,50 @@ class _LoginPageState extends State<LoginPage> {
                   ),
 
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 50.0),
-                    child: Form(
-                      key: formKey,
-                      child: Column(
-                        children: [
-                          InputField(
-                              placeholderText: 'Username',
-                              controller: _usernameController,
-                              validator: usernameValidator),
-                          InputField(
-                              placeholderText: 'Password',
-                              controller: _passwordController,
-                              validator: passwordValidator),
-                          const Row(
-                            children: [
-                              Expanded(
-                                child: Text('Remember Me',
+                      padding: const EdgeInsets.only(bottom: 50.0),
+                      child: Form(
+                        key: formKey,
+                        child: Column(
+                          children: [
+                            InputField(
+                                placeholderText: 'Username',
+                                controller: _usernameController,
+                                validator: usernameValidator),
+                            InputField(
+                                placeholderText: 'Password',
+                                controller: _passwordController,
+                                validator: passwordValidator),
+                            const Row(
+                              children: [
+                                Expanded(
+                                  child: Text('Remember Me',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: 'Poppins',
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500)),
+                                ),
+                                Text('Forgot Password',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: 'Poppins',
                                         fontSize: 12,
-                                        fontWeight: FontWeight.w500)),
-                              ),
-                              Text('Forgot Password',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Poppins',
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500))
-                            ],
-                          ),
-                        ],
-                      ),
-                    )
-                  ),
+                                        fontWeight: FontWeight.w500))
+                              ],
+                            ),
+                          ],
+                        ),
+                      )),
 
                   Button(
                       placeholderText: 'Login',
                       backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
                       textColor: Colors.white,
-                      onPressed: login),
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          login();
+                        }
+                      }),
 
                   const DividerLine(),
                   Padding(
