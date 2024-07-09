@@ -39,12 +39,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void login() async {
-    final isValid = formKey.currentState!.validate();
-
-    if (!isValid) {
-      return;
-    }
-
     print('Username: ${_usernameController.text}');
     print('Password: ${_passwordController.text}');
 

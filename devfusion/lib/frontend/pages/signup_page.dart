@@ -82,12 +82,6 @@ class _SignUpPageState extends State<SignUpPage> {
   // validate email
 
   void signUp() async {
-    final isValid = formKey.currentState!.validate();
-
-    if (!isValid) {
-      return;
-    }
-
     print('First Name: ${_firstNameController.text}');
     print('Last Name: ${_lastNameController.text}');
     print('Username: ${_usernameController.text}');
