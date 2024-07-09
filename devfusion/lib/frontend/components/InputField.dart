@@ -5,9 +5,10 @@ class InputField extends StatelessWidget {
 
   final String? placeholderText;
   final TextEditingController? controller;
+  final String? Function(String?)? validator;
 
   const InputField({
-    super.key, this.placeholderText, this.controller
+    super.key, this.placeholderText, this.controller, this.validator
   });
 
   @override
@@ -50,7 +51,8 @@ class InputField extends StatelessWidget {
 
               SizedBox(
                 height: 18,
-                child: TextField(
+                child: TextFormField(
+                    validator: validator,
                     controller: controller,
                     style: const TextStyle(
                         color: Colors.white

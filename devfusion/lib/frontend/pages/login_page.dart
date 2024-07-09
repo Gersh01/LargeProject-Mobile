@@ -21,7 +21,33 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  final formKey = GlobalKey<FormState>();
+
+  String? usernameValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Username is required';
+    }
+
+    return null;
+  }
+
+  String? passwordValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Password is required';
+    }
+
+    return null;
+  }
+
   void login() async {
+
+    final isValid = formKey.currentState!.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+
     print('Username: ${_usernameController.text}');
     print('Password: ${_passwordController.text}');
 
@@ -82,34 +108,39 @@ class _LoginPageState extends State<LoginPage> {
 
                   Padding(
                     padding: const EdgeInsets.only(bottom: 50.0),
-                    child: Column(
-                      children: [
-                        InputField(
-                            placeholderText: 'Username',
-                            controller: _usernameController),
-                        InputField(
-                            placeholderText: 'Password',
-                            controller: _passwordController),
-                        const Row(
-                          children: [
-                            Expanded(
-                              child: Text('Remember Me',
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        children: [
+                          InputField(
+                              placeholderText: 'Username',
+                              controller: _usernameController,
+                              validator: usernameValidator),
+                          InputField(
+                              placeholderText: 'Password',
+                              controller: _passwordController,
+                              validator: passwordValidator),
+                          const Row(
+                            children: [
+                              Expanded(
+                                child: Text('Remember Me',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Poppins',
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500)),
+                              ),
+                              Text('Forgot Password',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: 'Poppins',
                                       fontSize: 12,
-                                      fontWeight: FontWeight.w500)),
-                            ),
-                            Text('Forgot Password',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Poppins',
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500))
-                          ],
-                        ),
-                      ],
-                    ),
+                                      fontWeight: FontWeight.w500))
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
                   ),
 
                   Button(

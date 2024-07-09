@@ -16,8 +16,28 @@ class _ResetPasswordState extends State<ResetPassword> {
 
     final TextEditingController _emailController = TextEditingController();
 
+    final formKey = GlobalKey<FormState>();
+
     void resetPassword() {
+
+      final isValid = formKey.currentState!.validate();
+
+      if (!isValid) {
+        return;
+      }
+
+      
+
+
       print('Email: ${_emailController.text}');
+    }
+
+    String? validateEmail(String? value) {
+      if (value == null || value.isEmpty) {
+        return 'Email is required';
+      }
+
+      return null;
     }
     
     return MaterialApp(
@@ -86,14 +106,18 @@ class _ResetPasswordState extends State<ResetPassword> {
 
                 Padding(
                   padding: const EdgeInsets.only(bottom: 0.0),
-                  child: Column(
+                  child: Form(
+                    key: formKey,
+                    child: Column(
                     children: [
-                      InputField(placeholderText: 'Email', controller: _emailController),
+                      InputField(placeholderText: 'Email', controller: _emailController, validator: validateEmail),
                       const SizedBox(height: 20),
                       Button(placeholderText: 'Login', backgroundColor: const Color.fromRGBO(124, 58, 237, 1), textColor: Colors.white, onPressed: resetPassword)
                     ]
+                    ),
                   ),
-                ),
+                    
+                )
               ]
             ),
           ),

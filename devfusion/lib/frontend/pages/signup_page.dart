@@ -24,7 +24,43 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  final formKey = GlobalKey<FormState>();
+
+  String? validateUsername(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Username is required';
+    }
+
+    return null;
+  }
+
+  String? validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Password is required';
+    }
+
+    return null;
+  }
+
+  String? validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Email is required';
+    }
+
+    return null;
+  }
+
+  // validate email
+
   void signUp() async {
+
+    final isValid = formKey.currentState!.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+
     print('First Name: ${_firstNameController.text}');
     print('Last Name: ${_lastNameController.text}');
     print('Username: ${_usernameController.text}');
@@ -88,33 +124,44 @@ class _SignUpPageState extends State<SignUpPage> {
                         ],
                       ),
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: InputField(
-                              placeholderText: 'First Name',
-                              controller: _firstNameController),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                            child: InputField(
-                                placeholderText: 'Last Name',
-                                controller: _lastNameController))
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 50.0),
+
+                    Form(
+                      key: formKey,
+
                       child: Column(children: [
-                        InputField(
-                            placeholderText: 'Username',
-                            controller: _usernameController),
-                        InputField(
-                            placeholderText: 'Email',
-                            controller: _emailController),
-                        InputField(
-                            placeholderText: 'Password',
-                            controller: _passwordController),
-                      ]),
+
+                        Row(
+                          children: [
+                            Expanded(
+                              child: InputField(
+                                  placeholderText: 'First Name',
+                                  controller: _firstNameController, validator: validateUsername),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                                child: InputField(
+                                    placeholderText: 'Last Name',
+                                    controller: _lastNameController, validator: validateUsername))
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 50.0),
+                          child: Column(children: [
+                              InputField(
+                                  placeholderText: 'Username',
+                                  controller: _usernameController,
+                                  validator: validateUsername),
+                              InputField(
+                                  placeholderText: 'Email',
+                                  controller: _emailController,
+                                  validator: validateEmail),
+                              InputField(
+                                  placeholderText: 'Password',
+                                  controller: _passwordController,
+                                  validator: validatePassword),
+                          ]),
+                        ),
+                    ],)
                     ),
                     Button(
                         placeholderText: 'Sign Up',
