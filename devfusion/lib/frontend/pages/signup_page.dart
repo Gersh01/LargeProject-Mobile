@@ -28,6 +28,8 @@ class _SignUpPageState extends State<SignUpPage> {
   String? validateFirstName(String? value) {
     if (value == null || value.isEmpty) {
       return 'First Name is required';
+    } else if (value.length > 18) {
+      return 'First Name is too long';
     }
 
     return null;
@@ -36,6 +38,8 @@ class _SignUpPageState extends State<SignUpPage> {
   String? validateLastName(String? value) {
     if (value == null || value.isEmpty) {
       return 'Last Name is required';
+    } else if (value.length > 18) {
+      return 'Last Name is too long';
     }
 
     return null;
@@ -44,22 +48,32 @@ class _SignUpPageState extends State<SignUpPage> {
   String? validateUsername(String? value) {
     if (value == null || value.isEmpty) {
       return 'Username is required';
+    } else if (value.length > 24) {
+      return 'Username is too long';
     }
 
     return null;
   }
 
   String? validatePassword(String? value) {
+    final validPassword =
+        RegExp(r'(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&])(?=.{8,24}$)');
     if (value == null || value.isEmpty) {
       return 'Password is required';
+    } else if (!validPassword.hasMatch(value)) {
+      return 'Password does not follow the correct format';
     }
 
     return null;
   }
 
   String? validateEmail(String? value) {
+    final validEmail =
+        RegExp(r'^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
     if (value == null || value.isEmpty) {
       return 'Email is required';
+    } else if (!validEmail.hasMatch(value)) {
+      return 'Email must follow example@email.com format';
     }
 
     return null;
