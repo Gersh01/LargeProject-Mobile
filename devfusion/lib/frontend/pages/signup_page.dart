@@ -31,19 +31,6 @@ class _SignUpPageState extends State<SignUpPage> {
     print('Email: ${_emailController.text}');
     print('Password: ${_passwordController.text}');
 
-    List<String> errors = validateSignUp(
-        _firstNameController.text,
-        _lastNameController.text,
-        _usernameController.text,
-        _emailController.text,
-        _passwordController.text);
-
-    if (errors.isNotEmpty) {
-      // Handle errors
-      print('Validation errors: ${errors.join(', ')}');
-      return;
-    }
-
     var reqBody = {
       "firstName": _firstNameController.text,
       "lastName": _lastNameController.text,

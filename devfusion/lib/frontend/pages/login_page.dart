@@ -25,16 +25,6 @@ class _LoginPageState extends State<LoginPage> {
     print('Username: ${_usernameController.text}');
     print('Password: ${_passwordController.text}');
 
-    Map<String, List<String>> errors =
-        validateLogin(_usernameController.text, _passwordController.text);
-
-    if (errors.values.any((element) => element.isNotEmpty)) {
-      // Handle errors
-      print(
-          'Validation errors: ${errors.entries.where((entry) => entry.value.isNotEmpty).map((entry) => '${entry.key}: ${entry.value.join(', ')}').join(', ')}');
-      return;
-    }
-
     var reqBody = {
       "login": _usernameController.text,
       "password": _passwordController.text
