@@ -8,6 +8,7 @@ import '../components/InputField.dart';
 import '../components/DevFusionColoredText.dart';
 import 'package:http/http.dart' as http;
 import '../utils/utility.dart';
+import '../utils/validations.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -29,6 +30,19 @@ class _SignUpPageState extends State<SignUpPage> {
     print('Username: ${_usernameController.text}');
     print('Email: ${_emailController.text}');
     print('Password: ${_passwordController.text}');
+
+    List<String> errors = validateSignUp(
+        _firstNameController.text,
+        _lastNameController.text,
+        _usernameController.text,
+        _emailController.text,
+        _passwordController.text);
+
+    if (errors.isNotEmpty) {
+      // Handle errors
+      print('Validation errors: ${errors.join(', ')}');
+      return;
+    }
 
     var reqBody = {
       "firstName": _firstNameController.text,
