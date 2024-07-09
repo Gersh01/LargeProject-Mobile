@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'frontend/pages/discover.dart';
+import 'frontend/pages/home.dart';
 import 'frontend/pages/lander.dart';
 import 'frontend/pages/login_page.dart';
 import 'frontend/pages/signup_page.dart';
@@ -25,9 +27,10 @@ class MyApp extends StatelessWidget {
         '/resetPassword': (context) => const ResetPassword(),
         '/lander': (context) => const Lander(),
         '/signup': (context) => const SignUpPage(),
+        '/home': (context) => const Home(),
 
       },
-      initialRoute: '/lander',
+      initialRoute: '/home',
     );
   }
 }

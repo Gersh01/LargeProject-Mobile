@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 
-class DfNavBar extends StatefulWidget{
-  const DfNavBar({super.key});
+import 'create.dart';
+import 'discover.dart';
+import 'profile.dart';
+import 'projects.dart';
+
+class Home extends StatefulWidget {
+  const Home({super.key});
 
   @override
-  State<DfNavBar> createState() => _DfNavBarState();
+  State<Home> createState() => _HomeState();
 }
 
-class _DfNavBarState extends State<DfNavBar> {
+class _HomeState extends State<Home> {
 
   int _selectedIndex = 0;
 
@@ -19,9 +24,21 @@ class _DfNavBarState extends State<DfNavBar> {
     print(_selectedIndex);
   }
 
+
+  final List<Widget> _children = [
+    const Discover(),
+    const Create(),
+    const Projects(),
+    const Profile(),
+  ];
+
   @override
-  Widget build(BuildContext context){
-    return BottomNavigationBar(
+  Widget build(BuildContext context) {
+    return Scaffold(
+
+      body: _children[_selectedIndex],
+
+      bottomNavigationBar: BottomNavigationBar(
         onTap: _onItemTapped,
         currentIndex: _selectedIndex,
         type: BottomNavigationBarType.fixed,
@@ -31,6 +48,7 @@ class _DfNavBarState extends State<DfNavBar> {
           BottomNavigationBarItem(backgroundColor: Color.fromRGBO(31, 41, 55, 1), icon: Icon(Icons.search), label:'discover'),
           BottomNavigationBarItem(backgroundColor: Color.fromRGBO(31, 41, 55, 1), icon: Icon(Icons.circle), label:'profile'),
         ]
-      );
+      ),
+    );
   }
 }
