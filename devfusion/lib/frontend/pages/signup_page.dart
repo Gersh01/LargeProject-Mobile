@@ -8,6 +8,7 @@ import '../components/InputField.dart';
 import '../components/DevFusionColoredText.dart';
 import 'package:http/http.dart' as http;
 import '../utils/utility.dart';
+import '../utils/validations.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});

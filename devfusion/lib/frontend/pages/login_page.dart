@@ -8,6 +8,7 @@ import '../components/InputField.dart';
 import '../components/DevFusionColoredText.dart';
 import 'package:http/http.dart' as http;
 import '../utils/utility.dart';
+import '../utils/validations.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -23,6 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   void login() async {
     print('Username: ${_usernameController.text}');
     print('Password: ${_passwordController.text}');
+
     var reqBody = {
       "login": _usernameController.text,
       "password": _passwordController.text

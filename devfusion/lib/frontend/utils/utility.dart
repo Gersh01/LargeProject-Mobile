@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:4000/api/mobile/';
+const baseUrl = 'http://www.dev-fusion.com/api/mobile/';
 //URLs for Users collection APIs
 const loginUrl = '${baseUrl}login';
 const registerUrl = '${baseUrl}register';
