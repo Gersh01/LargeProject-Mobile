@@ -26,6 +26,23 @@ class _SignUpPageState extends State<SignUpPage> {
 
   final formKey = GlobalKey<FormState>();
 
+
+  String? validateFirstName(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'First Name is required';
+    }
+
+    return null;
+  }
+
+  String? validateLastName(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Last Name is required';
+    }
+
+    return null;
+  }
+
   String? validateUsername(String? value) {
     if (value == null || value.isEmpty) {
       return 'Username is required';
@@ -49,6 +66,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
     return null;
   }
+
 
   // validate email
 
