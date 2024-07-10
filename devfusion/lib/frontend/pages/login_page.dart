@@ -49,7 +49,8 @@ class _LoginPageState extends State<LoginPage> {
 
     var reqBody = {
       "login": _usernameController.text,
-      "password": _passwordController.text
+      "password": _passwordController.text,
+      "rememberMe": true
     };
 
     var response = await http.post(
