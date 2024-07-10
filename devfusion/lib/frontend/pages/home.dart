@@ -47,6 +47,7 @@ class _HomeState extends State<Home> {
           BottomNavigationBarItem(backgroundColor: Color.fromRGBO(31, 41, 55, 1), icon: Icon(Icons.add_to_queue_rounded), label:'create'),
           BottomNavigationBarItem(backgroundColor: Color.fromRGBO(31, 41, 55, 1), icon: Icon(Icons.search), label:'discover'),
           BottomNavigationBarItem(backgroundColor: Color.fromRGBO(31, 41, 55, 1), icon: Icon(Icons.circle), label:'profile'),
+          BottomNavigationBarItem(backgroundColor: Color.fromRGBO(31, 41, 55, 1), icon: Icon(Icons.settings), label:'settings'),
         ]
       ),
     );
