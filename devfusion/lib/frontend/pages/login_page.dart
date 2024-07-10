@@ -73,35 +73,35 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  initLogin() async {
-    SharedPref sharedPref = SharedPref();
-    String? token = await sharedPref.readToken();
-    // Future.delayed(const Duration(seconds: 2), () async {
-    if (token != null) {
-      var reqBody = {"token": token};
+  // initLogin() async {
+  //   SharedPref sharedPref = SharedPref();
+  //   String? token = await sharedPref.readToken();
+  //   // Future.delayed(const Duration(seconds: 2), () async {
+  //   if (token != null) {
+  //     var reqBody = {"token": token};
 
-      var response = await http.post(
-        Uri.parse(jwtUrl),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode(reqBody),
-      );
-      if (response.statusCode == 200) {
-        var jsonResponse = jsonDecode(response.body);
-        sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const Home()),
-        );
-      }
-    }
-    // });
-  }
+  //     var response = await http.post(
+  //       Uri.parse(jwtUrl),
+  //       headers: {"Content-Type": "application/json"},
+  //       body: jsonEncode(reqBody),
+  //     );
+  //     if (response.statusCode == 200) {
+  //       var jsonResponse = jsonDecode(response.body);
+  //       sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => const Home()),
+  //       );
+  //     }
+  //   }
+  //   // });
+  // }
 
-  @override
-  void initState() {
-    initLogin();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   initLogin();
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
