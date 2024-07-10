@@ -11,8 +11,6 @@ List<String> validateSignUp(String firstName, String lastName, String username,
   // Regex patterns for validation
   final validEmail =
       RegExp(r'^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
-  final validPassword =
-      RegExp(r'(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&])(?=.{8,24}$)');
   final hasUpperCase = RegExp(r'(?=.*[A-Z])'); // At least one uppercase letter
   final hasDigit = RegExp(r'(?=.*[0-9])'); // At least one digit
   final hasSpecialChar = RegExp(

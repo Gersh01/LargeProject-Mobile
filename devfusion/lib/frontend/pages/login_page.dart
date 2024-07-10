@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:devfusion/frontend/pages/home.dart';
 import 'package:flutter/material.dart';
 
@@ -44,10 +45,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<String> login(BuildContext context) async {
-    // print('Username: ${_usernameController.text}');
-    // print('Password: ${_passwordController.text}');
-
-    // print(response.body);
+    SharedPref sharedPref = SharedPref();
 
     var reqBody = {
       "login": _usernameController.text,
@@ -62,6 +60,8 @@ class _LoginPageState extends State<LoginPage> {
 
     if (response.statusCode == 200) {
       print("login successful");
+      var jsonResponse = jsonDecode(response.body);
+      sharedPref.writeToken(jwtToken: jsonResponse['token']);
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Home()),
@@ -71,6 +71,36 @@ class _LoginPageState extends State<LoginPage> {
       print("login unsucessful");
       return Future.value("login unsucessful");
     }
+  }
+
+  initLogin() async {
+    SharedPref sharedPref = SharedPref();
+    String? token = await sharedPref.readToken();
+    // Future.delayed(const Duration(seconds: 2), () async {
+    if (token != null) {
+      var reqBody = {"token": token};
+
+      var response = await http.post(
+        Uri.parse(jwtUrl),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(reqBody),
+      );
+      if (response.statusCode == 200) {
+        var jsonResponse = jsonDecode(response.body);
+        sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Home()),
+        );
+      }
+    }
+    // });
+  }
+
+  @override
+  void initState() {
+    initLogin();
+    super.initState();
   }
 
   @override
