@@ -13,6 +13,12 @@ List<String> validateSignUp(String firstName, String lastName, String username,
       RegExp(r'^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
   final validPassword =
       RegExp(r'(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&])(?=.{8,24}$)');
+  final hasUpperCase = RegExp(r'(?=.*[A-Z])'); // At least one uppercase letter
+  final hasDigit = RegExp(r'(?=.*[0-9])'); // At least one digit
+  final hasSpecialChar = RegExp(
+      r'(?=.*[!@#$%^&])'); // At least one special character from the set !@#$%^&
+  final validLength =
+      RegExp(r'(?=.{8,24}$)'); // Length between 8 and 24 characters
 
   // Validate first name
   if (firstName.isEmpty) {
@@ -45,8 +51,22 @@ List<String> validateSignUp(String firstName, String lastName, String username,
   // Validate password
   if (password.isEmpty) {
     errors['password']!.add('Password cannot be empty');
-  } else if (!validPassword.hasMatch(password)) {
-    errors['password']!.add('Password does not follow the correct format');
+  } else {
+    if (!validLength.hasMatch(password)) {
+      errors['password']!
+          .add('Password must be between 8 and 24 characters long');
+    }
+    if (!hasUpperCase.hasMatch(password)) {
+      errors['password']!
+          .add('Password must contain at least one uppercase letter');
+    }
+    if (!hasDigit.hasMatch(password)) {
+      errors['password']!.add('Password must contain at least one digit');
+    }
+    if (!hasSpecialChar.hasMatch(password)) {
+      errors['password']!
+          .add('Password must contain at least one special character');
+    }
   }
 
   // Combine all error messages into a single list
