@@ -9,6 +9,7 @@ import '../components/InputField.dart';
 import '../components/DevFusionColoredText.dart';
 import 'package:http/http.dart' as http;
 import '../utils/utility.dart';
+import '../utils/validations.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -158,6 +159,10 @@ class _LoginPageState extends State<LoginPage> {
                   backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
                   textColor: Colors.white,
                   onPressed: () async {
+                    print(
+                      validateLogin(
+                          _usernameController.text, _passwordController.text),
+                    );
                     if (formKey.currentState!.validate()) {
                       login(context);
                     }

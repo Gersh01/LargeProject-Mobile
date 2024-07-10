@@ -58,7 +58,7 @@ List<String> validateSignUp(String firstName, String lastName, String username,
   return errorMessages;
 }
 
-Map<String, List<String>> validateLogin(String username, String password) {
+List<String> validateLogin(String username, String password) {
   Map<String, List<String>> errors = {
     'username': [],
     'password': [],
@@ -74,5 +74,11 @@ Map<String, List<String>> validateLogin(String username, String password) {
     errors['password']!.add('Password must not be empty');
   }
 
-  return errors;
+  // Combine all error messages into a single list
+  List<String> errorMessages = [];
+  errors.forEach((key, value) {
+    errorMessages.addAll(value);
+  });
+
+  return errorMessages;
 }

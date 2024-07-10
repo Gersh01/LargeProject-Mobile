@@ -8,6 +8,7 @@ import '../components/InputField.dart';
 import '../components/DevFusionColoredText.dart';
 import 'package:http/http.dart' as http;
 import '../utils/utility.dart';
+import '../utils/validations.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -82,11 +83,11 @@ class _SignUpPageState extends State<SignUpPage> {
   // validate email
 
   void signUp() async {
-    print('First Name: ${_firstNameController.text}');
-    print('Last Name: ${_lastNameController.text}');
-    print('Username: ${_usernameController.text}');
-    print('Email: ${_emailController.text}');
-    print('Password: ${_passwordController.text}');
+    // print('First Name: ${_firstNameController.text}');
+    // print('Last Name: ${_lastNameController.text}');
+    // print('Username: ${_usernameController.text}');
+    // print('Email: ${_emailController.text}');
+    // print('Password: ${_passwordController.text}');
 
     var reqBody = {
       "firstName": _firstNameController.text,
@@ -101,7 +102,7 @@ class _SignUpPageState extends State<SignUpPage> {
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(reqBody),
     );
-    print(response.body);
+    // print(response.body);
   }
 
   @override
@@ -196,6 +197,14 @@ class _SignUpPageState extends State<SignUpPage> {
                   backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
                   textColor: Colors.white,
                   onPressed: () {
+                    print(
+                      validateSignUp(
+                          _firstNameController.text,
+                          _lastNameController.text,
+                          _usernameController.text,
+                          _emailController.text,
+                          _passwordController.text),
+                    );
                     if (formKey.currentState!.validate()) {
                       signUp();
                     }
