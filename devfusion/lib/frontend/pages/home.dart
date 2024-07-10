@@ -4,6 +4,7 @@ import 'create.dart';
 import 'discover.dart';
 import 'profile.dart';
 import 'projects.dart';
+import 'settings.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -30,6 +31,7 @@ class _HomeState extends State<Home> {
     const Create(),
     const Projects(),
     const Profile(),
+    const Settings(),
   ];
 
   @override

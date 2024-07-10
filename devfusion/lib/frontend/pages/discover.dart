@@ -20,6 +20,17 @@ class _DiscoverState extends State<Discover> {
     }
   }
 
+  String _dropdownSearchByValue = 'Title';
+
+  void dropdownSearchByCallback(String? newValue){
+
+    if (newValue != null) {
+      setState(() {
+        _dropdownSearchByValue = newValue;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +59,30 @@ class _DiscoverState extends State<Discover> {
       Column(
 
         children: [
+
+          DropdownButton(
+            items: const [
+              DropdownMenuItem(
+                value: 'Title',
+                child: Text('Title'),
+              ),
+              DropdownMenuItem(
+                value: 'Technology',
+                child: Text('Technology'),
+              ),
+              DropdownMenuItem(
+                value: 'Description',
+                child: Text('Description'),
+              ),
+              DropdownMenuItem(
+                value: 'Role',
+                child: Text('Role'),
+              )
+            ],
+            value: _dropdownSearchByValue,
+            onChanged: dropdownSearchByCallback,
+          ),
+
           //Search Bar
           const Padding(
             padding: EdgeInsets.all(20),
@@ -67,7 +102,6 @@ class _DiscoverState extends State<Discover> {
               ),
             ),
           ),
-
 
           DropdownButton(
             items: const [
