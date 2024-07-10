@@ -128,7 +128,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           DevFusionColoredText(),
                           Center(
                               child: Text(
-                            'login',
+                            'Sign Up',
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -152,34 +152,95 @@ class _SignUpPageState extends State<SignUpPage> {
                             Row(
                               children: [
                                 Expanded(
-                                  child: InputField(
-                                      placeholderText: 'First Name',
-                                      controller: _firstNameController,
-                                      validator: validateUsername),
+                                  child: TextFormField(
+                                    controller: _firstNameController,
+                                    style: const TextStyle(color: Colors.white),
+                                    validator: validateFirstName,
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      filled: true,
+                                      fillColor: Color.fromRGBO(0, 0, 0, 0.4),
+                                      labelText: 'First Name',
+                                      labelStyle: TextStyle(
+                                          color: Colors.white, fontSize: 16.0),
+                                      hintText: 'Enter your first name',
+                                      hintStyle: TextStyle(
+                                          color: Colors.white, fontSize: 16.0),
+                                    ),
+                                  ),
                                 ),
                                 const SizedBox(width: 10),
                                 Expanded(
-                                    child: InputField(
-                                        placeholderText: 'Last Name',
-                                        controller: _lastNameController,
-                                        validator: validateUsername))
+                                  child: TextFormField(
+                                    controller: _lastNameController,
+                                    style: const TextStyle(color: Colors.white),
+                                    validator: validateLastName,
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      filled: true,
+                                      fillColor: Color.fromRGBO(0, 0, 0, 0.4),
+                                      labelText: 'Last Name',
+                                      labelStyle: TextStyle(
+                                          color: Colors.white, fontSize: 16.0),
+                                      hintText: 'Enter your last name',
+                                      hintStyle: TextStyle(
+                                          color: Colors.white, fontSize: 16.0),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 50.0),
                               child: Column(children: [
-                                InputField(
-                                    placeholderText: 'Username',
-                                    controller: _usernameController,
-                                    validator: validateUsername),
-                                InputField(
-                                    placeholderText: 'Email',
-                                    controller: _emailController,
-                                    validator: validateEmail),
-                                InputField(
-                                    placeholderText: 'Password',
-                                    controller: _passwordController,
-                                    validator: validatePassword),
+                                TextFormField(
+                                  controller: _usernameController,
+                                  style: const TextStyle(color: Colors.white),
+                                  validator: validateUsername,
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    filled: true,
+                                    fillColor: Color.fromRGBO(0, 0, 0, 0.4),
+                                    labelText: 'Username',
+                                    labelStyle: TextStyle(
+                                        color: Colors.white, fontSize: 16.0),
+                                    hintText: 'Enter your username',
+                                    hintStyle: TextStyle(
+                                        color: Colors.white, fontSize: 16.0),
+                                  ),
+                                ),
+                                TextFormField(
+                                  controller: _emailController,
+                                  style: const TextStyle(color: Colors.white),
+                                  validator: validateEmail,
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    filled: true,
+                                    fillColor: Color.fromRGBO(0, 0, 0, 0.4),
+                                    labelText: 'Email',
+                                    labelStyle: TextStyle(
+                                        color: Colors.white, fontSize: 16.0),
+                                    hintText: 'Enter your email',
+                                    hintStyle: TextStyle(
+                                        color: Colors.white, fontSize: 16.0),
+                                  ),
+                                ),
+                                TextFormField(
+                                  controller: _passwordController,
+                                  style: const TextStyle(color: Colors.white),
+                                  validator: validatePassword,
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    filled: true,
+                                    fillColor: Color.fromRGBO(0, 0, 0, 0.4),
+                                    labelText: 'Password',
+                                    labelStyle: TextStyle(
+                                        color: Colors.white, fontSize: 16.0),
+                                    hintText: 'Enter your password',
+                                    hintStyle: TextStyle(
+                                        color: Colors.white, fontSize: 16.0),
+                                  ),
+                                ),
                               ]),
                             ),
                           ],
