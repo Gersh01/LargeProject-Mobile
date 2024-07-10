@@ -60,108 +60,121 @@ class _LoginPageState extends State<LoginPage> {
     return MaterialApp(
       //Background
       home: Scaffold(
-          body: Center(
-            //Login Panel
-            child: Container(
-                height: 520,
-                width: 370,
-                padding: const EdgeInsets.all(30),
-                decoration: const BoxDecoration(
-                  color: Color.fromRGBO(31, 41, 55, 1),
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                ),
-                child: Column(children: [
-                  //DevFusion Text
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 50.0),
-                    child: Column(
-                      children: [
-                        DevFusionColoredText(),
-                        Center(
-                            child: Text(
+        body: Center(
+          //Login Panel
+          child: Container(
+            height: 520,
+            width: 370,
+            padding: const EdgeInsets.all(30),
+            decoration: const BoxDecoration(
+              color: Color.fromRGBO(31, 41, 55, 1),
+              borderRadius: BorderRadius.all(
+                Radius.circular(20),
+              ),
+            ),
+            child: Column(
+              children: [
+                //DevFusion Text
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 50.0),
+                  child: Column(
+                    children: [
+                      DevFusionColoredText(),
+                      Center(
+                        child: Text(
                           'login',
                           style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'League Spartan',
-                              color: Colors.white,
-                              shadows: [
-                                Shadow(
-                                  offset: Offset(0, 4.0),
-                                  blurRadius: 20.0,
-                                  color: Color.fromRGBO(0, 0, 0, 0.4),
-                                )
-                              ]),
-                        )),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'League Spartan',
+                            color: Colors.white,
+                            shadows: [
+                              Shadow(
+                                offset: Offset(0, 4.0),
+                                blurRadius: 20.0,
+                                color: Color.fromRGBO(0, 0, 0, 0.4),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 50.0),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        InputField(
+                            placeholderText: 'Username',
+                            controller: _usernameController,
+                            validator: usernameValidator),
+                        InputField(
+                            placeholderText: 'Password',
+                            controller: _passwordController,
+                            validator: passwordValidator),
+                        const Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Remember Me',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Poppins',
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            Text('Forgot Password',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Poppins',
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500))
+                          ],
+                        ),
                       ],
                     ),
                   ),
+                ),
 
-                  Padding(
-                      padding: const EdgeInsets.only(bottom: 50.0),
-                      child: Form(
-                        key: formKey,
-                        child: Column(
-                          children: [
-                            InputField(
-                                placeholderText: 'Username',
-                                controller: _usernameController,
-                                validator: usernameValidator),
-                            InputField(
-                                placeholderText: 'Password',
-                                controller: _passwordController,
-                                validator: passwordValidator),
-                            const Row(
-                              children: [
-                                Expanded(
-                                  child: Text('Remember Me',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'Poppins',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500)),
-                                ),
-                                Text('Forgot Password',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Poppins',
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500))
-                              ],
-                            ),
-                          ],
-                        ),
-                      )),
+                Button(
+                  placeholderText: 'Login',
+                  backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
+                  textColor: Colors.white,
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      login();
+                    }
+                  },
+                ),
 
-                  Button(
-                      placeholderText: 'Login',
-                      backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
-                      textColor: Colors.white,
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          login();
-                        }
-                      }),
-
-                  const DividerLine(),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: InkWell(
-                        child: const Text(
-                          'Sign Up Instead',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.pushNamed(context, '/signup');
-                        }),
-                  )
-                ])),
+                const DividerLine(),
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: InkWell(
+                    child: const Text(
+                      'Sign Up Instead',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/signup');
+                    },
+                  ),
+                )
+              ],
+            ),
           ),
-          backgroundColor: const Color.fromRGBO(124, 58, 237, 1)),
+        ),
+        backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
+      ),
     );
   }
 }
