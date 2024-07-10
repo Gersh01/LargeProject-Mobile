@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => const SignUpPage(),
         '/home': (context) => const Home(),
       },
-      initialRoute: '/home',
+      initialRoute: '/lander',
     );
   }
 }

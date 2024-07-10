@@ -22,6 +22,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  List<String> fieldValidationErrors = <String>[""];
+
   final formKey = GlobalKey<FormState>();
 
   String? usernameValidator(String? value) {
@@ -153,6 +155,15 @@ class _LoginPageState extends State<LoginPage> {
                                           fontWeight: FontWeight.w500))
                                 ],
                               ),
+                              Text(
+                                fieldValidationErrors.reduce(
+                                    (value, element) => value + '\n' + element),
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Poppins',
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500),
+                              ),
                             ],
                           ),
                         ),
@@ -163,12 +174,14 @@ class _LoginPageState extends State<LoginPage> {
                         backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
                         textColor: Colors.white,
                         onPressed: () async {
-                          print(
-                            validateLogin(_usernameController.text,
-                                _passwordController.text),
-                          );
                           if (formKey.currentState!.validate()) {
                             login(context);
+                          } else {
+                            setState(() {
+                              fieldValidationErrors = validateLogin(
+                                  _usernameController.text,
+                                  _passwordController.text);
+                            });
                           }
                         },
                       ),

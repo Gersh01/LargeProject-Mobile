@@ -24,6 +24,8 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  List<String> fieldValidationErrors = <String>[""];
+
   final formKey = GlobalKey<FormState>();
 
   String? validateFirstName(String? value) {
@@ -155,62 +157,73 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                       ),
                       Form(
-                          key: formKey,
-                          child: Column(
-                            children: [
-                              Row(
+                        key: formKey,
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: InputField(
+                                      placeholderText: 'First Name',
+                                      controller: _firstNameController,
+                                      validator: validateUsername),
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: InputField(
+                                      placeholderText: 'Last Name',
+                                      controller: _lastNameController,
+                                      validator: validateUsername),
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 50.0),
+                              child: Column(
                                 children: [
-                                  Expanded(
-                                    child: InputField(
-                                        placeholderText: 'First Name',
-                                        controller: _firstNameController,
-                                        validator: validateUsername),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Expanded(
-                                    child: InputField(
-                                        placeholderText: 'Last Name',
-                                        controller: _lastNameController,
-                                        validator: validateUsername),
-                                  ),
+                                  InputField(
+                                      placeholderText: 'Username',
+                                      controller: _usernameController,
+                                      validator: validateUsername),
+                                  InputField(
+                                      placeholderText: 'Email',
+                                      controller: _emailController,
+                                      validator: validateEmail),
+                                  InputField(
+                                      placeholderText: 'Password',
+                                      controller: _passwordController,
+                                      validator: validatePassword),
                                 ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 50.0),
-                                child: Column(
-                                  children: [
-                                    InputField(
-                                        placeholderText: 'Username',
-                                        controller: _usernameController,
-                                        validator: validateUsername),
-                                    InputField(
-                                        placeholderText: 'Email',
-                                        controller: _emailController,
-                                        validator: validateEmail),
-                                    InputField(
-                                        placeholderText: 'Password',
-                                        controller: _passwordController,
-                                        validator: validatePassword),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          )),
+                            ),
+                            Text(
+                              fieldValidationErrors.reduce(
+                                  (value, element) => value + '\n' + element),
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Poppins',
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                      ),
                       Button(
                         placeholderText: 'Sign Up',
                         backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
                         textColor: Colors.white,
                         onPressed: () {
-                          print(
-                            validateSignUp(
-                                _firstNameController.text,
-                                _lastNameController.text,
-                                _usernameController.text,
-                                _emailController.text,
-                                _passwordController.text),
-                          );
                           if (formKey.currentState!.validate()) {
                             signUp();
+                          } else {
+                            setState(() {
+                              fieldValidationErrors = validateSignUp(
+                                  _firstNameController.text,
+                                  _lastNameController.text,
+                                  _usernameController.text,
+                                  _emailController.text,
+                                  _passwordController.text);
+                            });
                           }
                         },
                       ),
