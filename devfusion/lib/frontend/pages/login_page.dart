@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:devfusion/frontend/pages/home.dart';
 import 'package:flutter/material.dart';
 
 import '../components/Button.dart';
@@ -38,9 +39,11 @@ class _LoginPageState extends State<LoginPage> {
     return null;
   }
 
-  void login() async {
-    print('Username: ${_usernameController.text}');
-    print('Password: ${_passwordController.text}');
+  void login(BuildContext context) async {
+    // print('Username: ${_usernameController.text}');
+    // print('Password: ${_passwordController.text}');
+
+    // print(response.body);
 
     var reqBody = {
       "login": _usernameController.text,
@@ -52,7 +55,16 @@ class _LoginPageState extends State<LoginPage> {
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(reqBody),
     );
-    print(response.body);
+
+    if (response.statusCode == 200) {
+      print("login successful");
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const Home()),
+      );
+    } else {
+      print("login unsucessful");
+    }
   }
 
   @override
@@ -145,9 +157,9 @@ class _LoginPageState extends State<LoginPage> {
                   placeholderText: 'Login',
                   backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
                   textColor: Colors.white,
-                  onPressed: () {
+                  onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      login();
+                      login(context);
                     }
                   },
                 ),
