@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'frontend/pages/discover.dart';
 import 'frontend/pages/home.dart';
 import 'frontend/pages/lander.dart';
@@ -8,7 +9,10 @@ import 'frontend/pages/reset_password.dart';
 import 'frontend/pages/update_password.dart';
 
 void main() {
-  runApp( const MyApp() );
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +20,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       // theme: ThemeData(
       //   primarySwatch: Colors.blue,
@@ -28,9 +31,8 @@ class MyApp extends StatelessWidget {
         '/lander': (context) => const Lander(),
         '/signup': (context) => const SignUpPage(),
         '/home': (context) => const Home(),
-
       },
-      initialRoute: '/home',
+      initialRoute: '/login',
     );
   }
 }
