@@ -128,7 +128,7 @@ class _SignUpPageState extends State<SignUpPage> {
               padding: const EdgeInsets.only(top: 80.0),
               child: Center(
                 child: Container(
-                  height: 660 + validationError,
+                  height: 670 + validationError,
                   width: 370,
                   padding: const EdgeInsets.all(30),
                   decoration: const BoxDecoration(

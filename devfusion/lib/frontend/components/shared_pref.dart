@@ -7,7 +7,7 @@ class SharedPref {
     final SharedPreferences pref = await SharedPreferences.getInstance();
 
     bool isSaved = await pref.setString("token", jwtToken);
-    // debugPrint(isSaved.toString());
+    debugPrint(isSaved.toString());
     print("WRITE TOKEN END");
   }
 
