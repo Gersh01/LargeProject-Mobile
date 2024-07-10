@@ -35,6 +35,7 @@ class _DiscoverState extends State<Discover> {
           title: const Text(
             'Discover',
             style: TextStyle(
+                
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'League Spartan',
@@ -57,6 +58,7 @@ class _DiscoverState extends State<Discover> {
                   padding: const EdgeInsets.all(20),
                 
                   child: DropdownButton(
+                    isDense: true,
                     items: const [
                       DropdownMenuItem(
                         value: 'Title',
@@ -80,9 +82,10 @@ class _DiscoverState extends State<Discover> {
                   ),
               ),
               ),
-
+  
               //Search Bar
               const Expanded(
+                
                 child: Padding(
                   padding: EdgeInsets.all(20),
                   child: TextField(
@@ -101,21 +104,25 @@ class _DiscoverState extends State<Discover> {
                     ),
                   ),
                 ),
+                
               ),
             ]),
 
             //Search By Dropdown
 
-            DropdownButton(items: const [
-              DropdownMenuItem(
-                value: 'recent',
-                child: Text('Most Recent'),
-              ),
-              DropdownMenuItem(
-                value: 'relevance',
-                child: Text('Relevance'),
-              )
-            ], value: _dropdownValue, onChanged: dropdownCallback),
+            Align(
+                alignment: Alignment.centerRight,
+                child: DropdownButton(items: const [
+                DropdownMenuItem(
+                  value: 'recent',
+                  child: Text('Most Recent'),
+                ),
+                DropdownMenuItem(
+                  value: 'relevance',
+                  child: Text('Relevance'),
+                )
+              ], value: _dropdownValue, onChanged: dropdownCallback),
+            ),
 
             //Project Cards
             Expanded(
