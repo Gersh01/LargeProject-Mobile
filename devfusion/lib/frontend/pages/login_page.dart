@@ -23,6 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   List<String> fieldValidationErrors = <String>[""];
+  double validationError = 0;
 
   final formKey = GlobalKey<FormState>();
 
@@ -42,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
     return null;
   }
 
-  void login(BuildContext context) async {
+  Future<String> login(BuildContext context) async {
     // print('Username: ${_usernameController.text}');
     // print('Password: ${_passwordController.text}');
 
@@ -65,8 +66,10 @@ class _LoginPageState extends State<LoginPage> {
         context,
         MaterialPageRoute(builder: (context) => const Home()),
       );
+      return Future.value("");
     } else {
       print("login unsucessful");
+      return Future.value("login unsucessful");
     }
   }
 
@@ -82,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Center(
                 //Login Panel
                 child: Container(
-                  height: 520,
+                  height: (520 + validationError),
                   width: 370,
                   padding: const EdgeInsets.all(30),
                   decoration: const BoxDecoration(
@@ -175,12 +178,19 @@ class _LoginPageState extends State<LoginPage> {
                         textColor: Colors.white,
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
-                            login(context);
+                            String loginResult = await login(context);
+                            setState(() {
+                              fieldValidationErrors = <String>[loginResult];
+                              validationError = 10.toDouble() *
+                                  fieldValidationErrors.length.toDouble();
+                            });
                           } else {
                             setState(() {
                               fieldValidationErrors = validateLogin(
                                   _usernameController.text,
                                   _passwordController.text);
+                              validationError = 10.toDouble() *
+                                  fieldValidationErrors.length.toDouble();
                             });
                           }
                         },

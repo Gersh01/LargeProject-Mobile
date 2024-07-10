@@ -25,6 +25,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   List<String> fieldValidationErrors = <String>[""];
+  double validationError = 0;
 
   final formKey = GlobalKey<FormState>();
 
@@ -84,7 +85,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   // validate email
 
-  void signUp() async {
+  Future<String> signUp() async {
     // print('First Name: ${_firstNameController.text}');
     // print('Last Name: ${_lastNameController.text}');
     // print('Username: ${_usernameController.text}');
@@ -104,6 +105,15 @@ class _SignUpPageState extends State<SignUpPage> {
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(reqBody),
     );
+
+    if (response.statusCode == 201) {
+      print("Register successful");
+      return Future.value("User Registered");
+    } else {
+      print("Register unsucessful");
+      return Future.value("Registration was unsucessful");
+    }
+
     // print(response.body);
   }
 
@@ -119,7 +129,7 @@ class _SignUpPageState extends State<SignUpPage> {
               padding: const EdgeInsets.only(top: 80.0),
               child: Center(
                 child: Container(
-                  height: 636,
+                  height: 660 + validationError,
                   width: 370,
                   padding: const EdgeInsets.all(30),
                   decoration: const BoxDecoration(
@@ -212,9 +222,14 @@ class _SignUpPageState extends State<SignUpPage> {
                         placeholderText: 'Sign Up',
                         backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
                         textColor: Colors.white,
-                        onPressed: () {
+                        onPressed: () async {
                           if (formKey.currentState!.validate()) {
-                            signUp();
+                            String signUpResult = await signUp();
+                            setState(() {
+                              fieldValidationErrors = <String>[signUpResult];
+                              validationError = 10.toDouble() *
+                                  fieldValidationErrors.length.toDouble();
+                            });
                           } else {
                             setState(() {
                               fieldValidationErrors = validateSignUp(
@@ -224,6 +239,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                   _emailController.text,
                                   _passwordController.text);
                             });
+                            validationError = 20.toDouble() *
+                                fieldValidationErrors.length.toDouble();
                           }
                         },
                       ),
