@@ -15,10 +15,13 @@ import 'frontend/pages/update_password.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
+  //CHECK IF THE USER IS ALREADY SIGNED IN
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  String? token = await sharedPreferences.getString('token');
+  String? token = sharedPreferences.getString('token');
   bool isSignedIn = false;
   if (token != null) {
     var reqBody = {"token": token};
@@ -34,6 +37,8 @@ void main() async {
       isSignedIn = true;
     }
   }
+
+  //RUN THE APP
   runApp(MyApp(
     isSignedIn: isSignedIn,
   ));
@@ -58,8 +63,9 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => const SignUpPage(),
         '/home': (context) => const Home(),
       },
+      // Set the inital rout to be /home if user is signed in, otherwise set it /lander
       initialRoute: (isSignedIn) ? '/home' : '/lander',
-      // initialRoute: '/lander',
+      // initialRoute: '/updatePassword',
     );
   }
 }
