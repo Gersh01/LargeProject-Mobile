@@ -1,4 +1,11 @@
+import 'package:devfusion/frontend/components/shared_pref.dart';
+import 'package:devfusion/frontend/pages/projects.dart';
 import 'package:flutter/material.dart';
+import '../utils/utility.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+
 
 class Discover extends StatefulWidget {
   const Discover({super.key});
@@ -8,12 +15,12 @@ class Discover extends StatefulWidget {
 }
 
 class _DiscoverState extends State<Discover> {
-  String _dropdownValue = 'recent';
+  String _dropdownSortByValue = 'recent';
 
   void dropdownCallback(String? newValue) {
     if (newValue != null) {
       setState(() {
-        _dropdownValue = newValue;
+        _dropdownSortByValue = newValue;
       });
     }
   }
@@ -28,8 +35,84 @@ class _DiscoverState extends State<Discover> {
     }
   }
 
+  TextEditingController queryController = TextEditingController();
+
+  var projects = [];
+  bool loading = true;
+
+  // fetch all projects
+  Future fetchProjects() async {
+    // fetch projects
+    SharedPref sharedPref = SharedPref();
+
+    var token = await sharedPref.readToken();
+
+    var reqBody = {
+
+      "token": token,
+
+      "searchBy": _dropdownSearchByValue,
+      "sortBy": _dropdownSortByValue,
+      "query": queryController.text,
+      "count": 10,
+      "initial": true,
+      
+      // cursor
+      "projectId": "000000000000000000000000"
+    };
+
+    
+
+    var response = await http.post(
+      Uri.parse(discoverUrl),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(reqBody),
+    );
+
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(response.body);
+      sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
+
+      var projectsData = jsonResponse['results'];
+  
+  
+  
+  
+  
+
+      for (int i = 0; i < projectsData.length; i++) {
+
+        projects.add({
+          "title": projectsData[i]['title'],
+          "description": projectsData[i]['description'],
+          "technology": projectsData[i]['technologies'],
+          "role": projectsData[i]['roles'],
+          "projectID": projectsData[i]['_id'],
+        });
+      }
+
+      print(projects[0]);
+
+      setState(() {
+        loading = false;
+      });
+
+    } else {
+      String jsonDataString = response.body.toString();
+      var _data = jsonDecode(jsonDataString);
+      return Future.value("Failed to fetch projects");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchProjects();
+  }
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -50,7 +133,8 @@ class _DiscoverState extends State<Discover> {
           ),
           backgroundColor: const Color.fromRGBO(31, 41, 55, 1),
         ),
-        body: Column(
+        body: loading ? const Center(child: CircularProgressIndicator()) : 
+        Column(
           children: [
             Row(children: [
               Expanded(
@@ -84,12 +168,13 @@ class _DiscoverState extends State<Discover> {
               ),
   
               //Search Bar
-              const Expanded(
+              Expanded(
                 
                 child: Padding(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: TextField(
-                    decoration: InputDecoration(
+                    controller: queryController,
+                    decoration: const InputDecoration(
                       hintText: 'Search',
                       hintStyle: TextStyle(
                         color: Color.fromRGBO(0, 0, 0, 0.4),
@@ -121,18 +206,19 @@ class _DiscoverState extends State<Discover> {
                   value: 'relevance',
                   child: Text('Relevance'),
                 )
-              ], value: _dropdownValue, onChanged: dropdownCallback),
+              ], value: _dropdownSortByValue, onChanged: dropdownCallback),
             ),
 
             //Project Cards
             Expanded(
               child: ListView.builder(
-                itemCount: 10,
+                itemCount: projects.length,
                 itemBuilder: (BuildContext context, int index) {
+                  var project = projects[index];
                   return Card(
                     child: ListTile(
-                      title: Text('Project $index'),
-                      subtitle: const Text('Project Description'),
+                      title: Text(project['title']),
+                      subtitle: Text(project['description']),
                       trailing: const Icon(Icons.more_vert),
                     ),
                   );
