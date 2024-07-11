@@ -10,7 +10,6 @@ import '../components/InputField.dart';
 import '../components/DevFusionColoredText.dart';
 import 'package:http/http.dart' as http;
 import '../utils/utility.dart';
-import '../utils/validations.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -38,9 +37,13 @@ class _LoginPageState extends State<LoginPage> {
         usernameErrorDouble = 1;
       });
       return 'Username is required';
+    } else {
+      setState(() {
+        usernameErrorList = null;
+        usernameErrorDouble = 0;
+      });
+      return null;
     }
-
-    return null;
   }
 
   String? passwordValidator(String? value) {
@@ -50,9 +53,13 @@ class _LoginPageState extends State<LoginPage> {
         passwordErrorDouble = 1;
       });
       return 'Password is required';
+    } else {
+      setState(() {
+        passwordErrorList = null;
+        passwordErrorDouble = 0;
+      });
+      return null;
     }
-
-    return null;
   }
 
   void login(BuildContext context) async {
@@ -158,25 +165,30 @@ class _LoginPageState extends State<LoginPage> {
                                 errorTextList: passwordErrorList,
                                 errorCount: passwordErrorDouble,
                               ),
-                              const Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      'Remember Me',
+                              const Padding(
+                                padding: EdgeInsets.only(top: 5.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        'Remember Me',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: 'Poppins',
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                    Text(
+                                      'Forgot Password',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontFamily: 'Poppins',
                                           fontSize: 12,
                                           fontWeight: FontWeight.w500),
                                     ),
-                                  ),
-                                  Text('Forgot Password',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'Poppins',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500))
-                                ],
+                                  ],
+                                ),
                               ),
                             ],
                           ),

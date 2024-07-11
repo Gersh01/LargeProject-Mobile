@@ -114,7 +114,7 @@ class InputField extends StatelessWidget {
             child: Container(
               margin: const EdgeInsets.only(left: 4),
               child: SizedBox(
-                height: (20 * errorCount!).toDouble(),
+                height: (15 * errorCount!).toDouble(),
                 child: convertErrorsToText(),
               ),
             ),
