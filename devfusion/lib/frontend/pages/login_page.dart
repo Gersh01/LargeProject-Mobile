@@ -23,13 +23,20 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  List<String> fieldValidationErrors = <String>[""];
   double validationError = 0;
+  List<String>? usernameErrorList;
+  double usernameErrorDouble = 0;
+  List<String>? passwordErrorList;
+  double passwordErrorDouble = 0;
 
   final formKey = GlobalKey<FormState>();
 
   String? usernameValidator(String? value) {
     if (value == null || value.isEmpty) {
+      setState(() {
+        usernameErrorList = ["Username is required"];
+        usernameErrorDouble = 1;
+      });
       return 'Username is required';
     }
 
@@ -38,13 +45,17 @@ class _LoginPageState extends State<LoginPage> {
 
   String? passwordValidator(String? value) {
     if (value == null || value.isEmpty) {
+      setState(() {
+        passwordErrorList = ["Password is required"];
+        passwordErrorDouble = 1;
+      });
       return 'Password is required';
     }
 
     return null;
   }
 
-  Future<String> login(BuildContext context) async {
+  void login(BuildContext context) async {
     SharedPref sharedPref = SharedPref();
 
     var reqBody = {
@@ -67,42 +78,14 @@ class _LoginPageState extends State<LoginPage> {
         context,
         MaterialPageRoute(builder: (context) => const Home()),
       );
-      return Future.value("");
     } else {
       print("login unsucessful");
-      return Future.value("login unsucessful");
+      setState(() {
+        passwordErrorList = ["Login Unsucessful"];
+        passwordErrorDouble = 1;
+      });
     }
   }
-
-  // initLogin() async {
-  //   SharedPref sharedPref = SharedPref();
-  //   String? token = await sharedPref.readToken();
-  //   // Future.delayed(const Duration(seconds: 2), () async {
-  //   if (token != null) {
-  //     var reqBody = {"token": token};
-
-  //     var response = await http.post(
-  //       Uri.parse(jwtUrl),
-  //       headers: {"Content-Type": "application/json"},
-  //       body: jsonEncode(reqBody),
-  //     );
-  //     if (response.statusCode == 200) {
-  //       var jsonResponse = jsonDecode(response.body);
-  //       sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(builder: (context) => const Home()),
-  //       );
-  //     }
-  //   }
-  //   // });
-  // }
-
-  // @override
-  // void initState() {
-  //   initLogin();
-  //   super.initState();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Center(
                 //Login Panel
                 child: Container(
-                  height: (520 + validationError),
+                  height: (600 + validationError),
                   width: 370,
                   padding: const EdgeInsets.all(30),
                   decoration: const BoxDecoration(
@@ -162,13 +145,19 @@ class _LoginPageState extends State<LoginPage> {
                           child: Column(
                             children: [
                               InputField(
-                                  placeholderText: 'Username',
-                                  controller: _usernameController,
-                                  validator: usernameValidator),
+                                placeholderText: 'Username',
+                                controller: _usernameController,
+                                validator: usernameValidator,
+                                errorTextList: usernameErrorList,
+                                errorCount: usernameErrorDouble,
+                              ),
                               InputField(
-                                  placeholderText: 'Password',
-                                  controller: _passwordController,
-                                  validator: passwordValidator),
+                                placeholderText: 'Password',
+                                controller: _passwordController,
+                                validator: passwordValidator,
+                                errorTextList: passwordErrorList,
+                                errorCount: passwordErrorDouble,
+                              ),
                               const Row(
                                 children: [
                                   Expanded(
@@ -189,15 +178,6 @@ class _LoginPageState extends State<LoginPage> {
                                           fontWeight: FontWeight.w500))
                                 ],
                               ),
-                              Text(
-                                fieldValidationErrors.reduce(
-                                    (value, element) => value + '\n' + element),
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Poppins',
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500),
-                              ),
                             ],
                           ),
                         ),
@@ -209,21 +189,8 @@ class _LoginPageState extends State<LoginPage> {
                         textColor: Colors.white,
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
-                            String loginResult = await login(context);
-                            setState(() {
-                              fieldValidationErrors = <String>[loginResult];
-                              validationError = 10.toDouble() *
-                                  fieldValidationErrors.length.toDouble();
-                            });
-                          } else {
-                            setState(() {
-                              fieldValidationErrors = validateLogin(
-                                  _usernameController.text,
-                                  _passwordController.text);
-                              validationError = 10.toDouble() *
-                                  fieldValidationErrors.length.toDouble();
-                            });
-                          }
+                            login(context);
+                          } else {}
                         },
                       ),
 
