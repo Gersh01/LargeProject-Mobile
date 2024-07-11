@@ -7,7 +7,6 @@ import '../components/InputField.dart';
 import '../components/DevFusionColoredText.dart';
 import 'package:http/http.dart' as http;
 import '../utils/utility.dart';
-import '../utils/validations.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -23,68 +22,136 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  List<String> fieldValidationErrors = <String>[""];
-  double validationError = 0;
+  List<String>? firstNameErrorList;
+  double firstNameErrorDouble = 0;
+  List<String>? lastNameErrorList;
+  double lastNameErrorDouble = 0;
+  List<String>? usernameErrorList;
+  double usernameErrorDouble = 0;
+  List<String>? emailErrorList;
+  double emailErrorDouble = 0;
+  List<String>? passwordErrorList;
+  double passwordErrorDouble = 0;
 
   final formKey = GlobalKey<FormState>();
 
   String? validateFirstName(String? value) {
     if (value == null || value.isEmpty) {
+      setState(() {
+        firstNameErrorList = ['First Name is required'];
+        firstNameErrorDouble = 1;
+      });
       return 'First Name is required';
     } else if (value.length > 18) {
+      setState(() {
+        firstNameErrorList = ['First Name is too long'];
+        firstNameErrorDouble = 1;
+      });
       return 'First Name is too long';
+    } else {
+      setState(() {
+        firstNameErrorList = null;
+        firstNameErrorDouble = 0;
+      });
+      return null;
     }
-
-    return null;
   }
 
   String? validateLastName(String? value) {
     if (value == null || value.isEmpty) {
+      setState(() {
+        lastNameErrorList = ['Last Name is required'];
+        lastNameErrorDouble = 1;
+      });
       return 'Last Name is required';
     } else if (value.length > 18) {
+      setState(() {
+        lastNameErrorList = ['Last Name is too long'];
+        lastNameErrorDouble = 1;
+      });
       return 'Last Name is too long';
+    } else {
+      setState(() {
+        lastNameErrorList = null;
+        lastNameErrorDouble = 0;
+      });
+      return null;
     }
-
-    return null;
   }
 
   String? validateUsername(String? value) {
     if (value == null || value.isEmpty) {
+      setState(() {
+        usernameErrorList = ['Username is required'];
+        usernameErrorDouble = 1;
+      });
       return 'Username is required';
     } else if (value.length > 24) {
+      setState(() {
+        usernameErrorList = ['Username is too long'];
+        usernameErrorDouble = 1;
+      });
       return 'Username is too long';
+    } else {
+      setState(() {
+        usernameErrorList = null;
+        usernameErrorDouble = 0;
+      });
+      return null;
     }
-
-    return null;
   }
 
   String? validatePassword(String? value) {
     final validPassword =
         RegExp(r'(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&])(?=.{8,24}$)');
     if (value == null || value.isEmpty) {
+      setState(() {
+        passwordErrorList = ['Password is required'];
+        passwordErrorDouble = 1;
+      });
       return 'Password is required';
     } else if (!validPassword.hasMatch(value)) {
+      setState(() {
+        passwordErrorList = ['Password does not follow the correct format'];
+        passwordErrorDouble = 1;
+      });
       return 'Password does not follow the correct format';
+    } else {
+      setState(() {
+        passwordErrorList = null;
+        passwordErrorDouble = 0;
+      });
+      return null;
     }
-
-    return null;
   }
 
   String? validateEmail(String? value) {
     final validEmail =
         RegExp(r'^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
     if (value == null || value.isEmpty) {
+      setState(() {
+        emailErrorList = ['Email is required'];
+        emailErrorDouble = 1;
+      });
       return 'Email is required';
     } else if (!validEmail.hasMatch(value)) {
+      setState(() {
+        emailErrorList = ['Email must follow example@email.com format'];
+        emailErrorDouble = 1;
+      });
       return 'Email must follow example@email.com format';
+    } else {
+      setState(() {
+        emailErrorList = null;
+        emailErrorDouble = 0;
+      });
+      return null;
     }
-
-    return null;
   }
 
   // validate email
 
-  Future<String> signUp() async {
+  void signUp() async {
     // print('First Name: ${_firstNameController.text}');
     // print('Last Name: ${_lastNameController.text}');
     // print('Username: ${_usernameController.text}');
@@ -107,10 +174,8 @@ class _SignUpPageState extends State<SignUpPage> {
 
     if (response.statusCode == 201) {
       print("Register successful");
-      return Future.value("User Registered");
     } else {
       print("Register unsucessful");
-      return Future.value("Registration was unsucessful");
     }
 
     // print(response.body);
@@ -128,7 +193,7 @@ class _SignUpPageState extends State<SignUpPage> {
               padding: const EdgeInsets.only(top: 80.0),
               child: Center(
                 child: Container(
-                  height: 670 + validationError,
+                  height: 750,
                   width: 370,
                   padding: const EdgeInsets.all(30),
                   decoration: const BoxDecoration(
@@ -173,16 +238,22 @@ class _SignUpPageState extends State<SignUpPage> {
                               children: [
                                 Expanded(
                                   child: InputField(
-                                      placeholderText: 'First Name',
-                                      controller: _firstNameController,
-                                      validator: validateUsername),
+                                    placeholderText: 'First Name',
+                                    controller: _firstNameController,
+                                    validator: validateFirstName,
+                                    errorTextList: firstNameErrorList,
+                                    errorCount: firstNameErrorDouble,
+                                  ),
                                 ),
                                 const SizedBox(width: 10),
                                 Expanded(
                                   child: InputField(
-                                      placeholderText: 'Last Name',
-                                      controller: _lastNameController,
-                                      validator: validateUsername),
+                                    placeholderText: 'Last Name',
+                                    controller: _lastNameController,
+                                    validator: validateLastName,
+                                    errorTextList: lastNameErrorList,
+                                    errorCount: lastNameErrorDouble,
+                                  ),
                                 ),
                               ],
                             ),
@@ -191,28 +262,28 @@ class _SignUpPageState extends State<SignUpPage> {
                               child: Column(
                                 children: [
                                   InputField(
-                                      placeholderText: 'Username',
-                                      controller: _usernameController,
-                                      validator: validateUsername),
+                                    placeholderText: 'Username',
+                                    controller: _usernameController,
+                                    validator: validateUsername,
+                                    errorTextList: usernameErrorList,
+                                    errorCount: usernameErrorDouble,
+                                  ),
                                   InputField(
-                                      placeholderText: 'Email',
-                                      controller: _emailController,
-                                      validator: validateEmail),
+                                    placeholderText: 'Email',
+                                    controller: _emailController,
+                                    validator: validateEmail,
+                                    errorTextList: emailErrorList,
+                                    errorCount: emailErrorDouble,
+                                  ),
                                   InputField(
-                                      placeholderText: 'Password',
-                                      controller: _passwordController,
-                                      validator: validatePassword),
+                                    placeholderText: 'Password',
+                                    controller: _passwordController,
+                                    validator: validatePassword,
+                                    errorTextList: passwordErrorList,
+                                    errorCount: passwordErrorDouble,
+                                  ),
                                 ],
                               ),
-                            ),
-                            Text(
-                              fieldValidationErrors.reduce(
-                                  (value, element) => value + '\n' + element),
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'Poppins',
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500),
                             ),
                           ],
                         ),
@@ -223,23 +294,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         textColor: Colors.white,
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
-                            String signUpResult = await signUp();
-                            setState(() {
-                              fieldValidationErrors = <String>[signUpResult];
-                              validationError = 10.toDouble() *
-                                  fieldValidationErrors.length.toDouble();
-                            });
-                          } else {
-                            setState(() {
-                              fieldValidationErrors = validateSignUp(
-                                  _firstNameController.text,
-                                  _lastNameController.text,
-                                  _usernameController.text,
-                                  _emailController.text,
-                                  _passwordController.text);
-                            });
-                            validationError = 20.toDouble() *
-                                fieldValidationErrors.length.toDouble();
+                            signUp();
                           }
                         },
                       ),

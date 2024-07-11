@@ -22,7 +22,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  double validationError = 0;
   List<String>? usernameErrorList;
   double usernameErrorDouble = 0;
   List<String>? passwordErrorList;
@@ -106,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Center(
                 //Login Panel
                 child: Container(
-                  height: (600 + validationError),
+                  height: 600,
                   width: 370,
                   padding: const EdgeInsets.all(30),
                   decoration: const BoxDecoration(
@@ -202,7 +201,7 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
                             login(context);
-                          } else {}
+                          }
                         },
                       ),
 
