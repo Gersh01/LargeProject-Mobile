@@ -23,6 +23,8 @@ class _SettingsState extends State<Settings> {
 
   SharedPref sharedPref = SharedPref();
 
+  bool light = false;
+
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
 
@@ -137,223 +139,242 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
+      appBar: AppBar(
+        title: const Text(
+          'Settings',
+          style: TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'League Spartan',
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: const Color.fromRGBO(31, 41, 55, 1),
+      ),
+      body: Column(
         children: [
-          Container(
-            alignment: Alignment.topLeft,
-            padding: const EdgeInsets.only(left: 10),
-            child: const Text(
-              'Settings',
-              style: TextStyle(
-                fontSize: 50,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'League Spartan',
-                color: Color.fromRGBO(124, 58, 237, 1),
-                shadows: [
-                  Shadow(
-                    offset: Offset(0, 4.0),
-                    blurRadius: 20.0,
-                    color: Color.fromRGBO(0, 0, 0, 0.4),
+          Row(
+            children: [
+              Expanded(child: Container()),
+              SizedButton(
+                height: 25,
+                textStyle: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'League Spartan',
+                  color: Colors.white,
+                ),
+                // width: 120,
+                placeholderText: 'Upload',
+                backgroundColor: const Color.fromRGBO(251, 146, 60, 1),
+                textColor: Colors.white,
+                onPressed: () async {
+                  if (nameFormKey.currentState!.validate()) {
+                    updateName();
+                  }
+                },
+              ),
+            ],
+          ),
+          const Divider(
+            height: 10,
+            thickness: 1,
+            indent: 10,
+            endIndent: 10,
+          ),
+          Column(
+            children: [
+              Container(
+                alignment: Alignment.topLeft,
+                padding: const EdgeInsets.only(left: 10),
+                child: const Text(
+                  'Name',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'League Spartan',
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              Form(
+                key: nameFormKey,
+                child: Row(
+                  children: [
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: InputField(
+                        placeholderText: 'First Name',
+                        controller: _firstNameController,
+                        validator: validateFirstName,
+                        errorTextList: firstNameErrorList,
+                        errorCount: firstNameErrorDouble,
+                        hintText: firstName,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: InputField(
+                        placeholderText: 'Last Name',
+                        controller: _lastNameController,
+                        validator: validateLastName,
+                        errorTextList: lastNameErrorList,
+                        errorCount: lastNameErrorDouble,
+                        hintText: lastName,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                  ],
+                ),
+              ),
+              Row(
+                children: [
+                  Expanded(child: Container()),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: SizedButton(
+                      height: 25,
+                      textStyle: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'League Spartan',
+                        color: Colors.white,
+                      ),
+                      // width: 120,
+                      placeholderText: 'Save',
+                      backgroundColor: const Color.fromRGBO(251, 146, 60, 1),
+                      textColor: Colors.white,
+                      onPressed: () async {
+                        if (nameFormKey.currentState!.validate()) {
+                          updateName();
+                        }
+                      },
+                    ),
                   ),
                 ],
               ),
-            ),
+            ],
           ),
-          Container(
-            margin: const EdgeInsets.only(top: 30),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: const EdgeInsets.only(left: 10),
-                  child: const Text(
-                    'Name',
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'League Spartan',
-                      color: Color.fromRGBO(124, 58, 237, 1),
-                      shadows: [
-                        Shadow(
-                          offset: Offset(0, 4.0),
-                          blurRadius: 20.0,
-                          color: Color.fromRGBO(0, 0, 0, 0.4),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Form(
-                  key: nameFormKey,
-                  child: Row(
-                    children: [
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: InputField(
-                          placeholderText: 'First Name',
-                          controller: _firstNameController,
-                          validator: validateFirstName,
-                          errorTextList: firstNameErrorList,
-                          errorCount: firstNameErrorDouble,
-                          hintText: firstName,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: InputField(
-                          placeholderText: 'Last Name',
-                          controller: _lastNameController,
-                          validator: validateLastName,
-                          errorTextList: lastNameErrorList,
-                          errorCount: lastNameErrorDouble,
-                          hintText: lastName,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                    ],
-                  ),
-                ),
-                Row(
-                  children: [
-                    Expanded(child: Container()),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: SizedButton(
-                        width: 110,
-                        placeholderText: 'Save',
-                        backgroundColor: const Color.fromRGBO(107, 114, 128, 1),
-                        textColor: Colors.white,
-                        onPressed: () async {
-                          if (nameFormKey.currentState!.validate()) {
-                            updateName();
-                          }
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+          const Divider(
+            height: 10,
+            thickness: 1,
+            indent: 10,
+            endIndent: 10,
           ),
-          Container(
-            margin: const EdgeInsets.only(top: 30),
-            child: Row(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: const EdgeInsets.only(left: 10),
-                  child: const Text(
-                    'Display Mode',
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'League Spartan',
-                      color: Color.fromRGBO(124, 58, 237, 1),
-                      shadows: [
-                        Shadow(
-                          offset: Offset(0, 4.0),
-                          blurRadius: 20.0,
-                          color: Color.fromRGBO(0, 0, 0, 0.4),
-                        ),
-                      ],
-                    ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                alignment: Alignment.topLeft,
+                padding: const EdgeInsets.only(left: 10),
+                child: const Text(
+                  'Display Mode',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'League Spartan',
+                    color: Colors.black,
                   ),
                 ),
-                Container(
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                    color: Color.fromRGBO(17, 24, 39, 1),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: Offset(0, 2.0),
-                        blurRadius: 2.0,
-                        color: Color.fromRGBO(0, 0, 0, 0.25),
-                      ),
-                    ],
-                  ),
-                  child: Container(),
-                ),
-              ],
-            ),
+              ),
+              Switch.adaptive(
+                value: light,
+                onChanged: (bool value) {
+                  setState(() {
+                    light = value;
+                  });
+                },
+              ),
+              // Container(
+              //   decoration: const BoxDecoration(
+              //     borderRadius: BorderRadius.all(
+              //       Radius.circular(5),
+              //     ),
+              //     color: Color.fromRGBO(17, 24, 39, 1),
+              //   ),
+              //   child: Container(),
+              // ),
+            ],
           ),
-          Container(
-            margin: const EdgeInsets.only(top: 30),
-            child: Row(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: const EdgeInsets.only(left: 10),
-                  child: const Text(
-                    'Password',
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'League Spartan',
-                      color: Color.fromRGBO(124, 58, 237, 1),
-                      shadows: [
-                        Shadow(
-                          offset: Offset(0, 4.0),
-                          blurRadius: 20.0,
-                          color: Color.fromRGBO(0, 0, 0, 0.4),
-                        ),
-                      ],
-                    ),
+          const Divider(
+            height: 10,
+            thickness: 1,
+            indent: 10,
+            endIndent: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                alignment: Alignment.topLeft,
+                padding: const EdgeInsets.only(left: 10),
+                child: const Text(
+                  'Password',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'League Spartan',
+                    color: Colors.black,
                   ),
                 ),
-                Expanded(child: Container()),
-                Align(
-                  alignment: Alignment.centerRight,
-                  // padding: const EdgeInsets.only(left: 400),
-                  child: SizedButton(
-                    width: 110,
-                    placeholderText: 'Reset',
+              ),
+              SizedButton(
+                // width: 130,
+                height: 25,
+                textStyle: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'League Spartan',
+                  color: Colors.white,
+                ),
+                placeholderText: 'Reset Password',
+                backgroundColor: const Color.fromRGBO(239, 68, 68, 1),
+                textColor: Colors.white,
+                onPressed: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const UpdatePassword(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+          Expanded(child: Container()),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 10),
+              child: Column(
+                children: [
+                  Button(
+                    placeholderText: 'About Us',
+                    // backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
+                    backgroundColor: const Color.fromRGBO(107, 114, 128, 1),
+                    textColor: Colors.white,
+                    onPressed: () {
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => const AboutUs()),
+                      // );
+                    },
+                  ),
+                  Button(
+                    placeholderText: 'Logout',
+                    // backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
                     backgroundColor: const Color.fromRGBO(239, 68, 68, 1),
                     textColor: Colors.white,
-                    onPressed: () async {
+                    onPressed: () {
+                      sharedPref.removeToken();
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => const UpdatePassword(),
-                        ),
+                        MaterialPageRoute(builder: (context) => const Lander()),
                       );
                     },
                   ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 30),
-            child: Column(
-              children: [
-                Button(
-                  placeholderText: 'Logout',
-                  // backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
-                  backgroundColor: const Color.fromRGBO(239, 68, 68, 1),
-                  textColor: Colors.white,
-                  onPressed: () {
-                    sharedPref.removeToken();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Lander()),
-                    );
-                  },
-                ),
-                Button(
-                  placeholderText: 'About Us',
-                  // backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
-                  backgroundColor: const Color.fromRGBO(107, 114, 128, 1),
-                  textColor: Colors.white,
-                  onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => const AboutUs()),
-                    // );
-                  },
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
