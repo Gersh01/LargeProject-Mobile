@@ -33,6 +33,8 @@ class _SignUpPageState extends State<SignUpPage> {
   List<String>? passwordErrorList;
   double passwordErrorDouble = 0;
 
+  bool passwordVisible = true;
+
   final formKey = GlobalKey<FormState>();
 
   String? validateFirstName(String? value) {
@@ -325,11 +327,28 @@ class _SignUpPageState extends State<SignUpPage> {
                                   ),
                                   InputField(
                                     placeholderText: 'Password',
-                                    isObscure: true,
+                                    isObscure: passwordVisible,
                                     controller: _passwordController,
                                     validator: validatePassword,
                                     errorTextList: passwordErrorList,
                                     errorCount: passwordErrorDouble,
+                                    suffixIcon: IconButton(
+                                      padding: EdgeInsets.zero,
+                                      icon: Icon(
+                                        // Based on passwordVisible state choose the icon
+                                        passwordVisible
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                        color:
+                                            Theme.of(context).primaryColorDark,
+                                      ),
+                                      onPressed: () {
+                                        // Update the state i.e. toogle the state of passwordVisible variable
+                                        setState(() {
+                                          passwordVisible = !passwordVisible;
+                                        });
+                                      },
+                                    ),
                                   ),
                                 ],
                               ),

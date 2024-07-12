@@ -7,6 +7,7 @@ class InputField extends StatelessWidget {
   final List<String>? errorTextList;
   final double? errorCount;
   final bool? isObscure;
+  final IconButton? suffixIcon;
 
   const InputField(
       {super.key,
@@ -15,7 +16,8 @@ class InputField extends StatelessWidget {
       this.validator,
       this.errorTextList,
       this.errorCount,
-      this.isObscure});
+      this.isObscure,
+      this.suffixIcon});
 
   Text? convertErrorsToText() {
     if (errorTextList == null) {
@@ -111,6 +113,10 @@ class InputField extends StatelessWidget {
                           fontFamily: 'Poppins',
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
+                        ),
+                        suffixIcon: Transform.scale(
+                          scale: 0.80,
+                          child: suffixIcon,
                         ),
                       ),
                     ),
