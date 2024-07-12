@@ -1,35 +1,13 @@
+import 'dart:ffi';
+
 import 'package:devfusion/frontend/components/shared_pref.dart';
+import 'package:devfusion/frontend/json/Project.dart';
 import 'package:devfusion/frontend/pages/projects.dart';
 import 'package:flutter/material.dart';
 import '../components/project_tile.dart';
 import '../utils/utility.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-class Project {
-  final String title;
-  final String description;
-  final List<String> technologies;
-
-  Project({
-    required this.title,
-    required this.description,
-    required this.technologies,
-  });
-
-  Project.fromJson(Map<String, dynamic> json)
-      : title = json['title'],
-        description = json['description'],
-        technologies = json['technologies'];
-      
-      Map<String, dynamic> toJson() => {
-        'title': title,
-        'description': description,
-        'technologies': technologies,
-      };
-    
-
-}
 
 class Discover extends StatefulWidget {
   const Discover({super.key});
@@ -61,8 +39,10 @@ class _DiscoverState extends State<Discover> {
 
   TextEditingController queryController = TextEditingController();
 
-  var projects = [];
+  List<Project> projects = [];
   bool loading = true;
+
+  // List<Project> projectsObjs = [];
 
   // fetch all projects
   Future fetchProjects() async {
@@ -72,20 +52,17 @@ class _DiscoverState extends State<Discover> {
     var token = await sharedPref.readToken();
 
     var reqBody = {
-
       "token": token,
 
       "searchBy": _dropdownSearchByValue,
       "sortBy": _dropdownSortByValue,
       "query": queryController.text,
-      "count": 8,
+      "count": 4,
       "initial": true,
-      
+
       // cursor
       "projectId": "000000000000000000000000"
     };
-
-    
 
     var response = await http.post(
       Uri.parse(discoverUrl),
@@ -98,28 +75,19 @@ class _DiscoverState extends State<Discover> {
       sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
 
       var projectsData = jsonResponse['results'];
-  
-  
-  
-  
-  
 
       for (int i = 0; i < projectsData.length; i++) {
-
-        projects.add({
-          "title": projectsData[i]['title'],
-          "description": projectsData[i]['description'],
-          // "technologies": projectsData[i]['technologies']
-        });
-
+        // projects.add({
+        //   "title": projectsData[i]['title'],
+        //   "description": projectsData[i]['description'],
+        //   "technologies": projectsData[i]['technologies']
+        // });
+        projects.add(Project.fromJson(projectsData[i]));
       }
-
-      print(projectsData[1]);
 
       setState(() {
         loading = false;
       });
-
     } else {
       String jsonDataString = response.body.toString();
       var _data = jsonDecode(jsonDataString);
@@ -135,13 +103,11 @@ class _DiscoverState extends State<Discover> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
           title: const Text(
             'Discover',
             style: TextStyle(
-                
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'League Spartan',
@@ -156,98 +122,99 @@ class _DiscoverState extends State<Discover> {
           ),
           backgroundColor: const Color.fromRGBO(31, 41, 55, 1),
         ),
-        body: loading ? const Center(child: CircularProgressIndicator()) : 
-        Column(
-          children: [
-            Row(children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                
-                  child: DropdownButton(
-                    isDense: true,
-                    items: const [
-                      DropdownMenuItem(
-                        value: 'Title',
-                        child: Text('Title'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'Technology',
-                        child: Text('Technology'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'Description',
-                        child: Text('Description'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'Role',
-                        child: Text('Role'),
-                      )
-                    ],
-                    value: _dropdownSearchByValue,
-                    onChanged: dropdownSearchByCallback,
-                  ),
-              ),
-              ),
-  
-              //Search Bar
-              Expanded(
-                
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: TextField(
-                    controller: queryController,
-                    decoration: const InputDecoration(
-                      hintText: 'Search',
-                      hintStyle: TextStyle(
-                        color: Color.fromRGBO(0, 0, 0, 0.4),
-                      ),
-                      prefixIcon: Icon(Icons.search),
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        borderSide: BorderSide.none,
+        body: loading
+            ? const Center(child: CircularProgressIndicator())
+            : Column(
+                children: [
+                  Row(children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: DropdownButton(
+                          isDense: true,
+                          items: const [
+                            DropdownMenuItem(
+                              value: 'Title',
+                              child: Text('Title'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Technology',
+                              child: Text('Technology'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Description',
+                              child: Text('Description'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Role',
+                              child: Text('Role'),
+                            )
+                          ],
+                          value: _dropdownSearchByValue,
+                          onChanged: dropdownSearchByCallback,
+                        ),
                       ),
                     ),
+
+                    //Search Bar
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: TextField(
+                          controller: queryController,
+                          decoration: const InputDecoration(
+                            hintText: 'Search',
+                            hintStyle: TextStyle(
+                              color: Color.fromRGBO(0, 0, 0, 0.4),
+                            ),
+                            prefixIcon: Icon(Icons.search),
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                              borderSide: BorderSide.none,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ]),
+
+                  //Search By Dropdown
+
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: DropdownButton(
+                        items: const [
+                          DropdownMenuItem(
+                            value: 'recent',
+                            child: Text('Most Recent'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'relevance',
+                            child: Text('Relevance'),
+                          )
+                        ],
+                        value: _dropdownSortByValue,
+                        onChanged: dropdownCallback),
                   ),
-                ),
-                
-              ),
-            ]),
 
-            //Search By Dropdown
-
-            Align(
-                alignment: Alignment.centerRight,
-                child: DropdownButton(items: const [
-                DropdownMenuItem(
-                  value: 'recent',
-                  child: Text('Most Recent'),
-                ),
-                DropdownMenuItem(
-                  value: 'relevance',
-                  child: Text('Relevance'),
-                )
-              ], value: _dropdownSortByValue, onChanged: dropdownCallback),
-            ),
-
-            //Project Cards
-            Expanded(
-              child: ListView.builder(
-                itemCount: projects.length,
-                itemBuilder: (BuildContext context, int index) {
-                  var project = projects[index];
-                  return ProjectTile(
-                    title: project['title'],
-                    description: project['description'],
-                    // technologies: project['technologies'],
-                  );
-                  
-                },
-              ),
-            ),
-          ],
-        ));
+                  //Project Cards
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: projects.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        var project = projects[index];
+                        return ProjectTile(
+                          title: project.title,
+                          description: project.description,
+                          // technologies: project['technologies'],
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ));
   }
 }
