@@ -1,11 +1,35 @@
 import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:devfusion/frontend/pages/projects.dart';
 import 'package:flutter/material.dart';
+import '../components/project_tile.dart';
 import '../utils/utility.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+class Project {
+  final String title;
+  final String description;
+  final List<String> technologies;
 
+  Project({
+    required this.title,
+    required this.description,
+    required this.technologies,
+  });
+
+  Project.fromJson(Map<String, dynamic> json)
+      : title = json['title'],
+        description = json['description'],
+        technologies = json['technologies'];
+      
+      Map<String, dynamic> toJson() => {
+        'title': title,
+        'description': description,
+        'technologies': technologies,
+      };
+    
+
+}
 
 class Discover extends StatefulWidget {
   const Discover({super.key});
@@ -54,7 +78,7 @@ class _DiscoverState extends State<Discover> {
       "searchBy": _dropdownSearchByValue,
       "sortBy": _dropdownSortByValue,
       "query": queryController.text,
-      "count": 10,
+      "count": 8,
       "initial": true,
       
       // cursor
@@ -85,13 +109,12 @@ class _DiscoverState extends State<Discover> {
         projects.add({
           "title": projectsData[i]['title'],
           "description": projectsData[i]['description'],
-          "technology": projectsData[i]['technologies'],
-          "role": projectsData[i]['roles'],
-          "projectID": projectsData[i]['_id'],
+          // "technologies": projectsData[i]['technologies']
         });
+
       }
 
-      print(projects[0]);
+      print(projectsData[1]);
 
       setState(() {
         loading = false;
@@ -215,13 +238,12 @@ class _DiscoverState extends State<Discover> {
                 itemCount: projects.length,
                 itemBuilder: (BuildContext context, int index) {
                   var project = projects[index];
-                  return Card(
-                    child: ListTile(
-                      title: Text(project['title']),
-                      subtitle: Text(project['description']),
-                      trailing: const Icon(Icons.more_vert),
-                    ),
+                  return ProjectTile(
+                    title: project['title'],
+                    description: project['description'],
+                    // technologies: project['technologies'],
                   );
+                  
                 },
               ),
             ),

@@ -89,6 +89,7 @@ class InputField extends StatelessWidget {
                   SizedBox(
                     height: 18,
                     child: TextFormField(
+                      obscureText: true,
                       validator: validator,
                       controller: controller,
                       style: const TextStyle(color: Colors.white),
