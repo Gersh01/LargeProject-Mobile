@@ -102,6 +102,40 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   String? validatePassword(String? value) {
+    List<String> errorsList = [];
+    final hasUpperCase =
+        RegExp(r'(?=.*[A-Z])'); // At least one uppercase letter
+    final hasDigit = RegExp(r'(?=.*[0-9])'); // At least one digit
+    final hasSpecialChar = RegExp(
+        r'(?=.*[!@#$%^&])'); // At least one special character from the set !@#$%^&
+    final validLength =
+        RegExp(r'(?=.{8,24}$)'); // Length between 8 and 24 characters
+
+    double counter = 0;
+    if (value == null || value.isEmpty) {
+      errorsList.add('Password cannot be empty');
+      counter++;
+    } else {
+      if (!validLength.hasMatch(value)) {
+        errorsList.add('Password must be between 8 and 24 characters long');
+        counter++;
+      }
+      if (!hasUpperCase.hasMatch(value)) {
+        errorsList.add('Password must contain at least one uppercase letter');
+        counter++;
+      }
+      if (!hasDigit.hasMatch(value)) {
+        errorsList.add('Password must contain at least one digit');
+        counter++;
+      }
+      if (!hasSpecialChar.hasMatch(value)) {
+        errorsList.add('Password must contain at least one special character');
+        counter++;
+      }
+    }
+
+    counter *= 2;
+
     final validPassword =
         RegExp(r'(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&])(?=.{8,24}$)');
     if (value == null || value.isEmpty) {
@@ -112,8 +146,8 @@ class _SignUpPageState extends State<SignUpPage> {
       return 'Password is required';
     } else if (!validPassword.hasMatch(value)) {
       setState(() {
-        passwordErrorList = ['Password does not follow the correct format'];
-        passwordErrorDouble = 1;
+        passwordErrorList = errorsList;
+        passwordErrorDouble = counter;
       });
       return 'Password does not follow the correct format';
     } else {
@@ -201,7 +235,13 @@ class _SignUpPageState extends State<SignUpPage> {
               padding: const EdgeInsets.only(top: 80.0),
               child: Center(
                 child: Container(
-                  height: 750,
+                  height: 650 +
+                      (12 *
+                          (firstNameErrorDouble +
+                              lastNameErrorDouble +
+                              usernameErrorDouble +
+                              emailErrorDouble +
+                              passwordErrorDouble)),
                   width: 370,
                   padding: const EdgeInsets.all(30),
                   decoration: const BoxDecoration(

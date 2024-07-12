@@ -105,7 +105,8 @@ class _LoginPageState extends State<LoginPage> {
               child: Center(
                 //Login Panel
                 child: Container(
-                  height: 600,
+                  height:
+                      510 + (12 * (usernameErrorDouble + passwordErrorDouble)),
                   width: 370,
                   padding: const EdgeInsets.all(30),
                   decoration: const BoxDecoration(
