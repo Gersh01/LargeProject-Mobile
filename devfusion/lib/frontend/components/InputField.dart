@@ -8,6 +8,7 @@ class InputField extends StatelessWidget {
   final double? errorCount;
   final bool? isObscure;
   final IconButton? suffixIcon;
+  final String? hintText;
 
   const InputField(
       {super.key,
@@ -17,7 +18,8 @@ class InputField extends StatelessWidget {
       this.errorTextList,
       this.errorCount,
       this.isObscure,
-      this.suffixIcon});
+      this.suffixIcon,
+      this.hintText});
 
   Text? convertErrorsToText() {
     if (errorTextList == null) {
@@ -39,6 +41,14 @@ class InputField extends StatelessWidget {
           fontWeight: FontWeight.w600,
         ),
       );
+    }
+  }
+
+  String getHintText() {
+    if (hintText != null) {
+      return hintText!;
+    } else {
+      return placeholderText!;
     }
   }
 
@@ -106,7 +116,7 @@ class InputField extends StatelessWidget {
                       style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: placeholderText,
+                        hintText: getHintText(),
                         errorStyle: const TextStyle(fontSize: 0),
                         hintStyle: const TextStyle(
                           color: Colors.white,
