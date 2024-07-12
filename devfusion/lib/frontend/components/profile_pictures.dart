@@ -13,7 +13,7 @@ class ProfilePictures extends StatelessWidget {
     return Center(
       child: CircleAvatar(
           backgroundColor: Colors.white,
-          radius: 50,
+          radius: 45,
           backgroundImage: NetworkImage(
             imageUrl,
           )),
