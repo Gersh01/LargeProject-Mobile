@@ -219,7 +219,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             DevFusionColoredText(),
                             Center(
                               child: Text(
-                                'login',
+                                'Sign Up',
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,

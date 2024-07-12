@@ -124,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                             DevFusionColoredText(),
                             Center(
                               child: Text(
-                                'login',
+                                'Login',
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
