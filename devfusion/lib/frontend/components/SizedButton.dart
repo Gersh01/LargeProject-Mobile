@@ -6,6 +6,8 @@ class SizedButton extends StatelessWidget {
   final Color? backgroundColor;
   final Color? textColor;
   final VoidCallback? onPressed;
+  final TextStyle? textStyle;
+  final double? height;
   final double? width;
 
   const SizedButton(
@@ -14,7 +16,21 @@ class SizedButton extends StatelessWidget {
       this.backgroundColor,
       this.textColor,
       this.onPressed,
+      this.textStyle,
+      this.height,
       this.width});
+
+  getTextStyle() {
+    if (textStyle == null) {
+      return TextStyle(
+          color: textColor,
+          fontFamily: 'League Spartan',
+          fontSize: 20,
+          fontWeight: FontWeight.bold);
+    } else {
+      return textStyle!;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,20 +39,21 @@ class SizedButton extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
+            height: height,
             width: width,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
+                minimumSize: Size.zero, // Set this
+                padding: const EdgeInsets.only(left: 5, right: 5),
                 backgroundColor: backgroundColor,
                 shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
               ),
               onPressed: onPressed,
-              child: Text(placeholderText!,
-                  style: TextStyle(
-                      color: textColor,
-                      fontFamily: 'League Spartan',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold)),
+              child: Text(
+                placeholderText!,
+                style: getTextStyle(),
+              ),
             ),
           ),
         ],
