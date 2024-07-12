@@ -6,18 +6,32 @@ class Button extends StatelessWidget {
   final Color? backgroundColor;
   final Color? textColor;
   final VoidCallback? onPressed;
+  final TextStyle? textStyle;
 
   const Button(
       {super.key,
       this.placeholderText,
       this.backgroundColor,
       this.textColor,
-      this.onPressed});
+      this.onPressed,
+      this.textStyle});
+
+  getTextStyle() {
+    if (textStyle == null) {
+      return TextStyle(
+          color: textColor,
+          fontFamily: 'League Spartan',
+          fontSize: 20,
+          fontWeight: FontWeight.bold);
+    } else {
+      return textStyle!;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(left: 10, right: 10),
       child: Row(
         children: [
           Expanded(
@@ -25,15 +39,13 @@ class Button extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: backgroundColor,
                 shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
               ),
               onPressed: onPressed,
-              child: Text(placeholderText!,
-                  style: TextStyle(
-                      color: textColor,
-                      fontFamily: 'League Spartan',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold)),
+              child: Text(
+                placeholderText!,
+                style: getTextStyle(),
+              ),
             ),
           ),
         ],
