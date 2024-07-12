@@ -19,7 +19,7 @@ class _SettingsState extends State<Settings> {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: EdgeInsets.only(top: 110.0),
+          padding: const EdgeInsets.only(top: 110.0),
           child: Center(
             child: Column(
               children: [
@@ -40,7 +40,8 @@ class _SettingsState extends State<Settings> {
                 ),
                 Button(
                   placeholderText: 'Logout',
-                  backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
+                  // backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
+                  backgroundColor: const Color.fromRGBO(239, 68, 68, 1),
                   textColor: Colors.white,
                   onPressed: () {
                     sharedPref.removeToken();

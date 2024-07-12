@@ -6,6 +6,7 @@ class InputField extends StatelessWidget {
   final String? Function(String?)? validator;
   final List<String>? errorTextList;
   final double? errorCount;
+  final bool? isObscure;
 
   const InputField(
       {super.key,
@@ -13,7 +14,8 @@ class InputField extends StatelessWidget {
       this.controller,
       this.validator,
       this.errorTextList,
-      this.errorCount});
+      this.errorCount,
+      this.isObscure});
 
   Text? convertErrorsToText() {
     if (errorTextList == null) {
@@ -44,6 +46,13 @@ class InputField extends StatelessWidget {
     } else {
       return errorCount!;
     }
+  }
+
+  bool getIsObscure() {
+    if (isObscure == null) {
+      return false;
+    }
+    return isObscure!;
   }
 
   @override
@@ -89,7 +98,7 @@ class InputField extends StatelessWidget {
                   SizedBox(
                     height: 18,
                     child: TextFormField(
-                      obscureText: true,
+                      obscureText: getIsObscure(),
                       validator: validator,
                       controller: controller,
                       style: const TextStyle(color: Colors.white),

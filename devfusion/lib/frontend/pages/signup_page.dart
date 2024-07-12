@@ -325,6 +325,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   ),
                                   InputField(
                                     placeholderText: 'Password',
+                                    isObscure: true,
                                     controller: _passwordController,
                                     validator: validatePassword,
                                     errorTextList: passwordErrorList,

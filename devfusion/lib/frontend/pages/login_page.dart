@@ -160,6 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               InputField(
                                 placeholderText: 'Password',
+                                isObscure: true,
                                 controller: _passwordController,
                                 validator: passwordValidator,
                                 errorTextList: passwordErrorList,
