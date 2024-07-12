@@ -4,6 +4,7 @@ import 'package:devfusion/frontend/components/InputField.dart';
 import 'package:devfusion/frontend/components/SizedButton.dart';
 import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:devfusion/frontend/pages/lander.dart';
+import 'package:devfusion/frontend/pages/update_password.dart';
 import 'package:devfusion/frontend/utils/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -217,11 +218,9 @@ class _SettingsState extends State<Settings> {
                     Expanded(child: Container()),
                     Align(
                       alignment: Alignment.centerRight,
-                      // padding: const EdgeInsets.only(left: 400),
                       child: SizedButton(
-                        width: 150,
+                        width: 110,
                         placeholderText: 'Save',
-                        // backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
                         backgroundColor: const Color.fromRGBO(107, 114, 128, 1),
                         textColor: Colors.white,
                         onPressed: () async {
@@ -308,11 +307,18 @@ class _SettingsState extends State<Settings> {
                   alignment: Alignment.centerRight,
                   // padding: const EdgeInsets.only(left: 400),
                   child: SizedButton(
-                    width: 150,
+                    width: 110,
                     placeholderText: 'Reset',
                     backgroundColor: const Color.fromRGBO(239, 68, 68, 1),
                     textColor: Colors.white,
-                    onPressed: () async {},
+                    onPressed: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const UpdatePassword(),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],
