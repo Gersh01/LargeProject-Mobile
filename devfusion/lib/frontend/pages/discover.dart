@@ -77,11 +77,6 @@ class _DiscoverState extends State<Discover> {
       var projectsData = jsonResponse['results'];
 
       for (int i = 0; i < projectsData.length; i++) {
-        // projects.add({
-        //   "title": projectsData[i]['title'],
-        //   "description": projectsData[i]['description'],
-        //   "technologies": projectsData[i]['technologies']
-        // });
         projects.add(Project.fromJson(projectsData[i]));
       }
 
