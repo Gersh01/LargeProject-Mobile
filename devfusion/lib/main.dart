@@ -48,10 +48,10 @@ class MyApp extends StatelessWidget {
   final isSignedIn;
 
   const MyApp({@required this.isSignedIn, super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       // theme: ThemeData(
       //   primarySwatch: Colors.blue,
       // ),

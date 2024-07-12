@@ -82,10 +82,7 @@ class _LoginPageState extends State<LoginPage> {
       print("login successful");
       var jsonResponse = jsonDecode(response.body);
       sharedPref.writeToken(jwtToken: jsonResponse['token']);
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const Home()),
-      );
+      Navigator.of(context).pushNamedAndRemoveUntil("/home", (route) => false);
     } else {
       print("login unsucessful");
       setState(() {
