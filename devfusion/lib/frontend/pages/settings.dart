@@ -158,108 +158,197 @@ class _SettingsState extends State<Settings> {
               ),
             ),
           ),
-          Column(
-            children: [
-              Container(
-                alignment: Alignment.topLeft,
-                padding: const EdgeInsets.only(left: 10),
-                child: const Text(
-                  'Name',
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'League Spartan',
-                    color: Color.fromRGBO(124, 58, 237, 1),
-                    shadows: [
-                      Shadow(
-                        offset: Offset(0, 4.0),
-                        blurRadius: 20.0,
-                        color: Color.fromRGBO(0, 0, 0, 0.4),
+          Container(
+            margin: const EdgeInsets.only(top: 30),
+            child: Column(
+              children: [
+                Container(
+                  alignment: Alignment.topLeft,
+                  padding: const EdgeInsets.only(left: 10),
+                  child: const Text(
+                    'Name',
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'League Spartan',
+                      color: Color.fromRGBO(124, 58, 237, 1),
+                      shadows: [
+                        Shadow(
+                          offset: Offset(0, 4.0),
+                          blurRadius: 20.0,
+                          color: Color.fromRGBO(0, 0, 0, 0.4),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Form(
+                  key: nameFormKey,
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: InputField(
+                          placeholderText: 'First Name',
+                          controller: _firstNameController,
+                          validator: validateFirstName,
+                          errorTextList: firstNameErrorList,
+                          errorCount: firstNameErrorDouble,
+                          hintText: firstName,
+                        ),
                       ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: InputField(
+                          placeholderText: 'Last Name',
+                          controller: _lastNameController,
+                          validator: validateLastName,
+                          errorTextList: lastNameErrorList,
+                          errorCount: lastNameErrorDouble,
+                          hintText: lastName,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
                     ],
                   ),
                 ),
-              ),
-              Form(
-                key: nameFormKey,
-                child: Row(
+                Row(
                   children: [
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: InputField(
-                        placeholderText: 'First Name',
-                        controller: _firstNameController,
-                        validator: validateFirstName,
-                        errorTextList: firstNameErrorList,
-                        errorCount: firstNameErrorDouble,
-                        hintText: firstName,
+                    Expanded(child: Container()),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      // padding: const EdgeInsets.only(left: 400),
+                      child: SizedButton(
+                        width: 150,
+                        placeholderText: 'Save',
+                        // backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
+                        backgroundColor: const Color.fromRGBO(107, 114, 128, 1),
+                        textColor: Colors.white,
+                        onPressed: () async {
+                          if (nameFormKey.currentState!.validate()) {
+                            updateName();
+                          }
+                        },
                       ),
                     ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: InputField(
-                        placeholderText: 'Last Name',
-                        controller: _lastNameController,
-                        validator: validateLastName,
-                        errorTextList: lastNameErrorList,
-                        errorCount: lastNameErrorDouble,
-                        hintText: lastName,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
                   ],
                 ),
-              ),
-              Row(
-                children: [
-                  Expanded(child: Container()),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    // padding: const EdgeInsets.only(left: 400),
-                    child: SizedButton(
-                      width: 150,
-                      placeholderText: 'Save',
-                      // backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
-                      backgroundColor: const Color.fromRGBO(107, 114, 128, 1),
-                      textColor: Colors.white,
-                      onPressed: () async {
-                        if (nameFormKey.currentState!.validate()) {
-                          updateName();
-                        }
-                      },
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 30),
+            child: Row(
+              children: [
+                Container(
+                  alignment: Alignment.topLeft,
+                  padding: const EdgeInsets.only(left: 10),
+                  child: const Text(
+                    'Display Mode',
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'League Spartan',
+                      color: Color.fromRGBO(124, 58, 237, 1),
+                      shadows: [
+                        Shadow(
+                          offset: Offset(0, 4.0),
+                          blurRadius: 20.0,
+                          color: Color.fromRGBO(0, 0, 0, 0.4),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ],
+                ),
+                Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5),
+                    ),
+                    color: Color.fromRGBO(17, 24, 39, 1),
+                    boxShadow: [
+                      BoxShadow(
+                        offset: Offset(0, 2.0),
+                        blurRadius: 2.0,
+                        color: Color.fromRGBO(0, 0, 0, 0.25),
+                      ),
+                    ],
+                  ),
+                  child: Container(),
+                ),
+              ],
+            ),
           ),
-          Container(),
-          Container(),
-          Container(),
-          Button(
-            placeholderText: 'Logout',
-            // backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
-            backgroundColor: const Color.fromRGBO(239, 68, 68, 1),
-            textColor: Colors.white,
-            onPressed: () {
-              sharedPref.removeToken();
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Lander()),
-              );
-            },
+          Container(
+            margin: const EdgeInsets.only(top: 30),
+            child: Row(
+              children: [
+                Container(
+                  alignment: Alignment.topLeft,
+                  padding: const EdgeInsets.only(left: 10),
+                  child: const Text(
+                    'Password',
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'League Spartan',
+                      color: Color.fromRGBO(124, 58, 237, 1),
+                      shadows: [
+                        Shadow(
+                          offset: Offset(0, 4.0),
+                          blurRadius: 20.0,
+                          color: Color.fromRGBO(0, 0, 0, 0.4),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(child: Container()),
+                Align(
+                  alignment: Alignment.centerRight,
+                  // padding: const EdgeInsets.only(left: 400),
+                  child: SizedButton(
+                    width: 150,
+                    placeholderText: 'Reset',
+                    backgroundColor: const Color.fromRGBO(239, 68, 68, 1),
+                    textColor: Colors.white,
+                    onPressed: () async {},
+                  ),
+                ),
+              ],
+            ),
           ),
-          Button(
-            placeholderText: 'About Us',
-            // backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
-            backgroundColor: const Color.fromRGBO(107, 114, 128, 1),
-            textColor: Colors.white,
-            onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const AboutUs()),
-              // );
-            },
+          Container(
+            margin: const EdgeInsets.only(top: 30),
+            child: Column(
+              children: [
+                Button(
+                  placeholderText: 'Logout',
+                  // backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
+                  backgroundColor: const Color.fromRGBO(239, 68, 68, 1),
+                  textColor: Colors.white,
+                  onPressed: () {
+                    sharedPref.removeToken();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Lander()),
+                    );
+                  },
+                ),
+                Button(
+                  placeholderText: 'About Us',
+                  // backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
+                  backgroundColor: const Color.fromRGBO(107, 114, 128, 1),
+                  textColor: Colors.white,
+                  onPressed: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => const AboutUs()),
+                    // );
+                  },
+                ),
+              ],
+            ),
           ),
         ],
       ),
