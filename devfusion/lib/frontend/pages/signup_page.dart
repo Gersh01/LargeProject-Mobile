@@ -173,8 +173,16 @@ class _SignUpPageState extends State<SignUpPage> {
     );
 
     if (response.statusCode == 201) {
+      setState(() {
+        passwordErrorList = ["Registration is successful"];
+        passwordErrorDouble = 1;
+      });
       print("Register successful");
     } else {
+      setState(() {
+        passwordErrorList = ["Registration is unsuccessful"];
+        passwordErrorDouble = 1;
+      });
       print("Register unsucessful");
     }
 
