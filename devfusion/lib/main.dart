@@ -12,6 +12,7 @@ import 'frontend/pages/profile.dart';
 import 'package:http/http.dart' as http;
 import 'frontend/pages/reset_password.dart';
 import 'frontend/pages/update_password.dart';
+import './themes/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: darkMode,
       debugShowCheckedModeBanner: false,
       // theme: ThemeData(
       //   primarySwatch: Colors.blue,

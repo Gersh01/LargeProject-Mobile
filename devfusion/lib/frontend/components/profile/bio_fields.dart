@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 class BioFields extends StatefulWidget {
@@ -36,10 +34,10 @@ class _BioFields extends State<BioFields> {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-          height: 300,
-          decoration: const BoxDecoration(
-              color: Color(0xffF9FAFB),
-              borderRadius: BorderRadius.all(Radius.circular(10))),
+          height: 250,
+          decoration: BoxDecoration(
+              color: Theme.of(context).primaryColorDark,
+              borderRadius: const BorderRadius.all(Radius.circular(10))),
           child: Column(
             children: [
               Row(
@@ -50,10 +48,10 @@ class _BioFields extends State<BioFields> {
                     child: Text(
                       "Bio",
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'League Spartan',
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -74,7 +72,7 @@ class _BioFields extends State<BioFields> {
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: TextField(
-                  maxLines: 8,
+                  maxLines: 6,
                   decoration: const InputDecoration.collapsed(
                       hintText: "Tell us about yourself..."),
                   controller: _bioController,

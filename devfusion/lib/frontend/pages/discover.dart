@@ -2,7 +2,7 @@ import 'dart:ffi';
 
 import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:devfusion/frontend/json/Project.dart';
-import 'package:devfusion/frontend/pages/projects.dart';
+import 'package:devfusion/frontend/pages/projects_page.dart';
 import 'package:flutter/material.dart';
 import '../components/project_tile.dart';
 import '../utils/utility.dart';

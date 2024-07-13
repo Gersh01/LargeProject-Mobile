@@ -4,7 +4,6 @@ import '../components/profile_pictures.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
-  final backGroundColor = const Color(0xffE5E7EB);
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -18,18 +17,19 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffE5E7EB),
+      backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         title: const Text(
           'Profile',
           style: TextStyle(
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'League Spartan',
-            color: Colors.black,
-          ),
+              fontSize: 32,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'League Spartan',
+              color: Colors.white
+              // color: Theme.of(context).white,
+              ),
         ),
-        backgroundColor: const Color(0xffE5E7EB),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: ListView(
         children: [
@@ -48,7 +48,7 @@ class _ProfileState extends State<Profile> {
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'League Spartan',
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ),
             ]),
@@ -71,19 +71,3 @@ class _ProfileState extends State<Profile> {
     );
   }
 }
-
-//   child: Column()
-// Text(
-//   'Profile',
-//   style: TextStyle(
-//     fontSize: 32,
-//     fontWeight: FontWeight.bold,
-//     fontFamily: 'League Spartan',
-//     color: Color.fromRGBO(124, 58, 237, 1),
-//     shadows: [ Shadow(
-//       offset: Offset(0, 4.0),
-//       blurRadius: 20.0,
-//       color: Color.fromRGBO(0, 0, 0, 0.4),
-//     ),]
-//   ),
-// ),

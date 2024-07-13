@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 
 import 'discover.dart';
 import 'profile.dart';
-import 'projects.dart';
+import 'projects_page.dart';
 import 'settings.dart';
 
 class Home extends StatefulWidget {
