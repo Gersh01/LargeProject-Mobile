@@ -7,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'frontend/pages/home.dart';
 import 'frontend/pages/lander.dart';
 import 'frontend/pages/login_page.dart';
-import 'frontend/pages/email_sent.dart';
 import 'frontend/pages/signup_page.dart';
 import 'frontend/pages/profile.dart';
 import 'package:http/http.dart' as http;
@@ -60,7 +59,6 @@ class MyApp extends StatelessWidget {
       // ),
       routes: {
         '/forgotPassword': (context) => const ForgotPassword(),
-        '/emailSent': (context) => const EmailSent(),
         '/login': (context) => const LoginPage(),
         '/resetPassword': (context) => const ResetPassword(),
         '/lander': (context) => const Lander(),
