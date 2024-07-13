@@ -1,4 +1,5 @@
 import 'package:devfusion/frontend/components/profile/bio_fields.dart';
+import 'package:devfusion/frontend/components/profile/technologies_field.dart';
 import 'package:flutter/material.dart';
 import '../components/profile_pictures.dart';
 
@@ -64,7 +65,17 @@ class _ProfileState extends State<Profile> {
                   )
                 ],
               )),
-          Container(),
+          Container(
+              padding: const EdgeInsets.all(10.0),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TechnologiesField(
+                    myProfile: true,
+                    technologies: ["React", "Javascript"],
+                  )
+                ],
+              )),
           Container()
         ],
       ),
