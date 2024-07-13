@@ -49,7 +49,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     var reqBody = {"email": _emailController.text};
 
     var response = await http.post(
-      Uri.parse(resendEmailUrl),
+      Uri.parse(forgotPasswordUrl),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(reqBody),
     );

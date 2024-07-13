@@ -1,5 +1,10 @@
+import 'dart:convert';
+
+import 'package:devfusion/frontend/components/shared_pref.dart';
+import 'package:devfusion/frontend/utils/utility.dart';
 import 'package:flutter/material.dart';
 
+import 'package:http/http.dart' as http;
 import '../components/Button.dart';
 import '../components/InputField.dart';
 
@@ -11,78 +16,210 @@ class ResetPassword extends StatefulWidget {
 }
 
 class _ResetPasswordState extends State<ResetPassword> {
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+
+  List<String>? passwordErrorList;
+  double passwordErrorDouble = 0;
+  List<String>? passwordConfirmErrorList;
+  double passwordConfirmErrorDouble = 0;
+
+  SharedPref sharedPref = SharedPref();
+
+  String? validateConfirmPassword(String? value) {
+    List<String> errorsList = [];
+    final hasUpperCase =
+        RegExp(r'(?=.*[A-Z])'); // At least one uppercase letter
+    final hasDigit = RegExp(r'(?=.*[0-9])'); // At least one digit
+    final hasSpecialChar = RegExp(
+        r'(?=.*[!@#$%^&])'); // At least one special character from the set !@#$%^&
+    final validLength =
+        RegExp(r'(?=.{8,24}$)'); // Length between 8 and 24 characters
+
+    double counter = 0;
+    if (value == null || value.isEmpty) {
+      errorsList.add('Password cannot be empty');
+      counter++;
+    } else if (_passwordController.text != _confirmPasswordController.text) {
+      errorsList.add('Passwords must match');
+      counter++;
+    } else {
+      if (!validLength.hasMatch(value)) {
+        errorsList.add('Password must be between 8 and 24 characters long');
+        counter++;
+      }
+      if (!hasUpperCase.hasMatch(value)) {
+        errorsList.add('Password must contain at least one uppercase letter');
+        counter++;
+      }
+      if (!hasDigit.hasMatch(value)) {
+        errorsList.add('Password must contain at least one digit');
+        counter++;
+      }
+      if (!hasSpecialChar.hasMatch(value)) {
+        errorsList.add('Password must contain at least one special character');
+        counter++;
+      }
+    }
+
+    counter *= 2;
+
+    final validPassword =
+        RegExp(r'(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&])(?=.{8,24}$)');
+    if (value == null || value.isEmpty) {
+      setState(() {
+        passwordConfirmErrorList = ['Password is required'];
+        passwordConfirmErrorDouble = 1;
+      });
+      return 'Password is required';
+    } else if (!validPassword.hasMatch(value)) {
+      setState(() {
+        passwordConfirmErrorList = errorsList;
+        passwordConfirmErrorDouble = counter;
+      });
+      return 'Password does not follow the correct format';
+    } else {
+      setState(() {
+        passwordConfirmErrorList = null;
+        passwordConfirmErrorDouble = 0;
+      });
+      return null;
+    }
+  }
+
+  String? validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      setState(() {
+        passwordErrorList = ['Password is required'];
+        passwordErrorDouble = 1;
+      });
+      return 'Password is required';
+    } else {
+      setState(() {
+        passwordErrorList = null;
+        passwordErrorDouble = 0;
+      });
+      return null;
+    }
+  }
+
+  void updatePassword() async {
+    String? token = await sharedPref.readToken();
+    var reqBody = {"token": token, "newPassword": _passwordController.text};
+
+    var response = await http.post(
+      Uri.parse(resetPasswordUrl),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(reqBody),
+    );
+
+    var jsonResponse = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      print("Reset password successful");
+      setState(() {
+        passwordConfirmErrorList = ["Password updated"];
+        passwordConfirmErrorDouble = 1;
+      });
+    } else {
+      print("Reset password unsucessful");
+      setState(() {
+        passwordConfirmErrorList = [jsonResponse["error"]];
+        passwordConfirmErrorDouble = 1;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _passwordController = TextEditingController();
-    final TextEditingController _confirmPasswordController =
-        TextEditingController();
-
-    void updatePassword() {
-      print('Password: ${_passwordController.text}');
-    }
+    final formKey = GlobalKey<FormState>();
 
     return MaterialApp(
       home: Scaffold(
-          body: Center(
-            //Login Panel
-            child: Container(
-              height: 520,
-              width: 370,
-              padding: const EdgeInsets.all(30),
-              decoration: const BoxDecoration(
-                color: Color.fromRGBO(31, 41, 55, 1),
-                borderRadius: BorderRadius.all(Radius.circular(20)),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(30.0),
+          child: AppBar(
+            leading: Padding(
+              padding: const EdgeInsets.only(left: 30),
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                onPressed: () => Navigator.of(context).pop(),
               ),
-              child: Column(children: [
-                //DevFusion Text
+            ),
+            backgroundColor: Colors.transparent,
+          ),
+        ),
+        body: Center(
+          child: Container(
+            height: 500,
+            width: 370,
+            padding: const EdgeInsets.fromLTRB(30, 0, 30, 15),
+            decoration: const BoxDecoration(
+              color: Color.fromRGBO(31, 41, 55, 1),
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            child: Column(
+              children: [
                 const Padding(
-                  padding: EdgeInsets.only(bottom: 50.0),
+                  padding: EdgeInsets.only(bottom: 20.0),
                   child: Column(
                     children: [
                       SizedBox(
                         height: 90,
                       ),
-                      Center(
-                          child: Text(
+                      // Center(
+                      Text(
                         'Reset Password',
                         style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'League Spartan',
-                            color: Colors.white,
-                            shadows: [
-                              Shadow(
-                                offset: Offset(0, 4.0),
-                                blurRadius: 20.0,
-                                color: Color.fromRGBO(0, 0, 0, 0.4),
-                              )
-                            ]),
-                      ))
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'League Spartan',
+                          color: Colors.white,
+                        ),
+                      ),
+                      // ),
                     ],
                   ),
                 ),
-
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 0.0),
-                  child: Column(children: [
-                    InputField(
+                Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      InputField(
                         placeholderText: 'Password',
-                        controller: _passwordController),
-                    InputField(
+                        controller: _passwordController,
+                        validator: validatePassword,
+                        errorTextList: passwordErrorList,
+                        errorCount: passwordErrorDouble,
+                      ),
+                      InputField(
                         placeholderText: 'Confirm Password',
-                        controller: _confirmPasswordController),
-                    const SizedBox(height: 20),
-                    Button(
-                        placeholderText: 'Login',
+                        controller: _confirmPasswordController,
+                        validator: validateConfirmPassword,
+                        errorTextList: passwordConfirmErrorList,
+                        errorCount: passwordConfirmErrorDouble,
+                      ),
+                      const SizedBox(height: 20),
+                      Button(
+                        placeholderText: 'Submit',
                         backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
                         textColor: Colors.white,
-                        onPressed: updatePassword)
-                  ]),
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            updatePassword();
+                          }
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ]),
+              ],
             ),
           ),
-          backgroundColor: const Color.fromRGBO(124, 58, 237, 1)),
+        ),
+        backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
+      ),
     );
   }
 }
