@@ -20,6 +20,9 @@ class _ResetPasswordState extends State<ResetPassword> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
+  bool passwordVisible = true;
+  bool passwordConfirmVisible = true;
+
   List<String>? passwordErrorList;
   double passwordErrorDouble = 0;
   List<String>? passwordConfirmErrorList;
@@ -188,17 +191,51 @@ class _ResetPasswordState extends State<ResetPassword> {
                     children: [
                       InputField(
                         placeholderText: 'Password',
+                        isObscure: passwordVisible,
                         controller: _passwordController,
                         validator: validatePassword,
                         errorTextList: passwordErrorList,
                         errorCount: passwordErrorDouble,
+                        suffixIcon: IconButton(
+                          padding: EdgeInsets.zero,
+                          icon: Icon(
+                            // Based on passwordVisible state choose the icon
+                            passwordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Theme.of(context).primaryColorDark,
+                          ),
+                          onPressed: () {
+                            // Update the state i.e. toogle the state of passwordVisible variable
+                            setState(() {
+                              passwordVisible = !passwordVisible;
+                            });
+                          },
+                        ),
                       ),
                       InputField(
                         placeholderText: 'Confirm Password',
+                        isObscure: passwordConfirmVisible,
                         controller: _confirmPasswordController,
                         validator: validateConfirmPassword,
                         errorTextList: passwordConfirmErrorList,
                         errorCount: passwordConfirmErrorDouble,
+                        suffixIcon: IconButton(
+                          padding: EdgeInsets.zero,
+                          icon: Icon(
+                            // Based on passwordVisible state choose the icon
+                            passwordConfirmVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Theme.of(context).primaryColorDark,
+                          ),
+                          onPressed: () {
+                            // Update the state i.e. toogle the state of passwordVisible variable
+                            setState(() {
+                              passwordConfirmVisible = !passwordConfirmVisible;
+                            });
+                          },
+                        ),
                       ),
                       const SizedBox(height: 20),
                       Button(
