@@ -97,7 +97,7 @@ class InputField extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 0.0),
+                    padding: const EdgeInsets.only(bottom: 2.0),
                     child: Text(
                       placeholderText!,
                       style: const TextStyle(
