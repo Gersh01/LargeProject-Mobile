@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:devfusion/frontend/components/InputField.dart';
 import 'package:devfusion/frontend/components/SizedButton.dart';
+import 'package:devfusion/frontend/components/modals/confirm_cancel_modal.dart';
 import 'package:devfusion/frontend/components/profile_pictures.dart';
 import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:devfusion/frontend/pages/lander.dart';
@@ -403,6 +404,26 @@ class _SettingsState extends State<Settings> {
                     backgroundColor: const Color.fromRGBO(107, 114, 128, 1),
                     textColor: Colors.white,
                     onPressed: () {
+                      // final confirmCancelModal = ConfirmCancelModal(
+                      //   context: context,
+                      //   firstTextButton: TextButton(
+                      //     onPressed: () {
+                      //       Navigator.of(context).pop();
+                      //     },
+                      //     child: const Text("Cancel"),
+                      //   ),
+                      //   secondTextButton: TextButton(
+                      //     onPressed: () {
+                      //       Navigator.of(context).pop();
+                      //     },
+                      //     child: const Text("Confirm"),
+                      //   ),
+                      //   title: const Text("Title"),
+                      //   content: const Text("Content"),
+                      // );
+                      // confirmCancelModal.buildConfirmCancelModal();
+//
+//
                       // Navigator.push(
                       //   context,
                       //   MaterialPageRoute(builder: (context) => const AboutUs()),
