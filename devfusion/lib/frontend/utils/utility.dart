@@ -24,3 +24,7 @@ const applyInboxUrl = '${baseUrl}inbox/apply';
 const acceptInboxUrl = '${baseUrl}inbox/accept_member';
 const rejectInboxUrl = '${baseUrl}inbox/reject_member';
 const getInboxUrl = '${baseUrl}inbox/';
+//Variables for Cloudinary
+const cloudinaryUrl = 'https://api.cloudinary.com/v1_1/dlj2rlloi/upload';
+const cloudinaryApiKey = '153675853953957';
+const cloudinaryApiSecret = '7YD9MRHeaWC1UqF9r5uYAmjGMMA';

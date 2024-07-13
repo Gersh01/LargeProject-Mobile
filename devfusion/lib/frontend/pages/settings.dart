@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:devfusion/frontend/components/InputField.dart';
 import 'package:devfusion/frontend/components/SizedButton.dart';
@@ -9,6 +10,9 @@ import 'package:devfusion/frontend/pages/update_password.dart';
 import 'package:devfusion/frontend/utils/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:permission_handler/permission_handler.dart';
+
+import 'package:image_picker/image_picker.dart';
 
 import '../components/Button.dart';
 
@@ -23,6 +27,8 @@ class _SettingsState extends State<Settings> {
   final nameFormKey = GlobalKey<FormState>();
 
   SharedPref sharedPref = SharedPref();
+
+  File? _imageFile;
 
   bool light = false;
 
@@ -39,6 +45,36 @@ class _SettingsState extends State<Settings> {
   double firstNameErrorDouble = 0;
   List<String>? lastNameErrorList;
   double lastNameErrorDouble = 0;
+
+  Future<void> _pickImage() async {
+    PermissionStatus storagePermissionStatus = await Permission.storage.status;
+    print(storagePermissionStatus.toString());
+    print("1");
+    ImagePicker picker = ImagePicker();
+    print("2");
+    XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    print("3");
+    setState(() {
+      if (pickedFile != null) _imageFile = File(pickedFile.path);
+    });
+    print("4");
+  }
+
+  void uploadProfilePicture() async {
+    var request = http.MultipartRequest('POST', Uri.parse(cloudinaryUrl))
+      ..fields['upload_preset'] = ''
+      ..files.add(await http.MultipartFile.fromPath('file', _imageFile!.path));
+
+    var response = await request.send();
+    if (response.statusCode == 200) {
+      final responseData = await response.stream.toBytes();
+      final responseString = String.fromCharCodes(responseData);
+      final jsonMap = jsonDecode(responseString);
+      setState(() {
+        profilePicUrl = jsonMap['url'];
+      });
+    }
+  }
 
   void getUserCredentials() async {
     String? token = await sharedPref.readToken();
@@ -180,7 +216,7 @@ class _SettingsState extends State<Settings> {
                 textColor: Colors.white,
                 onPressed: () async {
                   if (nameFormKey.currentState!.validate()) {
-                    updateName();
+                    _pickImage;
                   }
                 },
               ),
@@ -287,13 +323,16 @@ class _SettingsState extends State<Settings> {
                   ),
                 ),
               ),
-              Switch.adaptive(
-                value: light,
-                onChanged: (bool value) {
-                  setState(() {
-                    light = value;
-                  });
-                },
+              Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Switch.adaptive(
+                  value: light,
+                  onChanged: (bool value) {
+                    setState(() {
+                      light = value;
+                    });
+                  },
+                ),
               ),
               // Container(
               //   decoration: const BoxDecoration(

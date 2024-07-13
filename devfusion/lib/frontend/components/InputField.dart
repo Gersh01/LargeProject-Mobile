@@ -133,7 +133,7 @@ class InputField extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                         ),
                         suffixIcon: Transform.scale(
-                          scale: 0.80,
+                          scale: 1,
                           child: suffixIcon,
                         ),
                       ),
