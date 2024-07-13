@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class InputField extends StatelessWidget {
   final String? placeholderText;
@@ -96,7 +97,7 @@ class InputField extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 5.0),
+                    padding: const EdgeInsets.only(bottom: 0.0),
                     child: Text(
                       placeholderText!,
                       style: const TextStyle(
@@ -108,14 +109,21 @@ class InputField extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 18,
+                    height: 22,
                     child: TextFormField(
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(50),
+                      ],
                       obscureText: getIsObscure(),
                       validator: validator,
                       controller: controller,
                       style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding:
+                            const EdgeInsets.fromLTRB(0.0, 1.0, 5.0, 1.0),
                         border: InputBorder.none,
+                        // border: const OutlineInputBorder(),
                         hintText: getHintText(),
                         errorStyle: const TextStyle(fontSize: 0),
                         hintStyle: const TextStyle(

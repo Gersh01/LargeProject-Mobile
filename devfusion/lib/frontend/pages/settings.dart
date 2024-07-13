@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:devfusion/frontend/components/InputField.dart';
 import 'package:devfusion/frontend/components/SizedButton.dart';
+import 'package:devfusion/frontend/components/profile_pictures.dart';
 import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:devfusion/frontend/pages/lander.dart';
 import 'package:devfusion/frontend/pages/update_password.dart';
@@ -24,6 +25,9 @@ class _SettingsState extends State<Settings> {
   SharedPref sharedPref = SharedPref();
 
   bool light = false;
+
+  String profilePicUrl =
+      "https://res.cloudinary.com/dlj2rlloi/image/upload/v1720043202/ef7zmzl5hokpnb3zd6en.png";
 
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
@@ -55,6 +59,7 @@ class _SettingsState extends State<Settings> {
         lastName = jsonResponse['lastName'];
         _firstNameController.text = jsonResponse['firstName'];
         _lastNameController.text = jsonResponse['lastName'];
+        profilePicUrl = jsonResponse['link'];
       });
     } else {
       print("settings jwt unsucessful");
@@ -154,7 +159,12 @@ class _SettingsState extends State<Settings> {
       body: Column(
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
+              Container(
+                margin: const EdgeInsets.all(10.0),
+                child: ProfilePictures(imageUrl: profilePicUrl),
+              ),
               Expanded(child: Container()),
               SizedButton(
                 height: 25,
