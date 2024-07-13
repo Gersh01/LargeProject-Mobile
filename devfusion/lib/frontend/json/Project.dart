@@ -1,7 +1,7 @@
 import 'package:devfusion/frontend/json/Role.dart';
 
 class Project {
-  final String _id;
+  final String id;
   final String title;
   final bool isOpen;
   final bool isDone;
@@ -13,7 +13,7 @@ class Project {
   final List<Role> roles;
 
   Project(
-    this._id,
+    this.id,
     this.title,
     this.description,
     this.isOpen,
@@ -44,6 +44,6 @@ class Project {
 
   @override
   String toString() {
-    return "{id: $_id, title: $title, description: $description, isOpen: $isOpen, isDone: $isDone, $isStarted: isStarted, projectStartDate: $projectStartDate, deadline: $deadline, ${technologies.toString()} roles: $roles}";
+    return "{id: $id, title: $title, description: $description, isOpen: $isOpen, isDone: $isDone, $isStarted: isStarted, projectStartDate: $projectStartDate, deadline: $deadline, ${technologies.toString()} roles: $roles}";
   }
 }
