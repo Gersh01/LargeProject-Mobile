@@ -115,6 +115,7 @@ class InputField extends StatelessWidget {
                         LengthLimitingTextInputFormatter(50),
                       ],
                       obscureText: getIsObscure(),
+                      autocorrect: false,
                       validator: validator,
                       controller: controller,
                       style: const TextStyle(color: Colors.white),
