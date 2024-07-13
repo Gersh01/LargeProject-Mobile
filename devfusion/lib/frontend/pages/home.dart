@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
 
-import 'create.dart';
 import 'discover.dart';
 import 'profile.dart';
 import 'projects.dart';
@@ -33,7 +32,6 @@ class _HomeState extends State<Home> {
 
   final List<Widget> _children = [
     const Discover(),
-    const Create(),
     const Projects(),
     const Profile(),
     const Settings(),
@@ -92,23 +90,19 @@ class _HomeState extends State<Home> {
             BottomNavigationBarItem(
                 backgroundColor: Color.fromRGBO(31, 41, 55, 1),
                 icon: Icon(Icons.assistant_navigation),
-                label: 'projects'),
-            BottomNavigationBarItem(
-                backgroundColor: Color.fromRGBO(31, 41, 55, 1),
-                icon: Icon(Icons.add_to_queue_rounded),
-                label: 'create'),
+                label: 'Discover'),
             BottomNavigationBarItem(
                 backgroundColor: Color.fromRGBO(31, 41, 55, 1),
                 icon: Icon(Icons.search),
-                label: 'discover'),
+                label: 'Projects'),
             BottomNavigationBarItem(
                 backgroundColor: Color.fromRGBO(31, 41, 55, 1),
                 icon: Icon(Icons.circle),
-                label: 'profile'),
+                label: 'Profile'),
             BottomNavigationBarItem(
                 backgroundColor: Color.fromRGBO(31, 41, 55, 1),
                 icon: Icon(Icons.settings),
-                label: 'settings'),
+                label: 'Settings'),
           ]),
     );
   }
