@@ -10,8 +10,8 @@ import 'frontend/pages/login_page.dart';
 import 'frontend/pages/signup_page.dart';
 import 'frontend/pages/profile.dart';
 import 'package:http/http.dart' as http;
+import 'frontend/pages/forgot_password.dart';
 import 'frontend/pages/reset_password.dart';
-import 'frontend/pages/update_password.dart';
 import './themes/theme.dart';
 
 void main() async {
@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
       //   primarySwatch: Colors.blue,
       // ),
       routes: {
-        '/updatePassword': (context) => const UpdatePassword(),
+        '/forgotPassword': (context) => const ForgotPassword(),
         '/login': (context) => const LoginPage(),
         '/resetPassword': (context) => const ResetPassword(),
         '/lander': (context) => const Lander(),

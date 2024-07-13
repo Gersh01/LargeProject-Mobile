@@ -6,7 +6,7 @@ import 'package:devfusion/frontend/components/SizedButton.dart';
 import 'package:devfusion/frontend/components/profile_pictures.dart';
 import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:devfusion/frontend/pages/lander.dart';
-import 'package:devfusion/frontend/pages/update_password.dart';
+import 'package:devfusion/frontend/pages/reset_password.dart';
 import 'package:devfusion/frontend/utils/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -383,7 +383,7 @@ class _SettingsState extends State<Settings> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const UpdatePassword(),
+                      builder: (context) => const ResetPassword(),
                     ),
                   );
                 },

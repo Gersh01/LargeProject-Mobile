@@ -181,30 +181,51 @@ class _LoginPageState extends State<LoginPage> {
                                   },
                                 ),
                               ),
-                              const Padding(
-                                padding: EdgeInsets.only(top: 5.0),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        'Remember Me',
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(),
+                                  ),
+                                  // TextButton(
+                                  //   style: ElevatedButton.styleFrom(
+                                  //     minimumSize: Size.zero, // Set this
+                                  //     padding: const EdgeInsets.only(
+                                  //         left: 5, right: 5),
+                                  //     backgroundColor: Colors.transparent,
+                                  //     shape: const RoundedRectangleBorder(
+                                  //         borderRadius: BorderRadius.all(
+                                  //             Radius.circular(5))),
+                                  //   ),
+                                  //   onPressed: () {},
+                                  //   child: const Text(
+                                  //     'Forgot Password',
+                                  //     style: TextStyle(
+                                  //         color: Colors.white,
+                                  //         fontFamily: 'Poppins',
+                                  //         fontSize: 12,
+                                  //         fontWeight: FontWeight.w500),
+                                  //   ),
+                                  // ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 5.0, right: 1.0),
+                                    child: InkWell(
+                                      child: const Text(
+                                        'Forgot Password',
                                         style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: 'Poppins',
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ),
-                                    Text(
-                                      'Forgot Password',
-                                      style: TextStyle(
                                           color: Colors.white,
-                                          fontFamily: 'Poppins',
                                           fontSize: 12,
-                                          fontWeight: FontWeight.w500),
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                            context, '/forgotPassword');
+                                      },
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
