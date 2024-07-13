@@ -10,6 +10,7 @@ import 'package:devfusion/frontend/pages/lander.dart';
 import 'package:devfusion/frontend/pages/reset_password.dart';
 import 'package:devfusion/frontend/utils/utility.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
 
@@ -404,24 +405,32 @@ class _SettingsState extends State<Settings> {
                     backgroundColor: const Color.fromRGBO(107, 114, 128, 1),
                     textColor: Colors.white,
                     onPressed: () {
-                      // final confirmCancelModal = ConfirmCancelModal(
-                      //   context: context,
-                      //   firstTextButton: TextButton(
-                      //     onPressed: () {
-                      //       Navigator.of(context).pop();
-                      //     },
-                      //     child: const Text("Cancel"),
-                      //   ),
-                      //   secondTextButton: TextButton(
-                      //     onPressed: () {
-                      //       Navigator.of(context).pop();
-                      //     },
-                      //     child: const Text("Confirm"),
-                      //   ),
-                      //   title: const Text("Title"),
-                      //   content: const Text("Content"),
-                      // );
-                      // confirmCancelModal.buildConfirmCancelModal();
+                      final confirmCancelModal = ConfirmCancelModal(
+                        context: context,
+                        firstTextButton: TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("Cancel"),
+                        ),
+                        secondTextButton: TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text(
+                            "Confirm",
+                          ),
+                        ),
+                        title: const Text(
+                          "Title",
+                          textAlign: TextAlign.center,
+                        ),
+                        content: const Text(
+                          "Content",
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+                      confirmCancelModal.buildConfirmCancelModal();
 //
 //
                       // Navigator.push(

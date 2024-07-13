@@ -4,8 +4,8 @@ class ConfirmCancelModal extends StatelessWidget {
   final BuildContext context;
   final TextButton firstTextButton;
   final TextButton secondTextButton;
-  final Widget title;
-  final Widget content;
+  final Text title;
+  final Text content;
   const ConfirmCancelModal(
       {super.key,
       required this.context,
@@ -24,8 +24,9 @@ class ConfirmCancelModal extends StatelessWidget {
           firstTextButton,
           secondTextButton,
         ],
+        actionsAlignment: MainAxisAlignment.spaceBetween,
         elevation: 20,
-        backgroundColor: Colors.black87,
+        backgroundColor: Colors.blue,
       ),
       barrierDismissible: false,
     );
@@ -33,21 +34,6 @@ class ConfirmCancelModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const Text("Title"),
-      content: const Text("content"),
-      actions: [
-        TextButton(
-          onPressed: () {},
-          child: const Text("Confirm"),
-        ),
-        TextButton(
-          onPressed: () {},
-          child: const Text("Cancel"),
-        ),
-      ],
-      elevation: 20,
-      backgroundColor: Colors.lightBlue,
-    );
+    return const Placeholder();
   }
 }
