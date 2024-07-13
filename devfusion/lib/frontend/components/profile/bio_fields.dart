@@ -4,14 +4,11 @@ import 'package:flutter/material.dart';
 
 class BioFields extends StatefulWidget {
   final bool myProfile;
-  final String? bioMessage;
-  final bool edit;
-
+  final String bioMessage;
   const BioFields({
     super.key,
     required this.myProfile,
-    required this.edit,
-    this.bioMessage,
+    required this.bioMessage,
   });
 
   @override
@@ -22,6 +19,18 @@ class _BioFields extends State<BioFields> {
   bool editMode = false;
 
   final TextEditingController _bioController = TextEditingController();
+
+  void getProfileInfo() {
+    setState(() {
+      _bioController.text = widget.bioMessage;
+    });
+  }
+
+  @override
+  void initState() {
+    getProfileInfo();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,14 +71,14 @@ class _BioFields extends State<BioFields> {
                       : Text("")
                 ],
               ),
-              const Padding(
-                padding: EdgeInsets.all(10.0),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
                 child: TextField(
                   maxLines: 8,
-                  decoration: InputDecoration.collapsed(
+                  decoration: const InputDecoration.collapsed(
                       hintText: "Tell us about yourself..."),
                   controller: _bioController,
-                  readOnly: edit,
+                  readOnly: !editMode,
                 ),
               )
             ],
