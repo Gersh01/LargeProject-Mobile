@@ -183,6 +183,7 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(31, 41, 55, 1),
       appBar: AppBar(
         title: const Text(
           'Settings',
@@ -242,7 +243,7 @@ class _SettingsState extends State<Settings> {
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'League Spartan',
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -322,7 +323,7 @@ class _SettingsState extends State<Settings> {
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'League Spartan',
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -366,7 +367,7 @@ class _SettingsState extends State<Settings> {
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'League Spartan',
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                 ),
               ),
