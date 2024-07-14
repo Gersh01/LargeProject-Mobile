@@ -32,4 +32,23 @@ class SharedPref {
     // print("REMOVE TOKEN END");
     return isCleared;
   }
+
+  Future writeDarkMode({required bool isDarkMode}) async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+
+    bool isSaved = await pref.setBool("darkMode", isDarkMode);
+    debugPrint(isSaved.toString());
+    print("darkMode read:$isDarkMode");
+  }
+
+  Future<bool?> readDarkMode() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+
+    bool? value = pref.getBool("darkMode");
+    if (value != null) {
+      debugPrint(value.toString());
+    }
+    print("darkMode read:$value");
+    return value;
+  }
 }

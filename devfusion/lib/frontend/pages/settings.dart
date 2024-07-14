@@ -17,6 +17,7 @@ import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/Button.dart';
 
@@ -34,7 +35,7 @@ class _SettingsState extends State<Settings> {
 
   File? _imageFile;
 
-  bool light = false;
+  bool dark = true;
 
   String profilePicUrl =
       "https://res.cloudinary.com/dlj2rlloi/image/upload/v1720043202/ef7zmzl5hokpnb3zd6en.png";
@@ -175,8 +176,15 @@ class _SettingsState extends State<Settings> {
     }
   }
 
+  getDarkModeInfo() async {
+    bool? darkModeInfo = await sharedPref.readDarkMode();
+    darkModeInfo ??= true;
+    dark = darkModeInfo;
+  }
+
   @override
   void initState() {
+    getDarkModeInfo();
     getUserCredentials();
     super.initState();
   }
@@ -333,23 +341,20 @@ class _SettingsState extends State<Settings> {
               Padding(
                 padding: const EdgeInsets.only(right: 8),
                 child: Switch.adaptive(
-                  value: light,
+                  activeTrackColor: darkAccent,
+                  inactiveTrackColor: lightAccent,
+                  thumbColor: (dark)
+                      ? const MaterialStatePropertyAll<Color>(Colors.black)
+                      : const MaterialStatePropertyAll<Color>(Colors.white),
+                  value: dark,
                   onChanged: (bool value) {
                     setState(() {
-                      light = value;
+                      dark = value;
                     });
+                    sharedPref.writeDarkMode(isDarkMode: dark);
                   },
                 ),
               ),
-              // Container(
-              //   decoration: const BoxDecoration(
-              //     borderRadius: BorderRadius.all(
-              //       Radius.circular(5),
-              //     ),
-              //     color: Color.fromRGBO(17, 24, 39, 1),
-              //   ),
-              //   child: Container(),
-              // ),
             ],
           ),
           const Divider(
