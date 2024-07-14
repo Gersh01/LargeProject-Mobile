@@ -146,7 +146,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             leading: Padding(
               padding: const EdgeInsets.only(left: 30),
               child: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ),
@@ -158,9 +158,9 @@ class _ResetPasswordState extends State<ResetPassword> {
             height: 500,
             width: 370,
             padding: const EdgeInsets.fromLTRB(30, 0, 30, 15),
-            decoration: const BoxDecoration(
-              color: Color.fromRGBO(31, 41, 55, 1),
-              borderRadius: BorderRadius.all(Radius.circular(20)),
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
             ),
             child: Column(
               children: [
@@ -203,7 +203,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                             passwordVisible
                                 ? Icons.visibility
                                 : Icons.visibility_off,
-                            color: Theme.of(context).primaryColorDark,
+                            color: Colors.white,
                           ),
                           onPressed: () {
                             // Update the state i.e. toogle the state of passwordVisible variable
@@ -240,7 +240,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                       const SizedBox(height: 20),
                       Button(
                         placeholderText: 'Submit',
-                        backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
+                        backgroundColor: Theme.of(context).focusColor,
                         textColor: Colors.white,
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
@@ -255,7 +255,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             ),
           ),
         ),
-        backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
+        backgroundColor: Theme.of(context).focusColor,
       ),
     );
   }

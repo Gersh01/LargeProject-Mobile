@@ -1,3 +1,4 @@
+import 'package:devfusion/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -36,7 +37,7 @@ class InputField extends StatelessWidget {
       return Text(
         errors,
         style: const TextStyle(
-          color: Colors.red,
+          color: danger,
           fontFamily: 'Poppins',
           fontSize: 12,
           fontWeight: FontWeight.w600,
