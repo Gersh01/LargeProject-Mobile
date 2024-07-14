@@ -11,12 +11,14 @@ import 'package:devfusion/frontend/pages/lander.dart';
 import 'package:devfusion/frontend/pages/reset_password.dart';
 import 'package:devfusion/frontend/utils/utility.dart';
 import 'package:devfusion/themes/theme.dart';
+import 'package:devfusion/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/Button.dart';
@@ -35,7 +37,7 @@ class _SettingsState extends State<Settings> {
 
   File? _imageFile;
 
-  bool dark = true;
+  bool dark = false;
 
   String profilePicUrl =
       "https://res.cloudinary.com/dlj2rlloi/image/upload/v1720043202/ef7zmzl5hokpnb3zd6en.png";
@@ -184,13 +186,16 @@ class _SettingsState extends State<Settings> {
 
   @override
   void initState() {
-    getDarkModeInfo();
+    // getDarkModeInfo();
     getUserCredentials();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    dark = (Provider.of<ThemeProvider>(context).themeData == darkMode)
+        ? true
+        : false;
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
@@ -352,6 +357,8 @@ class _SettingsState extends State<Settings> {
                   onChanged: (bool value) {
                     setState(() {
                       dark = value;
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .toggleTheme();
                     });
                     sharedPref.writeDarkMode(isDarkMode: dark);
                   },

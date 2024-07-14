@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:devfusion/frontend/utils/utility.dart';
+import 'package:devfusion/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'frontend/pages/home.dart';
 import 'frontend/pages/lander.dart';
@@ -40,9 +42,14 @@ void main() async {
   }
 
   //RUN THE APP
-  runApp(MyApp(
-    isSignedIn: isSignedIn,
-  ));
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: MyApp(
+        isSignedIn: isSignedIn,
+      ),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -52,8 +59,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: lightMode,
-      darkTheme: darkMode,
+      theme: Provider.of<ThemeProvider>(context).themeData,
       debugShowCheckedModeBanner: false,
       // theme: ThemeData(
       //   primarySwatch: Colors.blue,
