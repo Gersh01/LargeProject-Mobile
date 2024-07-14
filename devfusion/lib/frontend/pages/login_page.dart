@@ -107,9 +107,9 @@ class _LoginPageState extends State<LoginPage> {
                       510 + (12 * (usernameErrorDouble + passwordErrorDouble)),
                   width: 370,
                   padding: const EdgeInsets.all(30),
-                  decoration: const BoxDecoration(
-                    color: Color.fromRGBO(31, 41, 55, 1),
-                    borderRadius: BorderRadius.all(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(20),
                     ),
                   ),
@@ -129,13 +129,6 @@ class _LoginPageState extends State<LoginPage> {
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'League Spartan',
                                   color: Colors.white,
-                                  shadows: [
-                                    Shadow(
-                                      offset: Offset(0, 4.0),
-                                      blurRadius: 20.0,
-                                      color: Color.fromRGBO(0, 0, 0, 0.4),
-                                    )
-                                  ],
                                 ),
                               ),
                             ),
@@ -170,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                                     passwordVisible
                                         ? Icons.visibility
                                         : Icons.visibility_off,
-                                    color: Theme.of(context).primaryColorDark,
+                                    color: Colors.white,
                                   ),
                                   onPressed: () {
                                     // Update the state i.e. toogle the state of passwordVisible variable
@@ -213,7 +206,7 @@ class _LoginPageState extends State<LoginPage> {
 
                       Button(
                         placeholderText: 'Login',
-                        backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
+                        backgroundColor: Theme.of(context).focusColor,
                         textColor: Colors.white,
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
@@ -246,7 +239,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ],
         ),
-        backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
+        backgroundColor: Theme.of(context).focusColor,
       ),
     );
   }
