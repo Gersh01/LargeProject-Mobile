@@ -190,6 +190,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   child: Column(
                     children: [
                       InputField(
+                        backgroundColor: Theme.of(context).primaryColorDark,
                         placeholderText: 'Password',
                         isObscure: passwordVisible,
                         controller: _passwordController,
@@ -214,6 +215,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                         ),
                       ),
                       InputField(
+                        backgroundColor: Theme.of(context).primaryColorDark,
                         placeholderText: 'Confirm Password',
                         isObscure: passwordConfirmVisible,
                         controller: _confirmPasswordController,

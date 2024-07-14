@@ -128,6 +128,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   child: Column(
                     children: [
                       InputField(
+                        backgroundColor: Theme.of(context).primaryColorDark,
                         placeholderText: 'Email',
                         controller: _emailController,
                         validator: validateEmail,

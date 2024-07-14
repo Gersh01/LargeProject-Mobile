@@ -281,6 +281,8 @@ class _SignUpPageState extends State<SignUpPage> {
                               children: [
                                 Expanded(
                                   child: InputField(
+                                    backgroundColor:
+                                        Theme.of(context).primaryColorDark,
                                     placeholderText: 'First Name',
                                     controller: _firstNameController,
                                     validator: validateFirstName,
@@ -291,6 +293,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                 const SizedBox(width: 10),
                                 Expanded(
                                   child: InputField(
+                                    backgroundColor:
+                                        Theme.of(context).primaryColorDark,
                                     placeholderText: 'Last Name',
                                     controller: _lastNameController,
                                     validator: validateLastName,
@@ -305,6 +309,8 @@ class _SignUpPageState extends State<SignUpPage> {
                               child: Column(
                                 children: [
                                   InputField(
+                                    backgroundColor:
+                                        Theme.of(context).primaryColorDark,
                                     placeholderText: 'Username',
                                     controller: _usernameController,
                                     validator: validateUsername,
@@ -312,6 +318,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                     errorCount: usernameErrorDouble,
                                   ),
                                   InputField(
+                                    backgroundColor:
+                                        Theme.of(context).primaryColorDark,
                                     placeholderText: 'Email',
                                     controller: _emailController,
                                     validator: validateEmail,
@@ -319,6 +327,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                     errorCount: emailErrorDouble,
                                   ),
                                   InputField(
+                                    backgroundColor:
+                                        Theme.of(context).primaryColorDark,
                                     placeholderText: 'Password',
                                     isObscure: passwordVisible,
                                     controller: _passwordController,

@@ -143,6 +143,8 @@ class _LoginPageState extends State<LoginPage> {
                           child: Column(
                             children: [
                               InputField(
+                                backgroundColor:
+                                    Theme.of(context).primaryColorDark,
                                 placeholderText: 'Username',
                                 controller: _usernameController,
                                 validator: usernameValidator,
@@ -150,6 +152,8 @@ class _LoginPageState extends State<LoginPage> {
                                 errorCount: usernameErrorDouble,
                               ),
                               InputField(
+                                backgroundColor:
+                                    Theme.of(context).primaryColorDark,
                                 placeholderText: 'Password',
                                 isObscure: passwordVisible,
                                 controller: _passwordController,

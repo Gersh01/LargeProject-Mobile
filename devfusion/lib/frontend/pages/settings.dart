@@ -255,6 +255,7 @@ class _SettingsState extends State<Settings> {
                     const SizedBox(width: 10),
                     Expanded(
                       child: InputField(
+                        backgroundColor: Theme.of(context).primaryColorDark,
                         placeholderText: 'First Name',
                         controller: _firstNameController,
                         validator: validateFirstName,
@@ -266,6 +267,7 @@ class _SettingsState extends State<Settings> {
                     const SizedBox(width: 10),
                     Expanded(
                       child: InputField(
+                        backgroundColor: Theme.of(context).primaryColorDark,
                         placeholderText: 'Last Name',
                         controller: _lastNameController,
                         validator: validateLastName,

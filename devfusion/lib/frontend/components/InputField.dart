@@ -11,17 +11,20 @@ class InputField extends StatelessWidget {
   final bool? isObscure;
   final IconButton? suffixIcon;
   final String? hintText;
+  final Color? backgroundColor;
 
-  const InputField(
-      {super.key,
-      this.placeholderText,
-      this.controller,
-      this.validator,
-      this.errorTextList,
-      this.errorCount,
-      this.isObscure,
-      this.suffixIcon,
-      this.hintText});
+  const InputField({
+    super.key,
+    this.placeholderText,
+    this.controller,
+    this.validator,
+    this.errorTextList,
+    this.errorCount,
+    this.isObscure,
+    this.suffixIcon,
+    this.hintText,
+    this.backgroundColor,
+  });
 
   Text? convertErrorsToText() {
     if (errorTextList == null) {
@@ -78,18 +81,11 @@ class InputField extends StatelessWidget {
             height: 64,
             margin: const EdgeInsets.only(top: 8, bottom: 2),
             //Box Decoration
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(
                 Radius.circular(5),
               ),
-              color: Color.fromRGBO(17, 24, 39, 1),
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(0, 2.0),
-                  blurRadius: 2.0,
-                  color: Color.fromRGBO(0, 0, 0, 0.25),
-                ),
-              ],
+              color: backgroundColor,
             ),
 
             child: Padding(
