@@ -3,14 +3,18 @@ import 'package:flutter/material.dart';
 class ApplyDropDown extends StatefulWidget {
   final List<String> roles;
 
-  const ApplyDropDown({super.key, required this.roles});
+  const ApplyDropDown({
+    super.key,
+    required this.roles,
+    // required this.projectId,
+  });
 
   @override
   State<ApplyDropDown> createState() => _ApplyDropDownState();
 }
 
 class _ApplyDropDownState extends State<ApplyDropDown> {
-  String? _dropdownValue;
+  // String? _dropdownValue;
   Text? hintText;
 
   @override
@@ -26,7 +30,7 @@ class _ApplyDropDownState extends State<ApplyDropDown> {
         overflow: TextOverflow.ellipsis,
       );
     }
-    _dropdownValue = widget.roles[0];
+    // _dropdownValue = widget.roles[0];
     super.initState();
   }
 
@@ -52,9 +56,9 @@ class _ApplyDropDownState extends State<ApplyDropDown> {
           );
         }).toList(),
         onChanged: (String? newValue) {
-          setState(() {
-            _dropdownValue = newValue!;
-          });
+          // setState(() {
+          //   _dropdownValue = newValue!;
+          // });
         },
         // value: _dropdownValue,
       ),

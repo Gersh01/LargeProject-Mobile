@@ -107,12 +107,33 @@ class ApplyModal extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(top: 10),
               ),
-              TextField(
-                maxLines: 5,
-                decoration: const InputDecoration.collapsed(
-                    hintText: "Tell us about yourself..."),
-                controller: _descriptionController,
-                readOnly: false,
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: const Color.fromRGBO(17, 24, 39, 1),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text("Description"),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: TextField(
+                        maxLines: 5,
+                        decoration: const InputDecoration.collapsed(
+                            hintText: "Tell us about yourself..."),
+                        controller: _descriptionController,
+                        readOnly: false,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
