@@ -10,6 +10,7 @@ import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:devfusion/frontend/pages/lander.dart';
 import 'package:devfusion/frontend/pages/reset_password.dart';
 import 'package:devfusion/frontend/utils/utility.dart';
+import 'package:devfusion/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
@@ -183,7 +184,7 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(31, 41, 55, 1),
+      backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         title: const Text(
           'Settings',
@@ -194,7 +195,7 @@ class _SettingsState extends State<Settings> {
             color: Colors.white,
           ),
         ),
-        backgroundColor: const Color.fromRGBO(31, 41, 55, 1),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Column(
         children: [
@@ -216,7 +217,7 @@ class _SettingsState extends State<Settings> {
                 ),
                 // width: 120,
                 placeholderText: 'Upload',
-                backgroundColor: const Color.fromRGBO(251, 146, 60, 1),
+                backgroundColor: Theme.of(context).focusColor,
                 textColor: Colors.white,
                 onPressed: () async {
                   if (nameFormKey.currentState!.validate()) {
@@ -292,7 +293,7 @@ class _SettingsState extends State<Settings> {
                       ),
                       // width: 120,
                       placeholderText: 'Save',
-                      backgroundColor: const Color.fromRGBO(251, 146, 60, 1),
+                      backgroundColor: Theme.of(context).focusColor,
                       textColor: Colors.white,
                       onPressed: () async {
                         if (nameFormKey.currentState!.validate()) {
@@ -381,7 +382,7 @@ class _SettingsState extends State<Settings> {
                   color: Colors.white,
                 ),
                 placeholderText: 'Reset Password',
-                backgroundColor: const Color.fromRGBO(239, 68, 68, 1),
+                backgroundColor: danger,
                 textColor: Colors.white,
                 onPressed: () async {
                   Navigator.push(
@@ -404,7 +405,7 @@ class _SettingsState extends State<Settings> {
                   Button(
                     placeholderText: 'About Us',
                     // backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
-                    backgroundColor: const Color.fromRGBO(107, 114, 128, 1),
+                    backgroundColor: neutral,
                     textColor: Colors.white,
                     onPressed: () {
                       // final confirmCancelModal = ConfirmCancelModal(
@@ -451,7 +452,7 @@ class _SettingsState extends State<Settings> {
                   Button(
                     placeholderText: 'Logout',
                     // backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
-                    backgroundColor: const Color.fromRGBO(239, 68, 68, 1),
+                    backgroundColor: danger,
                     textColor: Colors.white,
                     onPressed: () {
                       sharedPref.removeToken();
