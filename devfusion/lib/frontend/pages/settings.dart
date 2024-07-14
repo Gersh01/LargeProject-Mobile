@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:devfusion/frontend/components/InputField.dart';
 import 'package:devfusion/frontend/components/SizedButton.dart';
+import 'package:devfusion/frontend/components/modals/apply_modal.dart';
 import 'package:devfusion/frontend/components/modals/confirm_cancel_modal.dart';
 import 'package:devfusion/frontend/components/profile_pictures.dart';
 import 'package:devfusion/frontend/components/shared_pref.dart';
@@ -10,6 +11,7 @@ import 'package:devfusion/frontend/pages/lander.dart';
 import 'package:devfusion/frontend/pages/reset_password.dart';
 import 'package:devfusion/frontend/utils/utility.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
 
@@ -181,6 +183,7 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(31, 41, 55, 1),
       appBar: AppBar(
         title: const Text(
           'Settings',
@@ -240,7 +243,7 @@ class _SettingsState extends State<Settings> {
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'League Spartan',
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -320,7 +323,7 @@ class _SettingsState extends State<Settings> {
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'League Spartan',
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -364,7 +367,7 @@ class _SettingsState extends State<Settings> {
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'League Spartan',
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -416,13 +419,28 @@ class _SettingsState extends State<Settings> {
                       //     onPressed: () {
                       //       Navigator.of(context).pop();
                       //     },
-                      //     child: const Text("Confirm"),
+                      //     child: const Text(
+                      //       "Confirm",
+                      //     ),
                       //   ),
-                      //   title: const Text("Title"),
-                      //   content: const Text("Content"),
+                      //   title: const Text(
+                      //     "Title",
+                      //     textAlign: TextAlign.center,
+                      //   ),
+                      //   content: const Text(
+                      //     "Content",
+                      //     textAlign: TextAlign.center,
+                      //   ),
                       // );
                       // confirmCancelModal.buildConfirmCancelModal();
 //
+//
+                      // final applyModal = ApplyModal(
+                      //   context: context,
+                      //   applyFunction: () {},
+                      //   roles: ["API", "Frontend"],
+                      // );
+                      // applyModal.buildApplyModal();
 //
                       // Navigator.push(
                       //   context,
