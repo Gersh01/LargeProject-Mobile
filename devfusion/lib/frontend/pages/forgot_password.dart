@@ -84,7 +84,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             leading: Padding(
               padding: const EdgeInsets.only(left: 30),
               child: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ),
@@ -96,9 +96,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             height: 300 + (10 * emailErrorDouble),
             width: 370,
             padding: const EdgeInsets.fromLTRB(30, 0, 30, 15),
-            decoration: const BoxDecoration(
-              color: Color.fromRGBO(31, 41, 55, 1),
-              borderRadius: BorderRadius.all(Radius.circular(20)),
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
             ),
             child: Column(
               children: [
@@ -137,7 +137,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       const SizedBox(height: 20),
                       Button(
                         placeholderText: 'Submit',
-                        backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
+                        backgroundColor: Theme.of(context).focusColor,
                         textColor: Colors.white,
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
@@ -152,7 +152,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             ),
           ),
         ),
-        backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
+        backgroundColor: Theme.of(context).focusColor,
       ),
     );
   }
