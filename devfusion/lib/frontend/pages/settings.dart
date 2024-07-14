@@ -434,6 +434,7 @@ class _SettingsState extends State<Settings> {
                       // );
                       // confirmCancelModal.buildConfirmCancelModal();
 //
+//
                       final applyModal = ApplyModal(
                         context: context,
                         applyFunction: () {},
