@@ -435,12 +435,12 @@ class _SettingsState extends State<Settings> {
                       // confirmCancelModal.buildConfirmCancelModal();
 //
 //
-                      final applyModal = ApplyModal(
-                        context: context,
-                        applyFunction: () {},
-                        roles: ["API", "Frontend"],
-                      );
-                      applyModal.buildApplyModal();
+                      // final applyModal = ApplyModal(
+                      //   context: context,
+                      //   applyFunction: () {},
+                      //   roles: ["API", "Frontend"],
+                      // );
+                      // applyModal.buildApplyModal();
 //
                       // Navigator.push(
                       //   context,
