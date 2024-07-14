@@ -2,9 +2,13 @@ import 'package:devfusion/frontend/components/profile/bio_fields.dart';
 import 'package:devfusion/frontend/components/profile/technologies_field.dart';
 import 'package:flutter/material.dart';
 import '../components/profile_pictures.dart';
+import '../json/Profile.dart';
+import 'package:get/get.dart';
 
 class Profile extends StatefulWidget {
-  const Profile({super.key});
+  final String? urlExtension;
+
+  const Profile({super.key, this.urlExtension});
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -15,6 +19,27 @@ class _ProfileState extends State<Profile> {
       "https://res.cloudinary.com/dlj2rlloi/image/upload/v1720043202/ef7zmzl5hokpnb3zd6en.png";
 
   bool profile = true;
+
+  void getProfileInfo() {}
+
+  void checkUrlPath() {
+    var contextCheck = ModalRoute.of(context)?.settings;
+    print(contextCheck);
+    if (contextCheck != null) {
+      final uri = Uri.parse(contextCheck.name ?? '');
+      final hasId =
+          uri.pathSegments.length > 1 && uri.pathSegments[1].isNotEmpty;
+      print('Current path: ${uri.path}, Has ID: $hasId');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkUrlPath();
+    // getProfileInfo();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +101,18 @@ class _ProfileState extends State<Profile> {
                   )
                 ],
               )),
-          Container()
+          const Padding(
+            padding: const EdgeInsets.only(left: 20, top: 5, right: 10),
+            child: Text(
+              "Projects",
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'League Spartan',
+                color: Colors.white,
+              ),
+            ),
+          )
         ],
       ),
     );

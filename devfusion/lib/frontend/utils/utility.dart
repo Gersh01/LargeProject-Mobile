@@ -511,6 +511,16 @@ const communications = [
   "Zoom",
 ];
 
+List<String> getTechnolgies(String techSearch) {
+  List<String> techList = [];
+  if (techSearch.length > 1) {
+    techList = technologies
+        .where((tech) => tech.toLowerCase().contains(techSearch.toLowerCase()))
+        .toList();
+  }
+  return techList;
+}
+
 Color getBubbleColor(String text) {
   int hash = 0;
 
