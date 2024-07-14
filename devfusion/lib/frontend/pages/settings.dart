@@ -344,9 +344,10 @@ class _SettingsState extends State<Settings> {
                   activeTrackColor: darkAccent,
                   inactiveTrackColor: lightAccent,
                   thumbColor: (dark)
-                      ? const MaterialStatePropertyAll<Color>(darkAccentVariant)
+                      ? const MaterialStatePropertyAll<Color>(
+                          darkPrimaryVariant)
                       : const MaterialStatePropertyAll<Color>(
-                          lightAccentVariant),
+                          lightPrimaryVariant),
                   value: dark,
                   onChanged: (bool value) {
                     setState(() {
