@@ -39,7 +39,7 @@ class Project {
       json['isOpen'] as bool,
       json['isDone'] as bool,
       json['isStarted'] as bool,
-      DateTime.parse(json['dateCreated']),
+      DateTime.parse(json['projectStartDate']),
       DateTime.parse(json['deadline']),
       List.from(json['technologies']),
       (json['roles'] as List)

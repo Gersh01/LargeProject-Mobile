@@ -1,41 +1,71 @@
 import 'package:flutter/material.dart';
 
+import '../json/Project.dart';
+import '../json/Role.dart';
+import '../json/team_member.dart';
 import 'tech_bubble.dart';
 
+//ignore: must_be_immutable
 class ProjectTile extends StatefulWidget {
-  String title;
-  String description;
+  final Project project;
 
-  // final List<String> technologies;
-
-  ProjectTile({
-    super.key,
-    required this.title,
-    required this.description,
-    // required this.technologies,
-  });
+  const ProjectTile({super.key, required this.project});
 
   @override
   State<ProjectTile> createState() => _ProjectTileState();
 }
 
 class _ProjectTileState extends State<ProjectTile> {
-  final titleLength = 20;
-  final descriptionLength = 200;
+  final titleLength = 17;
+  final descriptionLength = 120;
+
+  int positionLeft = 0;
 
   @override
   Widget build(BuildContext context) {
-    widget.title = widget.title.length > titleLength
-        ? "${widget.title.substring(0, titleLength)}..."
-        : widget.title;
-    widget.description = widget.description.length > descriptionLength
-        ? "${widget.description.substring(0, descriptionLength)}..."
-        : widget.description;
+    String title = widget.project.title;
+    String description = widget.project.description;
+    List<String> technologies = widget.project.technologies;
+
+    int currentCount = widget.project.teamMembers.length;
+    int numDaysTilStart =
+        widget.project.projectStartDate.difference(DateTime.now()).inDays;
+
+    int positionLeft = 0;
+
+    for (Role role in widget.project.roles) {
+      int totalCount = role.count;
+
+      for (TeamMember member in widget.project.teamMembers) {
+        if (member.role == role.role) {
+          totalCount--;
+        }
+      }
+
+      if (totalCount > 0) {
+        positionLeft += totalCount;
+      }
+    }
+
+    String numDaysTilStartText = numDaysTilStart > 1
+        ? "$numDaysTilStart Days Until Start"
+        : "$numDaysTilStart Day Until Start";
+
+    String positionLeftText = positionLeft > 1
+        ? "$positionLeft Positions Left"
+        : "$positionLeft Position Left";
+
+    title = title.length > titleLength
+        ? "${title.substring(0, titleLength)}..."
+        : title;
+    description = description.length > descriptionLength
+        ? "${description.substring(0, descriptionLength)}..."
+        : description;
 
     return Container(
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: const Color(0xffF97316),
+        color: Theme.of(context).focusColor,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
@@ -50,22 +80,20 @@ class _ProjectTileState extends State<ProjectTile> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-              color: Color(0xfff3f4f6),
+              color: Theme.of(context).primaryColor,
             ),
             child: Container(
               padding: const EdgeInsets.all(10),
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(10),
                       topRight: Radius.circular(10),
-                      topLeft: Radius.circular(10)
+                      topLeft: Radius.circular(10)),
+                  color: Theme.of(context).focusColor,
                   ),
-                  gradient: LinearGradient(
-                    colors: [Color(0xffFB923C), Color(0xffF97316)],
-                  )),
               child: Column(children: [
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,9 +102,9 @@ class _ProjectTileState extends State<ProjectTile> {
                       Expanded(
                         flex: 2,
                         child: Text(
-                          widget.title,
-                          style: const TextStyle(
-                            color: Colors.white,
+                          title,
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
@@ -86,31 +114,40 @@ class _ProjectTileState extends State<ProjectTile> {
                           child: Container(
                         padding: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Theme.of(context).primaryColor,
                           borderRadius: BorderRadius.circular(5),
                         ),
-                        child: const Text(
-                          "X Positions Left",
-                          style: TextStyle(
+                        child: Text(
+                          positionLeftText,
+                          style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       )),
                     ]),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "7 People",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
+                    Row(
+                      children: [
+                        Text(
+                          currentCount.toString(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        const Icon(
+                          Icons.person,
+                          color: Colors.white,
+                        ),
+                      ],
                     ),
                     Text(
-                      "13 days left to join",
-                      style: TextStyle(
+                      numDaysTilStartText,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                       ),
@@ -122,26 +159,29 @@ class _ProjectTileState extends State<ProjectTile> {
           ),
           Container(
               padding: const EdgeInsets.all(20),
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(10),
                       bottomRight: Radius.circular(10),
                       bottomLeft: Radius.circular(10)),
-                  color: Color(0xffE5E7EB)),
+                  color: Theme.of(context).primaryColor,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
                     "Description",
                     style: TextStyle(
+                      color: Colors.black,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   // const SizedBox(height: 10),
                   Text(
-                    widget.description,
+                    description,
                     style: const TextStyle(
+                      color: Colors.black,
                       fontSize: 16,
                     ),
                   ),
@@ -155,10 +195,10 @@ class _ProjectTileState extends State<ProjectTile> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "Technologies",
                           style: TextStyle(
                             color: Colors.black,
@@ -167,13 +207,10 @@ class _ProjectTileState extends State<ProjectTile> {
                           ),
                         ),
                         Wrap(
-                          spacing: 5,
-                          children: [
-                            TechBubble(technology: "Python"),
-                            TechBubble(technology: "PHP"),
-                            TechBubble(technology: "PyTorch"),
-                            TechBubble(technology: "Jupyter Notebooks"),
-                          ],
+                          spacing: 10,
+                          children: technologies
+                              .map((tech) => TechBubble(technology: tech))
+                              .toList(),
                         ),
                       ],
                     ),

@@ -5,6 +5,7 @@ import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:devfusion/frontend/json/Project.dart';
 import 'package:devfusion/frontend/pages/projects_page.dart';
 import 'package:flutter/material.dart';
+import '../../themes/theme.dart';
 import '../components/project_tile.dart';
 import '../utils/utility.dart';
 import 'package:http/http.dart' as http;
@@ -21,23 +22,29 @@ class _DiscoverState extends State<Discover> {
   String _dropdownSortByValue = 'recent';
   late ScrollController scrollController;
 
-  void dropdownCallback(String? newValue) {
+  void dropdownSortByCallback(String? newValue) {
     if (newValue != null) {
       setState(() {
         _dropdownSortByValue = newValue;
+        projects.clear();
+        fetchProjects(true);
       });
     }
   }
 
-  String _dropdownSearchByValue = 'Title';
+  String _dropdownSearchByValue = 'title';
 
   void dropdownSearchByCallback(String? newValue) {
     if (newValue != null) {
       setState(() {
         _dropdownSearchByValue = newValue;
+        projects.clear();
+        fetchProjects(true);
       });
     }
   }
+
+  String _query = '';
 
   TextEditingController queryController = TextEditingController();
 
@@ -56,12 +63,18 @@ class _DiscoverState extends State<Discover> {
 
     var token = await sharedPref.readToken();
 
+    print("Fetching projects WITH A QUERY OF: $_query");
+    print("Fetching projects WITH A SEARCH BY OF: $_dropdownSearchByValue");
+    print("Fetching projects WITH A SORT BY OF: $_dropdownSortByValue");
+
     var reqBody = {
       "token": token,
 
       "searchBy": _dropdownSearchByValue,
       "sortBy": _dropdownSortByValue,
-      "query": queryController.text,
+
+      "query": _query,
+
       "count": 4,
       "initial": initial,
 
@@ -134,17 +147,10 @@ class _DiscoverState extends State<Discover> {
             fontSize: 32,
             fontWeight: FontWeight.bold,
             fontFamily: 'League Spartan',
-            color: Colors.white,
-            shadows: [
-              Shadow(
-                offset: Offset(0, 4.0),
-                blurRadius: 20.0,
-                color: Color.fromRGBO(0, 0, 0, 0.4),
-              ),
-            ],
+            color: Colors.black,
           ),
         ),
-        backgroundColor: const Color.fromRGBO(31, 41, 55, 1),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: loading
           ? const Center(child: CircularProgressIndicator())
@@ -156,23 +162,24 @@ class _DiscoverState extends State<Discover> {
                       child: Padding(
                         padding: const EdgeInsets.all(20),
                         child: DropdownButton(
+                          
                           isDense: true,
                           items: const [
                             DropdownMenuItem(
-                              value: 'Title',
+                              value: 'title',
                               child: Text('Title'),
                             ),
                             DropdownMenuItem(
-                              value: 'Technology',
-                              child: Text('Technology'),
+                              value: 'technologies',
+                              child: Text('Technologies'),
                             ),
                             DropdownMenuItem(
-                              value: 'Description',
+                              value: 'description',
                               child: Text('Description'),
                             ),
                             DropdownMenuItem(
-                              value: 'Role',
-                              child: Text('Role'),
+                              value: 'roles',
+                              child: Text('Roles'),
                             )
                           ],
                           value: _dropdownSearchByValue,
@@ -186,7 +193,17 @@ class _DiscoverState extends State<Discover> {
                       child: Padding(
                         padding: const EdgeInsets.all(20),
                         child: TextField(
-                          controller: queryController,
+                          onChanged: (text) {
+                            print("TEXT: $text");
+                            setState(() {
+                              print("PROJECTS LENGTH BEFORE:  ${projects.length}");
+                              projects.clear();
+                              print("PROJECTS LENGTH AFTER:  ${projects.length}");
+                              _query = text;
+                              fetchProjects(true);
+                            }
+                          );
+                          },
                           decoration: const InputDecoration(
                             hintText: 'Search',
                             hintStyle: TextStyle(
@@ -220,7 +237,7 @@ class _DiscoverState extends State<Discover> {
                       value: 'relevance',
                       child: Text('Relevance'),
                     )
-                  ], value: _dropdownSortByValue, onChanged: dropdownCallback),
+                  ], value: _dropdownSortByValue, onChanged: dropdownSortByCallback),
                 ),
 
                 //Project Cards
@@ -231,9 +248,7 @@ class _DiscoverState extends State<Discover> {
                     itemBuilder: (BuildContext context, int index) {
                       var project = projects[index];
                       return ProjectTile(
-                        title: project.title,
-                        description: project.description,
-                        // technologies: project['technologies'],
+                        project: project
                       );
                     },
                   ),

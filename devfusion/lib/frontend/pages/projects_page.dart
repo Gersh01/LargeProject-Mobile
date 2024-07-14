@@ -235,10 +235,12 @@ class _ProjectsState extends State<Projects>
               itemCount: ownedProjects.length,
               itemBuilder: (BuildContext context, int index) {
                 var project = ownedProjects[index];
-                return ProjectTile(
-                  title: project.title,
-                  description: project.description,
-                );
+                // return ProjectTile(
+                //   title: project.title,
+                //   description: project.description,
+                //   technologies: project.technologies,
+                //   numDaysTilStart: project.projectStartDate.difference(DateTime.now()).inDays,
+                // );
               },
             ),
             ListView.builder(
@@ -246,10 +248,7 @@ class _ProjectsState extends State<Projects>
               itemCount: joinedProjects.length,
               itemBuilder: (BuildContext context, int index) {
                 var project = joinedProjects[index];
-                return ProjectTile(
-                  title: project.title,
-                  description: project.description,
-                );
+                // return ProjectTile(project);
               },
             ),
           ],
