@@ -193,9 +193,16 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
-    dark = (Provider.of<ThemeProvider>(context).themeData == darkMode)
-        ? true
-        : false;
+    var brightness = MediaQuery.of(context).platformBrightness;
+    bool systemInDark = brightness == Brightness.dark;
+    if (Provider.of<ThemeProvider>(context).themeData == null) {
+      dark = systemInDark;
+    } else {
+      dark = (Provider.of<ThemeProvider>(context).themeData == darkMode)
+          ? true
+          : false;
+    }
+
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
@@ -357,6 +364,19 @@ class _SettingsState extends State<Settings> {
                   onChanged: (bool value) {
                     setState(() {
                       dark = value;
+                      // if (Provider.of<ThemeProvider>(context).themeData ==
+                      //     null) {
+                      //   if (dark) {
+                      //     Provider.of<ThemeProvider>(context)
+                      //         .setToggleTheme(darkMode);
+                      //   } else {
+                      //     Provider.of<ThemeProvider>(context)
+                      //         .setToggleTheme(lightMode);
+                      //   }
+                      // } else {
+                      //   Provider.of<ThemeProvider>(context, listen: false)
+                      //       .toggleTheme();
+                      // }
                       Provider.of<ThemeProvider>(context, listen: false)
                           .toggleTheme();
                     });

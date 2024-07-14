@@ -59,7 +59,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: Provider.of<ThemeProvider>(context).themeData,
+      theme: (Provider.of<ThemeProvider>(context).themeData == null)
+          ? lightMode
+          : Provider.of<ThemeProvider>(context).themeData,
+      darkTheme: (Provider.of<ThemeProvider>(context).themeData == null)
+          ? darkMode
+          : Provider.of<ThemeProvider>(context).themeData,
       debugShowCheckedModeBanner: false,
       // theme: ThemeData(
       //   primarySwatch: Colors.blue,

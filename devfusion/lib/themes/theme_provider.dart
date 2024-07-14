@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import '../themes/theme.dart';
 
 class ThemeProvider with ChangeNotifier {
-  ThemeData _themeData = lightMode;
+  ThemeData? _themeData;
 
-  ThemeData get themeData => _themeData;
+  ThemeData? get themeData => _themeData;
 
-  set themeData(ThemeData themeData) {
+  set themeData(ThemeData? themeData) {
     _themeData = themeData;
     notifyListeners();
   }
@@ -19,4 +19,8 @@ class ThemeProvider with ChangeNotifier {
       themeData = lightMode;
     }
   }
+
+  // void setToggleTheme(ThemeData themeData) {
+  //   _themeData = themeData;
+  // }
 }
