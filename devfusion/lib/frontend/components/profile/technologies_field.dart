@@ -1,16 +1,23 @@
+import 'dart:convert';
+
+import 'package:devfusion/frontend/json/Profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../utils/utility.dart';
 import '../tech_bubble.dart';
+import 'package:devfusion/frontend/components/shared_pref.dart';
+import 'package:http/http.dart' as http;
 
 class TechnologiesField extends StatefulWidget {
   final bool myProfile;
   final List<String> technologies;
+  final Profile? userInfo;
 
   const TechnologiesField({
     super.key,
     required this.myProfile,
     required this.technologies,
+    required this.userInfo,
   });
   @override
   State<TechnologiesField> createState() => _TechnologiesField();
@@ -24,46 +31,84 @@ class _TechnologiesField extends State<TechnologiesField> {
   bool editMode = false;
 
   final TextEditingController _techSearchController = TextEditingController();
-  String? _dropDownValue = "Searching...";
+  String _dropDownValue = "Searching...";
   List<String> updatedTechList = [];
-
-  List<String> testTech = [
-    "React",
-    "React",
-    "React",
-    "React",
-    "React",
-    "React",
-    "React",
-    "React",
-    "React",
-    "React",
-    "React",
-    "React",
-    "React",
-    "React",
-    "React",
-    "React",
-    "React",
-    "React",
-    "React",
-    "React",
-    "React",
-    "React",
-    "React",
-    "React",
-  ];
-
+  List<String> userTechnologies = [];
+  SharedPref sharedPref = SharedPref();
   final addIcon = Icons.add;
 
   @override
   void initState() {
     _techSearchController.text;
+    userTechnologies = widget.technologies;
     super.initState();
   }
 
-  void addTechnology() {
-    setState(() {});
+  void addTechnology() async {
+    var newTechnologies;
+    bool exists = false;
+    userTechnologies = widget.technologies;
+    for (int i = 0; i < widget.technologies.length; i++) {
+      if (_dropDownValue == widget.technologies[i]) {
+        exists == true;
+      }
+    }
+    if (_dropDownValue != "Searching..." && exists == false) {
+      String? token = await sharedPref.readToken();
+
+      newTechnologies = widget.technologies;
+      newTechnologies.add(_dropDownValue);
+
+      var reqBody = {
+        "token": token,
+        "userId": widget.userInfo?.userId,
+        "technologies": newTechnologies,
+      };
+      var response = await http.put(
+        Uri.parse(updateUserUrl),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(reqBody),
+      );
+      if (response.statusCode == 200) {
+        setState(() {
+          userTechnologies = newTechnologies;
+        });
+      } else {
+        print("Projects have been updated!");
+      }
+    }
+  }
+
+  void deleteTechnology(String techName) async {
+    List<String> newTechnologies;
+
+    userTechnologies = widget.technologies;
+    if (techName != "") {
+      String? token = await sharedPref.readToken();
+
+      newTechnologies = userTechnologies;
+      print(newTechnologies);
+      newTechnologies.remove(techName);
+      print(newTechnologies);
+      var reqBody = {
+        "token": token,
+        "userId": widget.userInfo?.userId,
+        "technologies": newTechnologies,
+      };
+      var response = await http.put(
+        Uri.parse(updateUserUrl),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(reqBody),
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          userTechnologies = newTechnologies;
+        });
+      } else {
+        print("Projects have been updated!");
+      }
+    }
   }
 
   void getTechnologiesList(String tech) {
@@ -82,6 +127,8 @@ class _TechnologiesField extends State<TechnologiesField> {
       print("Setting the dropdownvalue = " + _dropDownValue.toString());
     }
   }
+
+  void updateUserTechnologies() async {}
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +179,7 @@ class _TechnologiesField extends State<TechnologiesField> {
                           width: 300,
                           padding: const EdgeInsets.only(left: 5.0, top: 5.0),
                           decoration: BoxDecoration(
-                              color: const Color(0xff374151),
+                              color: Theme.of(context).primaryColorDark,
                               borderRadius: BorderRadius.circular(10)),
                           child: SizedBox(
                               height: 30,
@@ -170,11 +217,11 @@ class _TechnologiesField extends State<TechnologiesField> {
                                 .toList(),
                             style: TextStyle(fontSize: 18, color: Colors.white),
                             value: _dropDownValue,
-                            dropdownColor: Color(0xff374151),
+                            dropdownColor: Theme.of(context).primaryColorDark,
                             menuMaxHeight: 200,
                             isExpanded: true,
                             onChanged: dropDownCallback,
-                            hint: Text("Help"),
+                            hint: Text("Searching..."),
                             underline: Container(
                               height: 0,
                             ),
@@ -194,12 +241,14 @@ class _TechnologiesField extends State<TechnologiesField> {
                 Container(
                   padding: EdgeInsets.all(10),
                   child: Wrap(
-                    spacing: 8,
-                    clipBehavior: Clip.hardEdge,
-                    children: testTech.map((techBubbles) {
-                      return TechBubble(technology: techBubbles);
-                    }).toList(),
-                  ),
+                      spacing: 8,
+                      clipBehavior: Clip.hardEdge,
+                      children: userTechnologies.map((techBubbles) {
+                        return TechBubble(
+                            technology: techBubbles,
+                            editMode: editMode,
+                            delete: deleteTechnology);
+                      }).toList()),
                 ),
               ],
             ),

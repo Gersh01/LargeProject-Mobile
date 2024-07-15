@@ -61,8 +61,7 @@ class _ProjectTileState extends State<ProjectTile> {
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(10),
                       topRight: Radius.circular(10),
-                      topLeft: Radius.circular(10)
-                  ),
+                      topLeft: Radius.circular(10)),
                   gradient: LinearGradient(
                     colors: [Color(0xffFB923C), Color(0xffF97316)],
                   )),
@@ -169,10 +168,15 @@ class _ProjectTileState extends State<ProjectTile> {
                         Wrap(
                           spacing: 5,
                           children: [
-                            TechBubble(technology: "Python"),
-                            TechBubble(technology: "PHP"),
-                            TechBubble(technology: "PyTorch"),
-                            TechBubble(technology: "Jupyter Notebooks"),
+                            TechBubble(
+                              technology: "Python",
+                              editMode: false,
+                            ),
+                            TechBubble(technology: "PHP", editMode: false),
+                            TechBubble(technology: "PyTorch", editMode: false),
+                            TechBubble(
+                                technology: "Jupyter Notebooks",
+                                editMode: false),
                           ],
                         ),
                       ],

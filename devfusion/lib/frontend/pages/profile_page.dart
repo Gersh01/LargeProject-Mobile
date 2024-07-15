@@ -22,6 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
   SharedPref sharedPref = SharedPref();
   late Profile? userProfile = null;
   bool profile = true;
+  bool loading = true;
 
   Future getUserInfo() async {
     String? token = await sharedPref.readToken();
@@ -34,16 +35,18 @@ class _ProfilePageState extends State<ProfilePage> {
     );
 
     if (response.statusCode == 200) {
-      print("settings jwt sucessful");
       var jsonResponse = jsonDecode(response.body);
       sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
       setState(() {
         userProfile = Profile.fromJson(jsonResponse);
+        loading = false;
       });
     } else {
       print("settings jwt unsucessful");
     }
   }
+
+  Future getUserProjects() async {}
 
   void checkUrlPath() {
     // var contextCheck = ModalRoute.of(context)?.settings;
@@ -60,6 +63,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
     getUserInfo();
+    //getUserProjects();
     // checkUrlPath();
   }
 
@@ -80,64 +84,70 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         backgroundColor: Theme.of(context).primaryColor,
       ),
-      body: ListView(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: ProfilePictures(
-                  imageUrl: userProfile?.link ?? "",
+      body: loading
+          ? const Center(child: CircularProgressIndicator())
+          : ListView(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: ProfilePictures(
+                            imageUrl: userProfile?.link ?? "",
+                          ),
+                        ),
+                        Text(
+                          userProfile?.username ?? "",
+                          style: const TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'League Spartan',
+                            color: Colors.white,
+                          ),
+                        ),
+                      ]),
                 ),
-              ),
-              Text(
-                userProfile?.username ?? "",
-                style: const TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'League Spartan',
-                  color: Colors.white,
+                Container(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        BioFields(
+                          myProfile: true,
+                          bioMessage: userProfile?.bio ?? "",
+                          userProfile: userProfile,
+                        )
+                      ],
+                    )),
+                Container(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TechnologiesField(
+                          myProfile: true,
+                          technologies: userProfile?.technologies ?? [],
+                          userInfo: userProfile,
+                        )
+                      ],
+                    )),
+                const Padding(
+                  padding: const EdgeInsets.only(left: 20, top: 5, right: 10),
+                  child: Text(
+                    "Projects",
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'League Spartan',
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
-              ),
-            ]),
-          ),
-          Container(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  BioFields(
-                    myProfile: true,
-                    bioMessage: userProfile?.bio ?? "",
-                  )
-                ],
-              )),
-          Container(
-              padding: const EdgeInsets.all(10.0),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TechnologiesField(
-                    myProfile: true,
-                    technologies: ["React", "Javascript"],
-                  )
-                ],
-              )),
-          const Padding(
-            padding: const EdgeInsets.only(left: 20, top: 5, right: 10),
-            child: Text(
-              "Projects",
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'League Spartan',
-                color: Colors.white,
-              ),
+              ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }
