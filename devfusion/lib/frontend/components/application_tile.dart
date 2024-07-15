@@ -57,36 +57,36 @@ class _ApplicationTileState extends State<ApplicationTile> {
     return Container(
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: const Color(0xffF97316),
+        gradient: LinearGradient(
+          colors: [
+            Theme.of(context).focusColor,
+            Theme.of(context).highlightColor,
+          ],
+        ),
         borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 3),
-          ),
-        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-              color: Color(0xfff3f4f6),
+              color: Theme.of(context).primaryColorLight,
             ),
             child: Container(
               padding: const EdgeInsets.all(10),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(10),
                   topRight: Radius.circular(10),
                   topLeft: Radius.circular(10),
                 ),
                 gradient: LinearGradient(
-                  colors: [Color(0xffFB923C), Color(0xffF97316)],
+                  colors: [
+                    Theme.of(context).focusColor,
+                    Theme.of(context).highlightColor,
+                  ],
                 ),
               ),
               child: Column(children: [
@@ -129,8 +129,8 @@ class _ApplicationTileState extends State<ApplicationTile> {
                               fontSize: 16,
                               fontFamily: "poppins",
                               fontWeight: FontWeight.w700,
-                              color: Colors.white,
                             ),
+                            foregroundColor: Colors.white,
                             shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(5),
@@ -154,6 +154,7 @@ class _ApplicationTileState extends State<ApplicationTile> {
                               fontWeight: FontWeight.w700,
                               color: Colors.white,
                             ),
+                            foregroundColor: Colors.white,
                             shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(5),
@@ -173,12 +174,13 @@ class _ApplicationTileState extends State<ApplicationTile> {
           ),
           Container(
             padding: const EdgeInsets.all(20),
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
-                    bottomLeft: Radius.circular(10)),
-                color: Color(0xffE5E7EB)),
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                  bottomLeft: Radius.circular(10)),
+              color: Theme.of(context).primaryColorLight,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
