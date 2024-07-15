@@ -6,54 +6,50 @@ import '../json/team_member.dart';
 import 'tech_bubble.dart';
 
 //ignore: must_be_immutable
-class ProjectTile extends StatefulWidget {
+class JoinedProjectsTile extends StatefulWidget {
   final Project project;
+  final String username;
 
-  const ProjectTile({super.key, required this.project});
+  const JoinedProjectsTile({super.key, required this.project, required this.username});
 
   @override
-  State<ProjectTile> createState() => _ProjectTileState();
+  State<JoinedProjectsTile> createState() => _JoinedProjectsTileState();
 }
 
-class _ProjectTileState extends State<ProjectTile> {
-  final titleLength = 17;
+class _JoinedProjectsTileState extends State<JoinedProjectsTile> {
+  final titleLength = 30;
   final descriptionLength = 120;
 
-  int positionLeft = 0;
 
   @override
   Widget build(BuildContext context) {
     String title = widget.project.title;
     String description = widget.project.description;
-    List<String> technologies = widget.project.technologies;
 
     int currentCount = widget.project.teamMembers.length;
-    int numDaysTilStart =
-        widget.project.projectStartDate.difference(DateTime.now()).inDays;
 
-    int positionLeft = 0;
+    String daysText = "";
 
-    for (Role role in widget.project.roles) {
-      int totalCount = role.count;
+    if (widget.project.projectStartDate.isAfter(DateTime.now())) {
+      int days = widget.project.projectStartDate.difference(DateTime.now()).inDays;
 
-      for (TeamMember member in widget.project.teamMembers) {
-        if (member.role == role.role) {
-          totalCount--;
-        }
+      if (days > 1) {
+        daysText = "$days days Until Start";
+      } else {
+        daysText = "$days day Until Start";
       }
 
-      if (totalCount > 0) {
-        positionLeft += totalCount;
+    } else {
+      int days = widget.project.deadline.difference(DateTime.now()).inDays;
+
+      if (days > 1) {
+        daysText = "$days days until project begins";
+      } else {
+        daysText = "$days day until project begins";
       }
     }
-
-    String numDaysTilStartText = numDaysTilStart > 1
-        ? "$numDaysTilStart days left to join"
-        : "$numDaysTilStart day left to join";
-
-    String positionLeftText = positionLeft > 1
-        ? "$positionLeft Positions Left"
-        : "$positionLeft Position Left";
+    
+    // String yourRole = widget.project.teamMembers.firstWhere((element) => element
 
     title = title.length > titleLength
         ? "${title.substring(0, titleLength)}..."
@@ -110,21 +106,6 @@ class _ProjectTileState extends State<ProjectTile> {
                           ),
                         ),
                       ),
-                      Expanded(
-                          child: Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Text(
-                          positionLeftText,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      )),
                     ]),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -146,7 +127,7 @@ class _ProjectTileState extends State<ProjectTile> {
                       ],
                     ),
                     Text(
-                      numDaysTilStartText,
+                      daysText,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -157,6 +138,8 @@ class _ProjectTileState extends State<ProjectTile> {
               ]),
             ),
           ),
+
+          
           Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -169,6 +152,23 @@ class _ProjectTileState extends State<ProjectTile> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
+                  const Text(
+                    "Your Role",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  TechBubble(technology: "I'll do this later"),
+                  
+
+
+                  const Divider(
+                    color: Colors.grey,
+                    thickness: 1,
+                  ),
                   const Text(
                     "Description",
                     style: TextStyle(
@@ -183,36 +183,6 @@ class _ProjectTileState extends State<ProjectTile> {
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16,
-                    ),
-                  ),
-
-                  const Divider(
-                    color: Colors.grey,
-                    thickness: 1,
-                  ),
-
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Technologies",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Wrap(
-                          spacing: 10,
-                          children: technologies
-                              .map((tech) => TechBubble(technology: tech))
-                              .toList(),
-                        ),
-                      ],
                     ),
                   ),
                 ],

@@ -159,39 +159,63 @@ class _DiscoverState extends State<Discover> {
                 Row(
                   children: [
                     Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: DropdownButton(
-                          
-                          isDense: true,
-                          items: const [
-                            DropdownMenuItem(
-                              value: 'title',
-                              child: Text('Title'),
+                      child: Container(
+                        margin: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[400],
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Theme(
+                          data: Theme.of(context).copyWith(
+                            canvasColor: Colors.grey[400],
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: DropdownButton(
+                              
+                              isDense: true,
+                              items: const [
+                                
+                                DropdownMenuItem(
+                                  value: 'title',
+                                  child: Text('Title'),
+                                ),
+                                DropdownMenuItem(
+                                  value: 'technologies',
+                                  child: Text('Technologies'),
+                                ),
+                                DropdownMenuItem(
+                                  value: 'description',
+                                  child: Text('Description'),
+                                ),
+                                DropdownMenuItem(
+                                  value: 'roles',
+                                  child: Text('Roles'),
+                                )
+                              ],
+                              value: _dropdownSearchByValue,
+                              onChanged: dropdownSearchByCallback,
                             ),
-                            DropdownMenuItem(
-                              value: 'technologies',
-                              child: Text('Technologies'),
-                            ),
-                            DropdownMenuItem(
-                              value: 'description',
-                              child: Text('Description'),
-                            ),
-                            DropdownMenuItem(
-                              value: 'roles',
-                              child: Text('Roles'),
-                            )
-                          ],
-                          value: _dropdownSearchByValue,
-                          onChanged: dropdownSearchByCallback,
+                          ),
                         ),
                       ),
+                    ),
+
+                    const SizedBox(
+                      width: 10,
+                      height: 40,
+                      
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                        ),
+                      )
                     ),
 
                     //Search Bar
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(0),
                         child: TextField(
                           onChanged: (text) {
                             print("TEXT: $text");

@@ -1,11 +1,14 @@
 import 'dart:convert';
 
+import 'package:devfusion/frontend/components/joined_projects_tile.dart';
 import 'package:devfusion/frontend/components/project_tile.dart';
 import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:devfusion/frontend/json/Project.dart';
 import 'package:devfusion/frontend/utils/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+import '../components/my_projects_tile.dart';
 
 class Projects extends StatefulWidget {
   const Projects({super.key});
@@ -27,6 +30,8 @@ class _ProjectsState extends State<Projects>
   bool isRetrievingJoinedProjects = true;
   bool endOfOwnedProject = false;
   bool endOfJoinedProject = false;
+
+  String username = "";
 
   @override
   void initState() {
@@ -242,12 +247,7 @@ class _ProjectsState extends State<Projects>
               itemCount: ownedProjects.length,
               itemBuilder: (BuildContext context, int index) {
                 var project = ownedProjects[index];
-                // return ProjectTile(
-                //   title: project.title,
-                //   description: project.description,
-                //   technologies: project.technologies,
-                //   numDaysTilStart: project.projectStartDate.difference(DateTime.now()).inDays,
-                // );
+                return MyProjectsTile(project: project);
               },
             ),
             ListView.builder(
@@ -255,7 +255,7 @@ class _ProjectsState extends State<Projects>
               itemCount: joinedProjects.length,
               itemBuilder: (BuildContext context, int index) {
                 var project = joinedProjects[index];
-                // return ProjectTile(project);
+                return JoinedProjectsTile(project: project, username: username);
               },
             ),
           ],
