@@ -26,8 +26,9 @@ class _BioFields extends State<BioFields> {
 
   @override
   void initState() {
-    getProfileInfo();
     super.initState();
+
+    getProfileInfo();
   }
 
   @override

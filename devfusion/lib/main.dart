@@ -8,7 +8,7 @@ import 'frontend/pages/home.dart';
 import 'frontend/pages/lander.dart';
 import 'frontend/pages/login_page.dart';
 import 'frontend/pages/signup_page.dart';
-import 'frontend/pages/profile.dart';
+import 'frontend/pages/profile_page.dart';
 import 'package:http/http.dart' as http;
 import 'frontend/pages/reset_password.dart';
 import 'frontend/pages/update_password.dart';
@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
         '/lander': (context) => const Lander(),
         '/signup': (context) => const SignUpPage(),
         '/home': (context) => const Home(),
-        '/profile': (context) => const Profile(),
+        '/profile': (context) => const ProfilePage(),
       },
       // Set the inital rout to be /home if user is signed in, otherwise set it /lander
       initialRoute: (isSignedIn) ? '/home' : '/lander',

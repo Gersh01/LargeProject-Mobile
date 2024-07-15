@@ -1,43 +1,66 @@
+import 'dart:convert';
+
 import 'package:devfusion/frontend/components/profile/bio_fields.dart';
 import 'package:devfusion/frontend/components/profile/technologies_field.dart';
+import 'package:devfusion/frontend/utils/utility.dart';
+import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:flutter/material.dart';
 import '../components/profile_pictures.dart';
 import '../json/Profile.dart';
-import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
-class Profile extends StatefulWidget {
+class ProfilePage extends StatefulWidget {
   final String? urlExtension;
 
-  const Profile({super.key, this.urlExtension});
+  const ProfilePage({super.key, this.urlExtension});
 
   @override
-  State<Profile> createState() => _ProfileState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _ProfileState extends State<Profile> {
-  final String image =
-      "https://res.cloudinary.com/dlj2rlloi/image/upload/v1720043202/ef7zmzl5hokpnb3zd6en.png";
-
+class _ProfilePageState extends State<ProfilePage> {
+  SharedPref sharedPref = SharedPref();
+  late Profile? userProfile = null;
   bool profile = true;
 
-  void getProfileInfo() {}
+  Future getUserInfo() async {
+    String? token = await sharedPref.readToken();
+    var reqBody = {"token": token};
+
+    var response = await http.post(
+      Uri.parse(jwtUrl),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(reqBody),
+    );
+
+    if (response.statusCode == 200) {
+      print("settings jwt sucessful");
+      var jsonResponse = jsonDecode(response.body);
+      sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
+      setState(() {
+        userProfile = Profile.fromJson(jsonResponse);
+      });
+    } else {
+      print("settings jwt unsucessful");
+    }
+  }
 
   void checkUrlPath() {
-    var contextCheck = ModalRoute.of(context)?.settings;
-    print(contextCheck);
-    if (contextCheck != null) {
-      final uri = Uri.parse(contextCheck.name ?? '');
-      final hasId =
-          uri.pathSegments.length > 1 && uri.pathSegments[1].isNotEmpty;
-      print('Current path: ${uri.path}, Has ID: $hasId');
-    }
+    // var contextCheck = ModalRoute.of(context)?.settings;
+    // print(contextCheck);
+    // if (contextCheck != null) {
+    //   final uri = Uri.parse(contextCheck.name ?? '');
+    //   final hasId =
+    //       uri.pathSegments.length > 1 && uri.pathSegments[1].isNotEmpty;
+    //   print('Current path: ${uri.path}, Has ID: $hasId');
+    // }
   }
 
   @override
   void initState() {
     super.initState();
-    checkUrlPath();
-    // getProfileInfo();
+    getUserInfo();
+    // checkUrlPath();
   }
 
   @override
@@ -65,12 +88,12 @@ class _ProfileState extends State<Profile> {
               Padding(
                 padding: const EdgeInsets.only(right: 10.0),
                 child: ProfilePictures(
-                  imageUrl: image,
+                  imageUrl: userProfile?.link ?? "",
                 ),
               ),
-              const Text(
-                "Username",
-                style: TextStyle(
+              Text(
+                userProfile?.username ?? "",
+                style: const TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'League Spartan',
@@ -81,12 +104,12 @@ class _ProfileState extends State<Profile> {
           ),
           Container(
               padding: const EdgeInsets.all(10.0),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   BioFields(
                     myProfile: true,
-                    bioMessage: "null",
+                    bioMessage: userProfile?.bio ?? "",
                   )
                 ],
               )),
@@ -112,7 +135,7 @@ class _ProfileState extends State<Profile> {
                 color: Colors.white,
               ),
             ),
-          )
+          ),
         ],
       ),
     );

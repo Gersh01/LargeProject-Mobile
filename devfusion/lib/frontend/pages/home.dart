@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'discover.dart';
-import 'profile.dart';
+import 'profile_page.dart';
 import 'projects_page.dart';
 import 'settings.dart';
 
@@ -33,7 +33,7 @@ class _HomeState extends State<Home> {
   final List<Widget> _children = [
     const Discover(),
     const Projects(),
-    const Profile(),
+    const ProfilePage(),
     const Settings(),
   ];
 
