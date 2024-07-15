@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:devfusion/frontend/components/input_field.dart';
 import 'package:devfusion/frontend/components/SizedButton.dart';
+import 'package:devfusion/frontend/components/modals/apply_modal.dart';
 // import 'package:devfusion/frontend/components/modals/apply_modal.dart';
 // import 'package:devfusion/frontend/components/modals/confirm_cancel_modal.dart';
 import 'package:devfusion/frontend/components/profile_pictures.dart';
@@ -473,12 +474,12 @@ class _SettingsState extends State<Settings> {
                       // confirmCancelModal.buildConfirmCancelModal();
 //
 //
-                      // final applyModal = ApplyModal(
-                      //   context: context,
-                      //   applyFunction: () {},
-                      //   roles: ["API", "Frontend"],
-                      // );
-                      // applyModal.buildApplyModal();
+                      final applyModal = ApplyModal(
+                        context: context,
+                        applyFunction: () {},
+                        roles: const ["API", "Frontend"],
+                      );
+                      applyModal.buildApplyModal();
 //
                       // Navigator.push(
                       //   context,
