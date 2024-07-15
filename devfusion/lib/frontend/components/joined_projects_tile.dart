@@ -10,7 +10,8 @@ class JoinedProjectsTile extends StatefulWidget {
   final Project project;
   final String username;
 
-  const JoinedProjectsTile({super.key, required this.project, required this.username});
+  const JoinedProjectsTile(
+      {super.key, required this.project, required this.username});
 
   @override
   State<JoinedProjectsTile> createState() => _JoinedProjectsTileState();
@@ -19,7 +20,6 @@ class JoinedProjectsTile extends StatefulWidget {
 class _JoinedProjectsTileState extends State<JoinedProjectsTile> {
   final titleLength = 30;
   final descriptionLength = 120;
-
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +31,14 @@ class _JoinedProjectsTileState extends State<JoinedProjectsTile> {
     String daysText = "";
 
     if (widget.project.projectStartDate.isAfter(DateTime.now())) {
-      int days = widget.project.projectStartDate.difference(DateTime.now()).inDays;
+      int days =
+          widget.project.projectStartDate.difference(DateTime.now()).inDays;
 
       if (days > 1) {
         daysText = "$days days Until Start";
       } else {
         daysText = "$days day Until Start";
       }
-
     } else {
       int days = widget.project.deadline.difference(DateTime.now()).inDays;
 
@@ -48,7 +48,7 @@ class _JoinedProjectsTileState extends State<JoinedProjectsTile> {
         daysText = "$days day until project begins";
       }
     }
-    
+
     // String yourRole = widget.project.teamMembers.firstWhere((element) => element
 
     title = title.length > titleLength
@@ -84,12 +84,12 @@ class _JoinedProjectsTileState extends State<JoinedProjectsTile> {
             child: Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                      topLeft: Radius.circular(10)),
-                  color: Theme.of(context).focusColor,
-                  ),
+                borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    topLeft: Radius.circular(10)),
+                color: Theme.of(context).focusColor,
+              ),
               child: Column(children: [
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -138,21 +138,18 @@ class _JoinedProjectsTileState extends State<JoinedProjectsTile> {
               ]),
             ),
           ),
-
-          
           Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(10),
-                      bottomRight: Radius.circular(10),
-                      bottomLeft: Radius.circular(10)),
-                  color: Theme.of(context).primaryColor,
+                borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10)),
+                color: Theme.of(context).primaryColor,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   const Text(
                     "Your Role",
                     style: TextStyle(
@@ -161,9 +158,7 @@ class _JoinedProjectsTileState extends State<JoinedProjectsTile> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  TechBubble(technology: "I'll do this later"),
-                  
-
+                  // TechBubble(technology: "I'll do this later", editMode: null,),
 
                   const Divider(
                     color: Colors.grey,

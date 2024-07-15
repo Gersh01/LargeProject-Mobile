@@ -1,4 +1,7 @@
+import 'package:devfusion/frontend/components/Button.dart';
+import 'package:devfusion/frontend/components/SizedButton.dart';
 import 'package:devfusion/frontend/components/modals/apply_dropdown_menu.dart';
+import 'package:devfusion/themes/theme.dart';
 import 'package:flutter/material.dart';
 
 // class ApplyModal extends StatefulWidget {
@@ -139,20 +142,40 @@ class ApplyModal extends StatelessWidget {
           ),
         ),
         actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text("Cancel"),
-          ),
-          TextButton(
+          Button(
+            // height: 25,
+            textStyle: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'League Spartan',
+              color: Colors.white,
+            ),
+            // width: 120,
+            placeholderText: 'Apply',
+            backgroundColor: approve,
+            textColor: Colors.white,
             onPressed: () {
               applyFunction;
             },
-            child: const Text("Apply"),
+          ),
+          Button(
+            // height: 25,
+            textStyle: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'League Spartan',
+              color: Colors.white,
+            ),
+            // width: 120,
+            placeholderText: 'Cancel',
+            backgroundColor: danger,
+            textColor: Colors.white,
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
         ],
-        actionsAlignment: MainAxisAlignment.spaceBetween,
+        // actionsAlignment: MainAxisAlignment.spaceBetween,
         elevation: 20,
         backgroundColor: Theme.of(context).primaryColorLight,
       ),
