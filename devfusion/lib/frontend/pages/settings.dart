@@ -228,11 +228,11 @@ class _SettingsState extends State<Settings> {
               Expanded(child: Container()),
               SizedButton(
                 height: 25,
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'League Spartan',
-                  color: Theme.of(context).hintColor,
+                  color: Colors.white,
                 ),
                 // width: 120,
                 placeholderText: 'Upload',
@@ -308,11 +308,11 @@ class _SettingsState extends State<Settings> {
                     alignment: Alignment.centerRight,
                     child: SizedButton(
                       height: 25,
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'League Spartan',
-                        color: Theme.of(context).hintColor,
+                        color: Colors.white,
                       ),
                       // width: 120,
                       placeholderText: 'Save',
@@ -412,11 +412,11 @@ class _SettingsState extends State<Settings> {
               SizedButton(
                 // width: 130,
                 height: 25,
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'League Spartan',
-                  color: Theme.of(context).hintColor,
+                  color: Colors.white,
                 ),
                 placeholderText: 'Reset Password',
                 backgroundColor: danger,
