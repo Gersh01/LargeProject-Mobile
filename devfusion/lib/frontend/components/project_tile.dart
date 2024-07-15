@@ -4,6 +4,7 @@ import '../json/Project.dart';
 import '../json/Role.dart';
 import '../json/team_member.dart';
 import 'tech_bubble.dart';
+import 'package:devfusion/frontend/components/shared_pref.dart';
 
 //ignore: must_be_immutable
 class ProjectTile extends StatefulWidget {
@@ -18,7 +19,8 @@ class ProjectTile extends StatefulWidget {
 class _ProjectTileState extends State<ProjectTile> {
   final titleLength = 17;
   final descriptionLength = 120;
-
+  SharedPref sharedPref = SharedPref();
+  bool darkMode = false;
   int positionLeft = 0;
 
   @override
@@ -67,14 +69,6 @@ class _ProjectTileState extends State<ProjectTile> {
       decoration: BoxDecoration(
         color: Theme.of(context).focusColor,
         borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 3),
-          ),
-        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,7 +87,10 @@ class _ProjectTileState extends State<ProjectTile> {
                       topRight: Radius.circular(10),
                       topLeft: Radius.circular(10)),
                   gradient: LinearGradient(
-                    colors: [Color(0xffFB923C), Color(0xffF97316)],
+                    colors: [
+                      Theme.of(context).focusColor,
+                      Theme.of(context).highlightColor
+                    ],
                   )),
               child: Column(children: [
                 Row(
@@ -115,13 +112,13 @@ class _ProjectTileState extends State<ProjectTile> {
                           child: Container(
                         padding: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).primaryColorDark,
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Text(
                           positionLeftText,
-                          style: const TextStyle(
-                            color: Colors.black,
+                          style: TextStyle(
+                            color: Theme.of(context).hintColor,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -134,22 +131,22 @@ class _ProjectTileState extends State<ProjectTile> {
                       children: [
                         Text(
                           currentCount.toString(),
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: Theme.of(context).hintColor,
                             fontSize: 16,
                           ),
                         ),
                         const SizedBox(width: 10),
-                        const Icon(
+                        Icon(
                           Icons.person,
-                          color: Colors.white,
+                          color: Theme.of(context).hintColor,
                         ),
                       ],
                     ),
                     Text(
                       numDaysTilStartText,
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: Theme.of(context).hintColor,
                         fontSize: 16,
                       ),
                     )
@@ -165,15 +162,15 @@ class _ProjectTileState extends State<ProjectTile> {
                     topRight: Radius.circular(10),
                     bottomRight: Radius.circular(10),
                     bottomLeft: Radius.circular(10)),
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).primaryColorDark,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     "Description",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Theme.of(context).hintColor,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -181,14 +178,15 @@ class _ProjectTileState extends State<ProjectTile> {
                   // const SizedBox(height: 10),
                   Text(
                     description,
-                    style: const TextStyle(
-                      color: Colors.black,
+                    style: TextStyle(
+                      color: Theme.of(context).hintColor,
                       fontSize: 16,
                     ),
                   ),
 
-                  const Divider(
-                    color: Colors.grey,
+                  Divider(
+                    // color: Theme.of(context).primaryColor,
+                    color: Color(0xff6B7280),
                     thickness: 1,
                   ),
 
@@ -199,10 +197,10 @@ class _ProjectTileState extends State<ProjectTile> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           "Technologies",
                           style: TextStyle(
-                            color: Colors.black,
+                            color: Theme.of(context).hintColor,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),

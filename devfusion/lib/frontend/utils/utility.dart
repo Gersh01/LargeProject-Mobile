@@ -28,23 +28,23 @@ const rejectInboxUrl = '${baseUrl}inbox/reject_member';
 const getInboxUrl = '${baseUrl}inbox/';
 
 final List<Color> bubbleBgColors = [
-  Colors.red, // bg-red-500
-  Colors.orange, // bg-orange-500
-  Colors.amber, // bg-amber-500
-  Colors.yellow, // bg-yellow-500
-  Colors.lime, // bg-lime-500
-  Colors.green, // bg-green-500
-  Colors.greenAccent, // bg-emerald-500
-  Colors.teal, // bg-teal-500
-  Colors.cyan, // bg-cyan-500
-  Colors.lightBlue, // bg-sky-500
-  Colors.blue, // bg-blue-500
-  Colors.indigo, // bg-indigo-500
-  Colors.purple, // bg-violet-500
-  Colors.deepPurple, // bg-purple-500
-  Colors.pink, // bg-fuchsia-500
-  Colors.pinkAccent, // bg-pink-500
-  Colors.pink, // bg-rose-500
+  Color(0xffb91c1c), // bg-red-700
+  Color(0xffc2410c), // bg-orange-700
+  Color(0xffb45309), // bg-amber-700
+  Color(0xffa16207), // bg-yellow-700
+  Color(0xff4d7c0f), // bg-lime-700
+  Color(0xff15803d), // bg-green-700
+  Color(0xff047857), // bg-emerald-700
+  Color(0xff0f766e), // bg-teal-700
+  Color(0xff0e7490), // bg-cyan-700
+  Color(0xff0369a1), // bg-sky-700
+  Color(0xff1d4ed8), // bg-blue-700
+  Color(0xff4338ca), // bg-indigo-700
+  Color(0xff7e22ce), // bg-violet-700
+  Color(0xffa21caf), // bg-purple-700
+  Color(0xffbe185d), // bg-fuchsia-700
+  Color(0xff9d174d), // bg-pink-700
+  Color(0xffbe123c) // bg-rose-700
 ];
 
 const technologies = [

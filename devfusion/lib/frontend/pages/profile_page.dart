@@ -48,20 +48,22 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future getUserProjects() async {}
 
-  void checkUrlPath() {
-    // var contextCheck = ModalRoute.of(context)?.settings;
-    // print(contextCheck);
-    // if (contextCheck != null) {
-    //   final uri = Uri.parse(contextCheck.name ?? '');
-    //   final hasId =
-    //       uri.pathSegments.length > 1 && uri.pathSegments[1].isNotEmpty;
-    //   print('Current path: ${uri.path}, Has ID: $hasId');
-    // }
-  }
+  void checkUrlPath() {}
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final currentRoute = ModalRoute.of(context)?.settings.name;
+      if (currentRoute != null) {
+        final uri = Uri.parse(currentRoute);
+        final id = uri.queryParameters['id'];
+        print("The current uri = " + uri.toString());
+        if (id != null) {
+          print("The current ID = " + id);
+        }
+      }
+    });
     getUserInfo();
     //getUserProjects();
     // checkUrlPath();
@@ -72,15 +74,15 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Profile',
           style: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'League Spartan',
-              color: Colors.white
-              // color: Theme.of(context).white,
-              ),
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'League Spartan',
+            color: Theme.of(context).hintColor,
+            // color: Theme.of(context).white,
+          ),
         ),
         backgroundColor: Theme.of(context).primaryColor,
       ),
@@ -101,11 +103,11 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         Text(
                           userProfile?.username ?? "",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'League Spartan',
-                            color: Colors.white,
+                            color: Theme.of(context).hintColor,
                           ),
                         ),
                       ]),
@@ -134,15 +136,15 @@ class _ProfilePageState extends State<ProfilePage> {
                         )
                       ],
                     )),
-                const Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 5, right: 10),
+                Padding(
+                  padding: EdgeInsets.only(left: 20, top: 5, right: 10),
                   child: Text(
                     "Projects",
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'League Spartan',
-                      color: Colors.white,
+                      color: Theme.of(context).hintColor,
                     ),
                   ),
                 ),

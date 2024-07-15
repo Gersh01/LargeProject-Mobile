@@ -78,7 +78,7 @@ class _BioFields extends State<BioFields> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.all(10),
                     child: Text(
                       "Bio",
@@ -86,15 +86,17 @@ class _BioFields extends State<BioFields> {
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'League Spartan',
-                        color: Colors.white,
+                        color: Theme.of(context).hintColor,
                       ),
                     ),
                   ),
                   widget.myProfile
                       ? IconButton(
-                          icon: Icon(!editMode
-                              ? Icons.mode_edit_outline
-                              : Icons.keyboard_double_arrow_up_outlined),
+                          icon: Icon(
+                              color: Theme.of(context).hintColor,
+                              !editMode
+                                  ? Icons.mode_edit_outline
+                                  : Icons.keyboard_double_arrow_up_outlined),
                           onPressed: () {
                             setState(() {
                               editMode = !editMode;

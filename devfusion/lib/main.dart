@@ -77,6 +77,7 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => const SignUpPage(),
         '/home': (context) => const Home(),
         '/profile': (context) => const ProfilePage(),
+        '/profile/:id': (context) => const ProfilePage(),
       },
       // Set the inital rout to be /home if user is signed in, otherwise set it /lander
       initialRoute: (isSignedIn) ? '/home' : '/lander',

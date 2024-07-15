@@ -45,6 +45,7 @@ class _TechBubbleState extends State<TechBubble> {
         onDeleted: widget.editMode ? deleteTechnology : null,
         deleteIcon: widget.editMode
             ? const Icon(
+                color: Colors.white,
                 size: 20,
                 Icons.remove_circle_outline,
               )

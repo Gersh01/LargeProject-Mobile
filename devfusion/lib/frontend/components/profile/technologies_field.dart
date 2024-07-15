@@ -144,7 +144,7 @@ class _TechnologiesField extends State<TechnologiesField> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Padding(
+              Padding(
                 padding: EdgeInsets.all(10),
                 child: Text(
                   "Technologies",
@@ -152,15 +152,17 @@ class _TechnologiesField extends State<TechnologiesField> {
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'League Spartan',
-                    color: Colors.white,
+                    color: Theme.of(context).hintColor,
                   ),
                 ),
               ),
               widget.myProfile
                   ? IconButton(
-                      icon: Icon(!editMode
-                          ? Icons.mode_edit_outline
-                          : Icons.keyboard_double_arrow_up_outlined),
+                      icon: Icon(
+                          color: Theme.of(context).hintColor,
+                          !editMode
+                              ? Icons.mode_edit_outline
+                              : Icons.keyboard_double_arrow_up_outlined),
                       onPressed: () {
                         setState(() {
                           editMode = !editMode;
@@ -189,7 +191,9 @@ class _TechnologiesField extends State<TechnologiesField> {
                                 ],
                                 controller: _techSearchController,
                                 onChanged: getTechnologiesList,
-                                style: const TextStyle(color: Colors.white),
+                                style: TextStyle(
+                                  color: Theme.of(context).hintColor,
+                                ),
                                 decoration: const InputDecoration(
                                     isDense: true,
                                     border: InputBorder.none,
@@ -204,7 +208,7 @@ class _TechnologiesField extends State<TechnologiesField> {
                       child: Container(
                           height: 34,
                           decoration: BoxDecoration(
-                            color: const Color(0xff374151),
+                            color: Theme.of(context).primaryColorLight,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: DropdownButton(
@@ -215,9 +219,11 @@ class _TechnologiesField extends State<TechnologiesField> {
                                       value: e,
                                     ))
                                 .toList(),
-                            style: TextStyle(fontSize: 18, color: Colors.white),
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Theme.of(context).hintColor),
                             value: _dropDownValue,
-                            dropdownColor: Theme.of(context).primaryColorDark,
+                            dropdownColor: Theme.of(context).primaryColorLight,
                             menuMaxHeight: 200,
                             isExpanded: true,
                             onChanged: dropDownCallback,
@@ -231,7 +237,11 @@ class _TechnologiesField extends State<TechnologiesField> {
                   Padding(
                     padding: const EdgeInsets.only(top: 5),
                     child: IconButton(
-                        onPressed: addTechnology, icon: Icon(Icons.add)),
+                        onPressed: addTechnology,
+                        icon: Icon(
+                          Icons.add,
+                          color: Theme.of(context).hintColor,
+                        )),
                   )
                 ])
               : Text(""),

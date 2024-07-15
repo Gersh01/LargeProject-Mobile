@@ -141,13 +141,13 @@ class _DiscoverState extends State<Discover> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Discover',
           style: TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
             fontFamily: 'League Spartan',
-            color: Colors.black,
+            color: Theme.of(context).hintColor,
           ),
         ),
         backgroundColor: Theme.of(context).primaryColor,
@@ -162,20 +162,18 @@ class _DiscoverState extends State<Discover> {
                       child: Container(
                         margin: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: Colors.grey[400],
+                          color: Theme.of(context).primaryColorLight,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Theme(
                           data: Theme.of(context).copyWith(
-                            canvasColor: Colors.grey[400],
+                            canvasColor: Theme.of(context).primaryColorLight,
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(10),
                             child: DropdownButton(
-                              
                               isDense: true,
                               items: const [
-                                
                                 DropdownMenuItem(
                                   value: 'title',
                                   child: Text('Title'),
@@ -201,16 +199,14 @@ class _DiscoverState extends State<Discover> {
                       ),
                     ),
 
-                    const SizedBox(
-                      width: 10,
-                      height: 40,
-                      
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                        ),
-                      )
-                    ),
+                    SizedBox(
+                        width: 10,
+                        height: 40,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColorLight,
+                          ),
+                        )),
 
                     //Search Bar
                     Expanded(
@@ -220,23 +216,24 @@ class _DiscoverState extends State<Discover> {
                           onChanged: (text) {
                             print("TEXT: $text");
                             setState(() {
-                              print("PROJECTS LENGTH BEFORE:  ${projects.length}");
+                              print(
+                                  "PROJECTS LENGTH BEFORE:  ${projects.length}");
                               projects.clear();
-                              print("PROJECTS LENGTH AFTER:  ${projects.length}");
+                              print(
+                                  "PROJECTS LENGTH AFTER:  ${projects.length}");
                               _query = text;
                               fetchProjects(true);
-                            }
-                          );
+                            });
                           },
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             hintText: 'Search',
                             hintStyle: TextStyle(
-                              color: Color.fromRGBO(0, 0, 0, 0.4),
+                              color: Theme.of(context).hintColor,
                             ),
                             prefixIcon: Icon(Icons.search),
                             filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
+                            fillColor: Theme.of(context).primaryColorLight,
+                            border: const OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20)),
                               borderSide: BorderSide.none,
@@ -252,16 +249,19 @@ class _DiscoverState extends State<Discover> {
 
                 Align(
                   alignment: Alignment.centerRight,
-                  child: DropdownButton(items: const [
-                    DropdownMenuItem(
-                      value: 'recent',
-                      child: Text('Most Recent'),
-                    ),
-                    DropdownMenuItem(
-                      value: 'relevance',
-                      child: Text('Relevance'),
-                    )
-                  ], value: _dropdownSortByValue, onChanged: dropdownSortByCallback),
+                  child: DropdownButton(
+                      items: const [
+                        DropdownMenuItem(
+                          value: 'recent',
+                          child: Text('Most Recent'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'relevance',
+                          child: Text('Relevance'),
+                        )
+                      ],
+                      value: _dropdownSortByValue,
+                      onChanged: dropdownSortByCallback),
                 ),
 
                 //Project Cards
@@ -271,9 +271,7 @@ class _DiscoverState extends State<Discover> {
                     itemCount: projects.length,
                     itemBuilder: (BuildContext context, int index) {
                       var project = projects[index];
-                      return ProjectTile(
-                        project: project
-                      );
+                      return ProjectTile(project: project);
                     },
                   ),
                 ),
