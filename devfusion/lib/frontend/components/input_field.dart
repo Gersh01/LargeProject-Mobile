@@ -12,7 +12,7 @@ class InputField extends StatelessWidget {
   final IconButton? suffixIcon;
   final String? hintText;
   final Color? backgroundColor;
-  final Color? color;
+  final Color color;
 
   const InputField({
     super.key,
@@ -25,7 +25,7 @@ class InputField extends StatelessWidget {
     this.suffixIcon,
     this.hintText,
     this.backgroundColor,
-    this.color,
+    required this.color,
   });
 
   Text? convertErrorsToText() {

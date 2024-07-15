@@ -84,7 +84,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             leading: Padding(
               padding: const EdgeInsets.only(left: 30),
               child: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                icon:
+                    Icon(Icons.arrow_back, color: Theme.of(context).hintColor),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ),
@@ -102,11 +103,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             ),
             child: Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 20.0),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 90,
                       ),
                       // Center(
@@ -116,7 +117,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'League Spartan',
-                          color: Colors.white,
+                          color: Theme.of(context).hintColor,
                         ),
                       ),
                       // ),
@@ -128,6 +129,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   child: Column(
                     children: [
                       InputField(
+                        color: Theme.of(context).hintColor,
                         backgroundColor: Theme.of(context).primaryColorDark,
                         placeholderText: 'Email',
                         controller: _emailController,
@@ -139,7 +141,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       Button(
                         placeholderText: 'Submit',
                         backgroundColor: Theme.of(context).focusColor,
-                        textColor: Colors.white,
+                        textColor: Theme.of(context).hintColor,
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
                             sendForgotPassword();

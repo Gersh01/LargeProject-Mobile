@@ -274,6 +274,7 @@ class _SettingsState extends State<Settings> {
                     const SizedBox(width: 10),
                     Expanded(
                       child: InputField(
+                        color: Theme.of(context).hintColor,
                         backgroundColor: Theme.of(context).primaryColorDark,
                         placeholderText: 'First Name',
                         controller: _firstNameController,
@@ -286,6 +287,7 @@ class _SettingsState extends State<Settings> {
                     const SizedBox(width: 10),
                     Expanded(
                       child: InputField(
+                        color: Theme.of(context).hintColor,
                         backgroundColor: Theme.of(context).primaryColorDark,
                         placeholderText: 'Last Name',
                         controller: _lastNameController,

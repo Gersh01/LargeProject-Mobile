@@ -146,7 +146,10 @@ class _ResetPasswordState extends State<ResetPassword> {
             leading: Padding(
               padding: const EdgeInsets.only(left: 30),
               child: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Theme.of(context).hintColor,
+                ),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ),
@@ -164,11 +167,11 @@ class _ResetPasswordState extends State<ResetPassword> {
             ),
             child: Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 20.0),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 90,
                       ),
                       // Center(
@@ -178,7 +181,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'League Spartan',
-                          color: Colors.white,
+                          color: Theme.of(context).hintColor,
                         ),
                       ),
                       // ),
@@ -190,6 +193,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   child: Column(
                     children: [
                       InputField(
+                        color: Theme.of(context).hintColor,
                         backgroundColor: Theme.of(context).primaryColorDark,
                         placeholderText: 'Password',
                         isObscure: passwordVisible,
@@ -204,7 +208,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                             passwordVisible
                                 ? Icons.visibility
                                 : Icons.visibility_off,
-                            color: Colors.white,
+                            color: Theme.of(context).hintColor,
                           ),
                           onPressed: () {
                             // Update the state i.e. toogle the state of passwordVisible variable
@@ -215,6 +219,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                         ),
                       ),
                       InputField(
+                        color: Theme.of(context).hintColor,
                         backgroundColor: Theme.of(context).primaryColorDark,
                         placeholderText: 'Confirm Password',
                         isObscure: passwordConfirmVisible,
@@ -229,7 +234,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                             passwordConfirmVisible
                                 ? Icons.visibility
                                 : Icons.visibility_off,
-                            color: Colors.white,
+                            color: Theme.of(context).hintColor,
                           ),
                           onPressed: () {
                             // Update the state i.e. toogle the state of passwordVisible variable
@@ -243,7 +248,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                       Button(
                         placeholderText: 'Submit',
                         backgroundColor: Theme.of(context).focusColor,
-                        textColor: Colors.white,
+                        textColor: Theme.of(context).hintColor,
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
                             updatePassword();
