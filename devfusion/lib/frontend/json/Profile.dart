@@ -13,7 +13,7 @@ class Profile {
 
   factory Profile.fromJson(Map<String, dynamic> json) {
     return Profile(
-      json['userId'] as String,
+      json['id'] as String,
       json['firstName'] as String,
       json['lastName'] as String,
       json['email'] as String,
@@ -26,6 +26,6 @@ class Profile {
 
   @override
   String toString() {
-    return "{userId: $userId, firstName: $firstName, lastName: $lastName, email: $email, username: $username, bio: $bio, technologies: $technologies, link: $link}";
+    return "{id: $userId, firstName: $firstName, lastName: $lastName, email: $email, username: $username, bio: $bio, technologies: $technologies, link: $link}";
   }
 }

@@ -92,8 +92,9 @@ class _ProjectTileState extends State<ProjectTile> {
                       bottomLeft: Radius.circular(10),
                       topRight: Radius.circular(10),
                       topLeft: Radius.circular(10)),
-                  color: Theme.of(context).focusColor,
-                  ),
+                  gradient: LinearGradient(
+                    colors: [Color(0xffFB923C), Color(0xffF97316)],
+                  )),
               child: Column(children: [
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -160,11 +161,11 @@ class _ProjectTileState extends State<ProjectTile> {
           Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(10),
-                      bottomRight: Radius.circular(10),
-                      bottomLeft: Radius.circular(10)),
-                  color: Theme.of(context).primaryColor,
+                borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10)),
+                color: Theme.of(context).primaryColor,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -209,7 +210,10 @@ class _ProjectTileState extends State<ProjectTile> {
                         Wrap(
                           spacing: 10,
                           children: technologies
-                              .map((tech) => TechBubble(technology: tech))
+                              .map((tech) => TechBubble(
+                                    technology: tech,
+                                    editMode: false,
+                                  ))
                               .toList(),
                         ),
                       ],
