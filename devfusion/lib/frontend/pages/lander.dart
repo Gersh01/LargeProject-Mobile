@@ -3,8 +3,11 @@ import 'dart:convert';
 import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:devfusion/frontend/pages/home.dart';
 import 'package:devfusion/frontend/utils/utility.dart';
+import 'package:devfusion/themes/theme.dart';
+import 'package:devfusion/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import '../components/Button.dart';
 
 class Lander extends StatelessWidget {
@@ -14,6 +17,11 @@ class Lander extends StatelessWidget {
     SharedPref sharedPref = SharedPref();
     String? token = await sharedPref.readToken();
     // Future.delayed(const Duration(seconds: 2), () async {
+    bool? isInDarkMode = await sharedPref.readDarkMode();
+    if (isInDarkMode != null) {
+      Provider.of<ThemeProvider>(context, listen: false)
+          .toggleTheme(isInDarkMode);
+    }
     if (token != null) {
       var reqBody = {"token": token};
 

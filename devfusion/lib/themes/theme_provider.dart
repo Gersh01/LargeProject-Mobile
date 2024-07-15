@@ -12,13 +12,14 @@ class ThemeProvider with ChangeNotifier {
   }
 
   void toggleTheme(bool isDark) {
-    if (_themeData == null) {
-      themeData = (isDark) ? darkMode : lightMode;
-    } else if (_themeData == lightMode) {
-      themeData = darkMode;
-    } else {
-      themeData = lightMode;
-    }
+    // if (_themeData == null) {
+    themeData = (isDark) ? darkMode : lightMode;
+    // }
+    // else if (_themeData == lightMode) {
+    //   themeData = darkMode;
+    // } else {
+    //   themeData = lightMode;
+    // }
   }
 
   // void setToggleTheme(ThemeData themeData) {

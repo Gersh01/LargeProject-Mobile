@@ -79,7 +79,7 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => const Profile(),
       },
       // Set the inital rout to be /home if user is signed in, otherwise set it /lander
-      initialRoute: (isSignedIn) ? '/home' : '/login',
+      initialRoute: (isSignedIn) ? '/home' : '/lander',
       // initialRoute: '/home',
     );
   }
