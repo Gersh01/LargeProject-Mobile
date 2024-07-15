@@ -59,6 +59,7 @@ class _ApplicationPageState extends State<ApplicationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         title: const Text(
           'Applications',
@@ -76,7 +77,7 @@ class _ApplicationPageState extends State<ApplicationPage> {
             ],
           ),
         ),
-        backgroundColor: const Color.fromRGBO(31, 41, 55, 1),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Column(
         //Project Cards
@@ -86,7 +87,9 @@ class _ApplicationPageState extends State<ApplicationPage> {
             margin: const EdgeInsets.all(10.0),
             child: Text(
               inbox.projectTitle,
-              style: const TextStyle(fontSize: 18),
+              style: const TextStyle(
+                fontSize: 18,
+              ),
             ),
           ),
           Expanded(
