@@ -47,7 +47,7 @@ class Lander extends StatelessWidget {
     initLogin(context);
     return MaterialApp(
         home: Scaffold(
-            backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
+            backgroundColor: Theme.of(context).focusColor,
             body: Padding(
                 padding: const EdgeInsets.only(
                     left: 30.0, right: 30.0, top: 150.0, bottom: 5.0),
@@ -96,7 +96,7 @@ class Lander extends StatelessWidget {
                             "Together, we can build a brighter future, one line of code at a time!")),
                     Expanded(
                         child: Container(
-                      color: const Color.fromRGBO(124, 58, 237, 1),
+                      color: Theme.of(context).focusColor,
                     )),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 30.0),
