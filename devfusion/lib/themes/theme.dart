@@ -21,6 +21,7 @@ const approve = Color(0xFF63CF48);
 
 ThemeData lightMode = ThemeData(
     brightness: Brightness.light,
+    hintColor: Colors.black,
     primaryColor: lightPrimary,
     primaryColorLight: lightPrimaryVariant,
     primaryColorDark: lightSecondary,
@@ -47,6 +48,7 @@ ThemeData lightMode = ThemeData(
 
 ThemeData darkMode = ThemeData(
     brightness: Brightness.dark,
+    hintColor: Colors.white,
     primaryColor: darkPrimary,
     primaryColorDark: darkPrimaryVariant,
     primaryColorLight: darkSecondary,

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:devfusion/frontend/pages/home.dart';
 import 'package:devfusion/frontend/utils/utility.dart';
-import 'package:devfusion/themes/theme.dart';
 import 'package:devfusion/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
