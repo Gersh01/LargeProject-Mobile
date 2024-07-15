@@ -205,13 +205,13 @@ class _SettingsState extends State<Settings> {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Settings',
           style: TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
             fontFamily: 'League Spartan',
-            color: Colors.white,
+            color: Theme.of(context).hintColor,
           ),
         ),
         backgroundColor: Theme.of(context).primaryColor,
@@ -228,11 +228,11 @@ class _SettingsState extends State<Settings> {
               Expanded(child: Container()),
               SizedButton(
                 height: 25,
-                textStyle: const TextStyle(
+                textStyle: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'League Spartan',
-                  color: Colors.white,
+                  color: Theme.of(context).hintColor,
                 ),
                 // width: 120,
                 placeholderText: 'Upload',
@@ -257,13 +257,13 @@ class _SettingsState extends State<Settings> {
               Container(
                 alignment: Alignment.topLeft,
                 padding: const EdgeInsets.only(left: 10),
-                child: const Text(
+                child: Text(
                   'Name',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'League Spartan',
-                    color: Colors.white,
+                    color: Theme.of(context).hintColor,
                   ),
                 ),
               ),
@@ -308,11 +308,11 @@ class _SettingsState extends State<Settings> {
                     alignment: Alignment.centerRight,
                     child: SizedButton(
                       height: 25,
-                      textStyle: const TextStyle(
+                      textStyle: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'League Spartan',
-                        color: Colors.white,
+                        color: Theme.of(context).hintColor,
                       ),
                       // width: 120,
                       placeholderText: 'Save',
@@ -341,13 +341,13 @@ class _SettingsState extends State<Settings> {
               Container(
                 alignment: Alignment.topLeft,
                 padding: const EdgeInsets.only(left: 10),
-                child: const Text(
+                child: Text(
                   'Display Mode',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'League Spartan',
-                    color: Colors.white,
+                    color: Theme.of(context).hintColor,
                   ),
                 ),
               ),
@@ -399,24 +399,24 @@ class _SettingsState extends State<Settings> {
               Container(
                 alignment: Alignment.topLeft,
                 padding: const EdgeInsets.only(left: 10),
-                child: const Text(
+                child: Text(
                   'Password',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'League Spartan',
-                    color: Colors.white,
+                    color: Theme.of(context).hintColor,
                   ),
                 ),
               ),
               SizedButton(
                 // width: 130,
                 height: 25,
-                textStyle: const TextStyle(
+                textStyle: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'League Spartan',
-                  color: Colors.white,
+                  color: Theme.of(context).hintColor,
                 ),
                 placeholderText: 'Reset Password',
                 backgroundColor: danger,
