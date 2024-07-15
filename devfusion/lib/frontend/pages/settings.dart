@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:devfusion/frontend/components/InputField.dart';
 import 'package:devfusion/frontend/components/SizedButton.dart';
-import 'package:devfusion/frontend/components/modals/apply_modal.dart';
-import 'package:devfusion/frontend/components/modals/confirm_cancel_modal.dart';
+// import 'package:devfusion/frontend/components/modals/apply_modal.dart';
+// import 'package:devfusion/frontend/components/modals/confirm_cancel_modal.dart';
 import 'package:devfusion/frontend/components/profile_pictures.dart';
 import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:devfusion/frontend/pages/lander.dart';
@@ -19,7 +19,6 @@ import 'package:permission_handler/permission_handler.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/Button.dart';
 
@@ -378,7 +377,7 @@ class _SettingsState extends State<Settings> {
                       //       .toggleTheme();
                       // }
                       Provider.of<ThemeProvider>(context, listen: false)
-                          .toggleTheme();
+                          .toggleTheme(dark);
                     });
                     sharedPref.writeDarkMode(isDarkMode: dark);
                   },

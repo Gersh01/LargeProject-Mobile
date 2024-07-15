@@ -1,4 +1,3 @@
-import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:flutter/material.dart';
 import '../themes/theme.dart';
 
@@ -12,8 +11,10 @@ class ThemeProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void toggleTheme() {
-    if (_themeData == lightMode) {
+  void toggleTheme(bool isDark) {
+    if (_themeData == null) {
+      themeData = (isDark) ? darkMode : lightMode;
+    } else if (_themeData == lightMode) {
       themeData = darkMode;
     } else {
       themeData = lightMode;
