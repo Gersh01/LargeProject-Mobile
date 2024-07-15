@@ -143,6 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: Column(
                             children: [
                               InputField(
+                                color: Theme.of(context).hintColor,
                                 backgroundColor:
                                     Theme.of(context).primaryColorDark,
                                 placeholderText: 'Username',
@@ -152,6 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                                 errorCount: usernameErrorDouble,
                               ),
                               InputField(
+                                color: Theme.of(context).hintColor,
                                 backgroundColor:
                                     Theme.of(context).primaryColorDark,
                                 placeholderText: 'Password',

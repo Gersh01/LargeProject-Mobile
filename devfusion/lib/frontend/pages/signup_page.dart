@@ -282,6 +282,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               children: [
                                 Expanded(
                                   child: InputField(
+                                    color: Theme.of(context).hintColor,
                                     backgroundColor:
                                         Theme.of(context).primaryColorDark,
                                     placeholderText: 'First Name',
@@ -294,6 +295,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 const SizedBox(width: 10),
                                 Expanded(
                                   child: InputField(
+                                    color: Theme.of(context).hintColor,
                                     backgroundColor:
                                         Theme.of(context).primaryColorDark,
                                     placeholderText: 'Last Name',
@@ -310,6 +312,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               child: Column(
                                 children: [
                                   InputField(
+                                    color: Theme.of(context).hintColor,
                                     backgroundColor:
                                         Theme.of(context).primaryColorDark,
                                     placeholderText: 'Username',
@@ -319,6 +322,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     errorCount: usernameErrorDouble,
                                   ),
                                   InputField(
+                                    color: Theme.of(context).hintColor,
                                     backgroundColor:
                                         Theme.of(context).primaryColorDark,
                                     placeholderText: 'Email',
@@ -328,6 +332,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     errorCount: emailErrorDouble,
                                   ),
                                   InputField(
+                                    color: Theme.of(context).hintColor,
                                     backgroundColor:
                                         Theme.of(context).primaryColorDark,
                                     placeholderText: 'Password',

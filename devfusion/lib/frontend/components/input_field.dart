@@ -12,6 +12,7 @@ class InputField extends StatelessWidget {
   final IconButton? suffixIcon;
   final String? hintText;
   final Color? backgroundColor;
+  final Color? color;
 
   const InputField({
     super.key,
@@ -24,6 +25,7 @@ class InputField extends StatelessWidget {
     this.suffixIcon,
     this.hintText,
     this.backgroundColor,
+    this.color,
   });
 
   Text? convertErrorsToText() {
@@ -98,7 +100,7 @@ class InputField extends StatelessWidget {
                     child: Text(
                       placeholderText!,
                       style: TextStyle(
-                        color: Theme.of(context).hintColor,
+                        color: color,
                         fontFamily: 'Poppins',
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
@@ -115,7 +117,7 @@ class InputField extends StatelessWidget {
                       autocorrect: false,
                       validator: validator,
                       controller: controller,
-                      style: TextStyle(color: Theme.of(context).hintColor),
+                      style: TextStyle(color: color),
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding:
@@ -125,7 +127,7 @@ class InputField extends StatelessWidget {
                         hintText: getHintText(),
                         errorStyle: const TextStyle(fontSize: 0),
                         hintStyle: TextStyle(
-                          color: Theme.of(context).hintColor,
+                          color: color,
                           fontFamily: 'Poppins',
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
