@@ -213,7 +213,7 @@ class _LoginPageState extends State<LoginPage> {
                       Button(
                         placeholderText: 'Login',
                         backgroundColor: Theme.of(context).focusColor,
-                        textColor: Theme.of(context).hintColor,
+                        textColor: Colors.white,
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
                             login(context);

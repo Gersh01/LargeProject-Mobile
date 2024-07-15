@@ -367,7 +367,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       Button(
                         placeholderText: 'Sign Up',
                         backgroundColor: Theme.of(context).focusColor,
-                        textColor: Theme.of(context).hintColor,
+                        textColor: Colors.white,
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
                             signUp();

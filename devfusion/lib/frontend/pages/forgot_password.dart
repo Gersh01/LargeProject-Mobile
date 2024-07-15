@@ -141,7 +141,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       Button(
                         placeholderText: 'Submit',
                         backgroundColor: Theme.of(context).focusColor,
-                        textColor: Theme.of(context).hintColor,
+                        textColor: Colors.white,
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
                             sendForgotPassword();
