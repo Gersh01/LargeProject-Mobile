@@ -97,8 +97,8 @@ class InputField extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 2.0),
                     child: Text(
                       placeholderText!,
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: Theme.of(context).hintColor,
                         fontFamily: 'Poppins',
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
@@ -115,7 +115,7 @@ class InputField extends StatelessWidget {
                       autocorrect: false,
                       validator: validator,
                       controller: controller,
-                      style: const TextStyle(color: Colors.white),
+                      style: TextStyle(color: Theme.of(context).hintColor),
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding:
@@ -124,8 +124,8 @@ class InputField extends StatelessWidget {
                         // border: const OutlineInputBorder(),
                         hintText: getHintText(),
                         errorStyle: const TextStyle(fontSize: 0),
-                        hintStyle: const TextStyle(
-                          color: Colors.white,
+                        hintStyle: TextStyle(
+                          color: Theme.of(context).hintColor,
                           fontFamily: 'Poppins',
                           fontSize: 14,
                           fontWeight: FontWeight.w500,

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
 import '../components/Button.dart';
-import '../components/InputField.dart';
+import '../components/input_field.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({super.key});

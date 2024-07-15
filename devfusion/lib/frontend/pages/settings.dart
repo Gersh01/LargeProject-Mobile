@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:devfusion/frontend/components/InputField.dart';
+import 'package:devfusion/frontend/components/input_field.dart';
 import 'package:devfusion/frontend/components/SizedButton.dart';
 // import 'package:devfusion/frontend/components/modals/apply_modal.dart';
 // import 'package:devfusion/frontend/components/modals/confirm_cancel_modal.dart';

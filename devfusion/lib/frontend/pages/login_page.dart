@@ -4,8 +4,7 @@ import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:flutter/material.dart';
 
 import '../components/Button.dart';
-import '../components/Divider.dart';
-import '../components/InputField.dart';
+import '../components/input_field.dart';
 import '../components/DevFusionColoredText.dart';
 import 'package:http/http.dart' as http;
 import '../utils/utility.dart';
@@ -116,11 +115,12 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       //DevFusion Text
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.only(bottom: 50.0),
                         child: Column(
                           children: [
-                            DevFusionColoredText(),
+                            DevFusionColoredText(
+                                color: Theme.of(context).focusColor),
                             Center(
                               child: Text(
                                 'Login',
@@ -128,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'League Spartan',
-                                  color: Colors.white,
+                                  color: Theme.of(context).hintColor,
                                 ),
                               ),
                             ),
@@ -167,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                                     passwordVisible
                                         ? Icons.visibility
                                         : Icons.visibility_off,
-                                    color: Colors.white,
+                                    color: Theme.of(context).hintColor,
                                   ),
                                   onPressed: () {
                                     // Update the state i.e. toogle the state of passwordVisible variable
@@ -186,10 +186,10 @@ class _LoginPageState extends State<LoginPage> {
                                     padding: const EdgeInsets.only(
                                         top: 5.0, right: 1.0),
                                     child: InkWell(
-                                      child: const Text(
+                                      child: Text(
                                         'Forgot Password',
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: Theme.of(context).hintColor,
                                           fontSize: 12,
                                           fontFamily: 'Poppins',
                                           fontWeight: FontWeight.w500,
@@ -211,7 +211,7 @@ class _LoginPageState extends State<LoginPage> {
                       Button(
                         placeholderText: 'Login',
                         backgroundColor: Theme.of(context).focusColor,
-                        textColor: Colors.white,
+                        textColor: Theme.of(context).hintColor,
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
                             login(context);
@@ -219,14 +219,14 @@ class _LoginPageState extends State<LoginPage> {
                         },
                       ),
 
-                      const DividerLine(),
+                      const Divider(),
                       Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: InkWell(
-                          child: const Text(
+                          child: Text(
                             'Sign Up Instead',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Theme.of(context).hintColor,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,
                             ),
