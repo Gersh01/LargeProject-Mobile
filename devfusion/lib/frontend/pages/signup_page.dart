@@ -269,10 +269,11 @@ class _SignUpPageState extends State<SignUpPage> {
                             DevFusionColoredText(
                                 color: Theme.of(context).focusColor),
                             Center(
-                              child: Text(
-                                'Sign Up',
-                                style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 18)
-                              ),
+                              child: Text('Sign Up',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall
+                                      ?.copyWith(fontSize: 18)),
                             ),
                           ],
                         ),
@@ -285,6 +286,8 @@ class _SignUpPageState extends State<SignUpPage> {
                               children: [
                                 Expanded(
                                   child: InputField(
+                                    backgroundColor:
+                                        Theme.of(context).primaryColorDark,
                                     color: Theme.of(context).hintColor,
                                     placeholderText: 'First Name',
                                     controller: _firstNameController,
@@ -296,6 +299,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                 const SizedBox(width: 10),
                                 Expanded(
                                   child: InputField(
+                                    backgroundColor:
+                                        Theme.of(context).primaryColorDark,
                                     color: Theme.of(context).hintColor,
                                     placeholderText: 'Last Name',
                                     controller: _lastNameController,
@@ -311,6 +316,8 @@ class _SignUpPageState extends State<SignUpPage> {
                               child: Column(
                                 children: [
                                   InputField(
+                                    backgroundColor:
+                                        Theme.of(context).primaryColorDark,
                                     color: Theme.of(context).hintColor,
                                     placeholderText: 'Username',
                                     controller: _usernameController,
@@ -319,6 +326,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                     errorCount: usernameErrorDouble,
                                   ),
                                   InputField(
+                                    backgroundColor:
+                                        Theme.of(context).primaryColorDark,
                                     color: Theme.of(context).hintColor,
                                     placeholderText: 'Email',
                                     controller: _emailController,
@@ -327,6 +336,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                     errorCount: emailErrorDouble,
                                   ),
                                   InputField(
+                                    backgroundColor:
+                                        Theme.of(context).primaryColorDark,
                                     color: Theme.of(context).hintColor,
                                     placeholderText: 'Password',
                                     isObscure: passwordVisible,
@@ -372,8 +383,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         padding: const EdgeInsets.all(5.0),
                         child: InkWell(
                           child: Text('Login Instead',
-                              style: Theme.of(context).textTheme.bodySmall
-                            ),
+                              style: Theme.of(context).textTheme.bodySmall),
                           onTap: () {
                             Navigator.pushNamed(context, '/login');
                           },
