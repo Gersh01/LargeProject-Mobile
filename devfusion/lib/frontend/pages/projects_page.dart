@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../components/my_projects_tile.dart';
+import '../json/Profile.dart';
 
 class Projects extends StatefulWidget {
   const Projects({super.key});
@@ -30,6 +31,8 @@ class _ProjectsState extends State<Projects>
   bool isRetrievingJoinedProjects = true;
   bool endOfOwnedProject = false;
   bool endOfJoinedProject = false;
+
+  late Profile? userProfile = null;
 
   String username = "";
 
@@ -73,6 +76,27 @@ class _ProjectsState extends State<Projects>
 
     var token = await sharedPref.readToken();
 
+    var reqBodyUser = {"token": token};
+
+    var userResponse = await http.post(
+      Uri.parse(jwtUrl),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(reqBodyUser),
+    );
+
+    if (userResponse.statusCode == 200) {
+      var jsonResponse = jsonDecode(userResponse.body);
+      sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
+      setState(() {
+        userProfile = Profile.fromJson(jsonResponse);
+        username = userProfile!.username;
+      });
+    } else {
+      print("settings jwt unsucessful");
+    }
+
+
+
     var reqBody = {
       "token": token,
 
@@ -89,6 +113,8 @@ class _ProjectsState extends State<Projects>
               ? ownedProjects[ownedProjects.length - 1].id
               : joinedProjects[joinedProjects.length - 1].id),
     };
+
+
 
     var ownedProjectsResponse;
     var joinedProjectsResponse;
@@ -210,20 +236,14 @@ class _ProjectsState extends State<Projects>
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
+          title: Text(
             'Projects',
             style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'League Spartan',
-                color: Colors.black,
-                shadows: [
-                  Shadow(
-                    offset: Offset(0, 4.0),
-                    blurRadius: 20.0,
-                    color: Colors.white,
-                  ),
-                ]),
+                color: Theme.of(context).hintColor,
+                ),
           ),
           bottom: TabBar(
             onTap: (index) {
