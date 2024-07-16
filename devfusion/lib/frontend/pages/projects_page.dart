@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 
 import '../components/my_projects_tile.dart';
 import '../json/Profile.dart';
+import 'view_project.dart';
 
 class Projects extends StatefulWidget {
   const Projects({super.key});
@@ -274,7 +275,19 @@ class _ProjectsState extends State<Projects>
               itemCount: ownedProjects.length,
               itemBuilder: (BuildContext context, int index) {
                 var project = ownedProjects[index];
-                return MyProjectsTile(project: project);
+                return InkWell(
+                          child: MyProjectsTile(project: project),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ViewProject(
+                                  project: project,
+                                ),
+                              ),
+                            );
+                          },
+                      );
               },
             ),
             ListView.builder(
@@ -282,7 +295,19 @@ class _ProjectsState extends State<Projects>
               itemCount: joinedProjects.length,
               itemBuilder: (BuildContext context, int index) {
                 var project = joinedProjects[index];
-                return JoinedProjectsTile(project: project, username: username);
+                return InkWell(
+                          child: JoinedProjectsTile(project: project, username: username),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ViewProject(
+                                  project: project,
+                                ),
+                              ),
+                            );
+                          },
+                      );
               },
             ),
           ],

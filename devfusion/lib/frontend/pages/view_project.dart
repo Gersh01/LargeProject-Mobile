@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../components/Divider.dart';
+import '../components/tech_bubble.dart';
 import '../json/Project.dart';
 import '../json/Role.dart';
+import '../json/communication.dart';
+import '../json/team_member.dart';
 
 class ViewProject extends StatefulWidget {
   final Project project;
@@ -41,10 +44,12 @@ class _ViewProjectState extends State<ViewProject> {
       }
     }
 
+
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(),
-      body: Center(
+      body: ListView(
+        children: [Center(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(widget.project.title),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -80,10 +85,91 @@ class _ViewProjectState extends State<ViewProject> {
               fontSize: 20,
               fontWeight: FontWeight.bold
             )
-          )
+          ),
+          
+
           
         ]),
       ),
+
+      for (Role role in widget.project.roles)
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10)),
+                color: Theme.of(context).primaryColorDark,
+              ),
+
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(role.role),
+
+                Divider(),
+
+                Text(
+                  "Description",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold
+                  )
+                ),
+                Text(role.description),
+
+
+                Divider(),
+
+                Text(
+                  "Current Members",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold
+                  )
+                ),
+
+                for (TeamMember member in widget.project.teamMembers)
+                  if (member.role == role.role)
+                    Wrap(
+                      children: [
+                        Text(member.username)
+                      ]
+                    )
+              ]
+            )
+            )
+          ]),
+      
+
+      Text("Technologies"),
+
+      Wrap(
+        children: [
+          for (String tech in widget.project.technologies)
+            TechBubble(technology: tech, editMode: false)
+        ]
+      ),
+
+      Text("Communications"),
+
+      for (Communication communication in widget.project.communications)
+        Container(
+
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(communication.name),
+              Text(communication.link)
+            ]
+          )
+        )
+
+      ])
     );
   }
 }
