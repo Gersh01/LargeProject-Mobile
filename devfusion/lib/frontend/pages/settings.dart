@@ -494,7 +494,7 @@ class _SettingsState extends State<Settings> {
                     textColor: Colors.white,
                     onPressed: () {
                       sharedPref.removeToken();
-                      Navigator.pushNamed(context, '/resetPassword');
+                      Navigator.pushNamed(context, '/login');
                     },
                   ),
                 ],
