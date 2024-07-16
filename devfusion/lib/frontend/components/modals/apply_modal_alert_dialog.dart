@@ -137,6 +137,10 @@ class _ApplyModalAlertDialogState extends State<ApplyModalAlertDialog> {
                 decoration: const InputDecoration(
                   contentPadding: EdgeInsets.only(left: 5, right: 5),
                   enabledBorder: InputBorder.none,
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
                 ),
                 isExpanded: true,
                 hint: hintText,
