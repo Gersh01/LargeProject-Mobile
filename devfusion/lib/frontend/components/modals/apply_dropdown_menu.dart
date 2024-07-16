@@ -40,7 +40,7 @@ class _ApplyDropDownState extends State<ApplyDropDown> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        color: const Color.fromRGBO(17, 24, 39, 1),
+        color: Theme.of(context).primaryColorDark,
       ),
       child: DropdownButtonFormField<String>(
         isExpanded: true,
