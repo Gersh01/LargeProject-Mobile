@@ -87,7 +87,7 @@ class InputField extends StatelessWidget {
               borderRadius: const BorderRadius.all(
                 Radius.circular(5),
               ),
-              color: backgroundColor,
+              color: Theme.of(context).primaryColorDark,
             ),
 
             child: Padding(
@@ -97,15 +97,35 @@ class InputField extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(bottom: 2.0),
-                    child: Text(
-                      placeholderText!,
-                      style: TextStyle(
-                        color: color,
-                        fontFamily: 'Poppins',
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    child: Row(
+                      children: [
+
+                        //Chooses Icon for field based on placeholder text
+                        placeholderText=='Username'?
+                          const Icon(Icons.account_circle_outlined, size: 14) 
+                        :placeholderText=='Password'?
+                          const Icon(Icons.lock_open, size: 14)
+                        :placeholderText=='Email'?
+                          const Icon(Icons.mail_outline, size: 14)
+                        :Container(),
+                        
+                        //Places padding between icon and text only if icon is present
+                        placeholderText=='Username'?
+                          const SizedBox(width: 5)
+                        :placeholderText=='Password'?
+                          const SizedBox(width: 5)
+                        :placeholderText=='Email'?
+                          const SizedBox(width: 5)
+                        :Container(),
+
+                        Text(
+                          placeholderText!,
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                      ],
                     ),
+
+                    
                   ),
                   SizedBox(
                     height: 22,
@@ -117,7 +137,7 @@ class InputField extends StatelessWidget {
                       autocorrect: false,
                       validator: validator,
                       controller: controller,
-                      style: TextStyle(color: color),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 14),
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding:
@@ -126,12 +146,7 @@ class InputField extends StatelessWidget {
                         // border: const OutlineInputBorder(),
                         hintText: getHintText(),
                         errorStyle: const TextStyle(fontSize: 0),
-                        hintStyle: TextStyle(
-                          color: color,
-                          fontFamily: 'Poppins',
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
+                        hintStyle: Theme.of(context).textTheme.bodySmall?.copyWith(color: color),
                         suffixIcon: Transform.scale(
                           scale: 1,
                           child: suffixIcon,

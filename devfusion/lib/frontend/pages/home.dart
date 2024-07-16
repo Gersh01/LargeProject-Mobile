@@ -117,7 +117,7 @@ class _HomeState extends State<Home> {
                     color: Theme.of(context).hintColor,
                     Icons.settings_outlined),
                 label: 'Settings'),
-          ]),
+            ]),
     );
   }
 }

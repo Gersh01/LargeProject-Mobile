@@ -164,7 +164,7 @@ class _DiscoverState extends State<Discover> {
                       child: Container(
                         margin: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColorLight,
+                          color: Theme.of(context).primaryColorDark,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Theme(

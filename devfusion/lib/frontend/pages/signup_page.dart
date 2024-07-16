@@ -7,6 +7,9 @@ import '../components/input_field.dart';
 import '../components/DevFusionColoredText.dart';
 import 'package:http/http.dart' as http;
 import '../utils/utility.dart';
+import '/themes/theme.dart';
+import 'package:provider/provider.dart';
+import 'package:devfusion/themes/theme_provider.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -228,8 +231,13 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: (Provider.of<ThemeProvider>(context).themeData == null)
+          ? lightMode
+          : Provider.of<ThemeProvider>(context).themeData,
+      darkTheme: (Provider.of<ThemeProvider>(context).themeData == null)
+          ? darkMode
+          : Provider.of<ThemeProvider>(context).themeData,
       //Background
-
       home: Scaffold(
         body: ListView(
           children: [
@@ -263,12 +271,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             Center(
                               child: Text(
                                 'Sign Up',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'League Spartan',
-                                  color: Theme.of(context).hintColor,
-                                ),
+                                style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 18)
                               ),
                             ),
                           ],
@@ -283,8 +286,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                 Expanded(
                                   child: InputField(
                                     color: Theme.of(context).hintColor,
-                                    backgroundColor:
-                                        Theme.of(context).primaryColorDark,
                                     placeholderText: 'First Name',
                                     controller: _firstNameController,
                                     validator: validateFirstName,
@@ -296,8 +297,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                 Expanded(
                                   child: InputField(
                                     color: Theme.of(context).hintColor,
-                                    backgroundColor:
-                                        Theme.of(context).primaryColorDark,
                                     placeholderText: 'Last Name',
                                     controller: _lastNameController,
                                     validator: validateLastName,
@@ -313,8 +312,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                 children: [
                                   InputField(
                                     color: Theme.of(context).hintColor,
-                                    backgroundColor:
-                                        Theme.of(context).primaryColorDark,
                                     placeholderText: 'Username',
                                     controller: _usernameController,
                                     validator: validateUsername,
@@ -323,8 +320,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                   ),
                                   InputField(
                                     color: Theme.of(context).hintColor,
-                                    backgroundColor:
-                                        Theme.of(context).primaryColorDark,
                                     placeholderText: 'Email',
                                     controller: _emailController,
                                     validator: validateEmail,
@@ -333,8 +328,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                   ),
                                   InputField(
                                     color: Theme.of(context).hintColor,
-                                    backgroundColor:
-                                        Theme.of(context).primaryColorDark,
                                     placeholderText: 'Password',
                                     isObscure: passwordVisible,
                                     controller: _passwordController,
@@ -379,10 +372,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         padding: const EdgeInsets.all(5.0),
                         child: InkWell(
                           child: Text('Login Instead',
-                              style: TextStyle(
-                                  color: Theme.of(context).hintColor,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w500)),
+                              style: Theme.of(context).textTheme.bodySmall
+                            ),
                           onTap: () {
                             Navigator.pushNamed(context, '/login');
                           },
