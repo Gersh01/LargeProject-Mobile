@@ -51,7 +51,8 @@ class _JoinedProjectsTileState extends State<JoinedProjectsTile> {
 
     // String yourRole = widget.project.teamMembers.firstWhere((element) => element
     String yourRole = widget.project.teamMembers
-        .firstWhere((element) => element.username == widget.username).role;
+        .firstWhere((element) => element.username == widget.username)
+        .role;
 
     title = title.length > titleLength
         ? "${title.substring(0, titleLength)}..."
@@ -152,6 +153,7 @@ class _JoinedProjectsTileState extends State<JoinedProjectsTile> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+
                   TechBubble(technology: yourRole, editMode: false),
 
                   const Divider(

@@ -30,26 +30,23 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10),
-      child: Row(
-        children: [
-          Expanded(
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: backgroundColor,
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5))),
-              ),
-              onPressed: onPressed,
-              child: Text(
-                placeholderText!,
-                style: getTextStyle(),
-              ),
+    return Row(
+      children: [
+        Expanded(
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: backgroundColor,
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+            ),
+            onPressed: onPressed,
+            child: Text(
+              placeholderText!,
+              style: getTextStyle(),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
