@@ -4,7 +4,7 @@ import 'package:devfusion/frontend/json/Profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../utils/utility.dart';
-import '../tech_bubble.dart';
+import '../bubbles/tech_bubble.dart';
 import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:http/http.dart' as http;
 

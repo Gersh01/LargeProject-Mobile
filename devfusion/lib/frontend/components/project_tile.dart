@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../json/Project.dart';
 import '../json/Role.dart';
 import '../json/team_member.dart';
-import 'tech_bubble.dart';
+import 'bubbles/tech_bubble.dart';
 import 'package:devfusion/frontend/components/shared_pref.dart';
 
 //ignore: must_be_immutable

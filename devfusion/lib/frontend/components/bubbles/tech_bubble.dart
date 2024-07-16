@@ -2,7 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 
-import '../utils/utility.dart';
+import '../../utils/utility.dart';
 
 class TechBubble extends StatefulWidget {
   final String technology;

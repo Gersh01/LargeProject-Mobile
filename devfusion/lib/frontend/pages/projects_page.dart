@@ -13,7 +13,8 @@ import '../json/Profile.dart';
 import 'view_project.dart';
 
 class Projects extends StatefulWidget {
-  const Projects({super.key});
+  final String? userId;
+  const Projects({super.key, this.userId});
 
   @override
   State<Projects> createState() => _ProjectsState();
@@ -276,18 +277,18 @@ class _ProjectsState extends State<Projects>
               itemBuilder: (BuildContext context, int index) {
                 var project = ownedProjects[index];
                 return InkWell(
-                          child: MyProjectsTile(project: project),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ViewProject(
-                                  project: project,
-                                ),
-                              ),
-                            );
-                          },
-                      );
+                  child: MyProjectsTile(project: project),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ViewProject(
+                          project: project,
+                        ),
+                      ),
+                    );
+                  },
+                );
               },
             ),
             ListView.builder(
@@ -296,18 +297,19 @@ class _ProjectsState extends State<Projects>
               itemBuilder: (BuildContext context, int index) {
                 var project = joinedProjects[index];
                 return InkWell(
-                          child: JoinedProjectsTile(project: project, username: username),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ViewProject(
-                                  project: project,
-                                ),
-                              ),
-                            );
-                          },
-                      );
+                  child:
+                      JoinedProjectsTile(project: project, username: username),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ViewProject(
+                          project: project,
+                        ),
+                      ),
+                    );
+                  },
+                );
               },
             ),
           ],

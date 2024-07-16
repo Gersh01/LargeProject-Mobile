@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../json/Project.dart';
 import '../json/Role.dart';
 import '../json/team_member.dart';
-import 'tech_bubble.dart';
+import 'bubbles/tech_bubble.dart';
 import '../components/Divider.dart';
 
 //ignore: must_be_immutable

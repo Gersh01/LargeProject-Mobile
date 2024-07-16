@@ -12,8 +12,9 @@ import '../components/Divider.dart';
 
 class ProfilePage extends StatefulWidget {
   final String? urlExtension;
+  final String? userId;
 
-  const ProfilePage({super.key, this.urlExtension});
+  const ProfilePage({super.key, this.urlExtension, this.userId});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();

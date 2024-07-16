@@ -521,10 +521,10 @@ List<String> getTechnolgies(String techSearch) {
   return techList;
 }
 
-Color getBubbleColor(String text) {
+Color getBubbleColor(String? text) {
   int hash = 0;
 
-  for (int i = 0; i < text.length; i++) {
+  for (int i = 0; i < text!.length; i++) {
     hash += text.codeUnitAt(i);
   }
 
