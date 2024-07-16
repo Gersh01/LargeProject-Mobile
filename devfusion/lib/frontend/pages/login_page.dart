@@ -133,7 +133,10 @@ class _LoginPageState extends State<LoginPage> {
                             Center(
                               child: Text(
                                 'Login',
-                                style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 18),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineSmall
+                                    ?.copyWith(fontSize: 18),
                               ),
                             ),
                           ],
@@ -147,6 +150,8 @@ class _LoginPageState extends State<LoginPage> {
                           child: Column(
                             children: [
                               InputField(
+                                backgroundColor:
+                                    Theme.of(context).primaryColorDark,
                                 color: Theme.of(context).hintColor,
                                 placeholderText: 'Username',
                                 controller: _usernameController,
@@ -155,6 +160,8 @@ class _LoginPageState extends State<LoginPage> {
                                 errorCount: usernameErrorDouble,
                               ),
                               InputField(
+                                backgroundColor:
+                                    Theme.of(context).primaryColorDark,
                                 color: Theme.of(context).hintColor,
                                 placeholderText: 'Password',
                                 isObscure: passwordVisible,
@@ -190,7 +197,9 @@ class _LoginPageState extends State<LoginPage> {
                                     child: InkWell(
                                       child: Text(
                                         'Forgot Password',
-                                        style: Theme.of(context).textTheme.bodySmall,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall,
                                       ),
                                       onTap: () {
                                         Navigator.pushNamed(
@@ -220,10 +229,8 @@ class _LoginPageState extends State<LoginPage> {
                       Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: InkWell(
-                          child: Text(
-                            'Sign Up Instead',
-                            style: Theme.of(context).textTheme.bodySmall
-                          ),
+                          child: Text('Sign Up Instead',
+                              style: Theme.of(context).textTheme.bodySmall),
                           onTap: () {
                             Navigator.pushNamed(context, '/signup');
                           },

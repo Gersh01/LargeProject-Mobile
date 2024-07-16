@@ -1,4 +1,3 @@
-import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:devfusion/themes/theme.dart';
 import 'package:devfusion/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +13,7 @@ class InputField extends StatelessWidget {
   final bool? isObscure;
   final IconButton? suffixIcon;
   final String? hintText;
-  final Color? backgroundColor;
+  final Color backgroundColor;
   final Color color;
 
   const InputField({
@@ -27,7 +26,7 @@ class InputField extends StatelessWidget {
     this.isObscure,
     this.suffixIcon,
     this.hintText,
-    this.backgroundColor,
+    required this.backgroundColor,
     required this.color,
   });
 
@@ -91,9 +90,10 @@ class InputField extends StatelessWidget {
                 Radius.circular(5),
               ),
               // color: Theme.of(context).primaryColorDark,
-              color: (Provider.of<ThemeProvider>(context).themeData == darkMode)
-                  ? darkPrimaryVariant
-                  : lightPrimaryVariant,
+              // color: (Provider.of<ThemeProvider>(context).themeData == darkMode)
+              //     ? darkPrimaryVariant
+              //     : lightPrimaryVariant,
+              color: backgroundColor,
             ),
 
             child: Padding(
@@ -108,21 +108,23 @@ class InputField extends StatelessWidget {
                         //Chooses Icon for field based on placeholder text
                         placeholderText == 'Username'
                             ? Icon(Icons.account_circle_outlined,
-                                color: (Provider.of<ThemeProvider>(context)
-                                            .themeData ==
-                                        darkMode)
-                                    ? Colors.white
-                                    : Colors.black,
+                                // color: (Provider.of<ThemeProvider>(context)
+                                //             .themeData ==
+                                //         darkMode)
+                                //     ? Colors.white
+                                //     : Colors.black,
+                                color: color,
                                 size: 14)
                             : placeholderText == 'Password'
                                 ? Icon(
                                     Icons.lock_open,
                                     size: 14,
-                                    color: (Provider.of<ThemeProvider>(context)
-                                                .themeData ==
-                                            darkMode)
-                                        ? Colors.white
-                                        : Colors.black,
+                                    // color: (Provider.of<ThemeProvider>(context)
+                                    //             .themeData ==
+                                    //         darkMode)
+                                    //     ? Colors.white
+                                    //     : Colors.black,
+                                    color: color,
                                   )
                                 : placeholderText == 'Email'
                                     ? Icon(
@@ -150,11 +152,12 @@ class InputField extends StatelessWidget {
                           placeholderText!,
                           // style: Theme.of(context).textTheme.labelMedium,
                           style: TextStyle(
-                            color: (Provider.of<ThemeProvider>(context)
-                                        .themeData ==
-                                    darkMode)
-                                ? Colors.white
-                                : Colors.black,
+                            // color: (Provider.of<ThemeProvider>(context)
+                            //             .themeData ==
+                            //         darkMode)
+                            //     ? Colors.white
+                            //     : Colors.black,
+                            color: color,
                           ),
                         ),
                       ],
