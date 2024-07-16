@@ -95,8 +95,6 @@ class _ProjectsState extends State<Projects>
       print("settings jwt unsucessful");
     }
 
-
-
     var reqBody = {
       "token": token,
 
@@ -113,8 +111,6 @@ class _ProjectsState extends State<Projects>
               ? ownedProjects[ownedProjects.length - 1].id
               : joinedProjects[joinedProjects.length - 1].id),
     };
-
-
 
     var ownedProjectsResponse;
     var joinedProjectsResponse;
@@ -219,7 +215,8 @@ class _ProjectsState extends State<Projects>
     double width = MediaQuery.of(context).size.width / 2;
 
     BoxDecoration decoration = BoxDecoration(
-      color: const Color(0xff6B7280),
+      //This is the color selector
+      color: Theme.of(context).primaryColorDark,
       shape: BoxShape.rectangle,
       borderRadius: _tabController.index == 0
           ? const BorderRadius.only(
@@ -235,15 +232,17 @@ class _ProjectsState extends State<Projects>
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        backgroundColor: Theme.of(context).primaryColor,
         appBar: AppBar(
+          backgroundColor: Theme.of(context).primaryColor,
           title: Text(
             'Projects',
             style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'League Spartan',
-                color: Theme.of(context).hintColor,
-                ),
+              fontSize: 32,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'League Spartan',
+              color: Theme.of(context).hintColor,
+            ),
           ),
           bottom: TabBar(
             onTap: (index) {
@@ -251,11 +250,19 @@ class _ProjectsState extends State<Projects>
                 _tabController.index = index;
               });
             },
+            //The unselected text color
+            unselectedLabelColor: Colors.white,
             indicator: decoration,
+            dividerColor: Colors.grey,
             tabs: [
-              SizedBox(width: width, child: const Tab(text: 'My Projects')),
+              SizedBox(
+                  width: width,
+                  child: const Tab(
+                    text: 'My Projects',
+                  )),
               SizedBox(width: width, child: const Tab(text: 'Joined Projects')),
             ],
+            //Changes the color of the text
             labelColor: Colors.white,
           ),
         ),
@@ -280,7 +287,6 @@ class _ProjectsState extends State<Projects>
             ),
           ],
         ),
-        backgroundColor: Theme.of(context).primaryColor
       ),
     );
   }

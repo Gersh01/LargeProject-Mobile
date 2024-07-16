@@ -4,6 +4,7 @@ import '../json/Project.dart';
 import '../json/Role.dart';
 import '../json/team_member.dart';
 import 'tech_bubble.dart';
+import '../components/Divider.dart';
 
 //ignore: must_be_immutable
 class JoinedProjectsTile extends StatefulWidget {
@@ -79,12 +80,16 @@ class _JoinedProjectsTileState extends State<JoinedProjectsTile> {
             child: Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
-                    topLeft: Radius.circular(10)),
-                color: Theme.of(context).focusColor,
-              ),
+                  borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                      topLeft: Radius.circular(10)),
+                  gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context).focusColor,
+                      Theme.of(context).highlightColor
+                    ],
+                  )),
               child: Column(children: [
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -94,8 +99,8 @@ class _JoinedProjectsTileState extends State<JoinedProjectsTile> {
                         flex: 2,
                         child: Text(
                           title,
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
+                          style: const TextStyle(
+                            color: Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
@@ -140,15 +145,15 @@ class _JoinedProjectsTileState extends State<JoinedProjectsTile> {
                     topRight: Radius.circular(10),
                     bottomRight: Radius.circular(10),
                     bottomLeft: Radius.circular(10)),
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).primaryColorDark,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     "Your Role",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Theme.of(context).hintColor,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -156,14 +161,11 @@ class _JoinedProjectsTileState extends State<JoinedProjectsTile> {
 
                   TechBubble(technology: yourRole, editMode: false),
 
-                  const Divider(
-                    color: Colors.grey,
-                    thickness: 1,
-                  ),
-                  const Text(
+                  const DividerLine(),
+                  Text(
                     "Description",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Theme.of(context).hintColor,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -171,8 +173,8 @@ class _JoinedProjectsTileState extends State<JoinedProjectsTile> {
                   // const SizedBox(height: 10),
                   Text(
                     description,
-                    style: const TextStyle(
-                      color: Colors.black,
+                    style: TextStyle(
+                      color: Theme.of(context).hintColor,
                       fontSize: 16,
                     ),
                   ),
