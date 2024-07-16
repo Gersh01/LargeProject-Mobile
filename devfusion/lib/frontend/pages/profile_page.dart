@@ -1,7 +1,11 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:devfusion/frontend/components/profile/bio_fields.dart';
 import 'package:devfusion/frontend/components/profile/technologies_field.dart';
+import 'package:devfusion/frontend/components/project_tile.dart';
+import 'package:devfusion/frontend/json/Project.dart';
+import 'package:devfusion/frontend/pages/view_project.dart';
 import 'package:devfusion/frontend/utils/utility.dart';
 import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +29,11 @@ class _ProfilePageState extends State<ProfilePage> {
   bool profile = true;
   bool loading = true;
 
+  late ScrollController scrollController;
+  List<Project> profileProjects = [];
+  bool isRetrievingProjects = true;
+  bool endOfProject = false;
+
   Future getUserInfo() async {
     String? token = await sharedPref.readToken();
     var reqBody = {"token": token};
@@ -47,7 +56,65 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
-  Future getUserProjects() async {}
+  Future fetchUserProjects(bool initial) async {
+    SharedPref sharedPref = SharedPref();
+
+    var token = await sharedPref.readToken();
+
+    var reqBody = {
+      "token": token,
+      "searchBy": "title",
+      "sortBy": "recent",
+      "query": "",
+      "count": initial ? 8 : 4,
+      "initial": initial,
+      "userId": userProfile?.userId ?? "",
+
+      // cursor
+      "projectId": initial
+          ? "000000000000000000000000"
+          : profileProjects[profileProjects.length - 1].id
+    };
+
+    setState(() {
+      isRetrievingProjects = true;
+    });
+    var response = await http.post(
+      Uri.parse(ownedJoinedUrl),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(reqBody),
+    );
+
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(response.body);
+      sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
+
+      var projectsData = jsonResponse['results'];
+
+      List<Project> retrievedProjects = [];
+
+      for (int i = 0; i < projectsData.length; i++) {
+        retrievedProjects.add(Project.fromJson(projectsData[i]));
+      }
+
+      // Set endOfProjects to true if reach the end
+      if (retrievedProjects.isEmpty) {
+        setState(() {
+          endOfProject = true;
+        });
+      }
+
+      setState(() {
+        loading = false;
+        profileProjects = [...profileProjects, ...retrievedProjects];
+        isRetrievingProjects = false;
+      });
+    } else {
+      // String jsonDataString = response.body.toString();
+      // var _data = jsonDecode(jsonDataString);
+      return Future.value("Failed to fetch projects");
+    }
+  }
 
   void checkUrlPath() {}
 
@@ -66,12 +133,29 @@ class _ProfilePageState extends State<ProfilePage> {
       }
     });
     getUserInfo();
+    scrollController = ScrollController()..addListener(onScroll);
+    fetchUserProjects(true);
     //getUserProjects();
     // checkUrlPath();
   }
 
   @override
+  void dispose() {
+    scrollController.removeListener(onScroll);
+    super.dispose();
+  }
+
+  void onScroll() {
+    if (scrollController.position.extentAfter < 500) {
+      if (!isRetrievingProjects && !loading && !endOfProject) {
+        fetchUserProjects(false);
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    log(profileProjects.length.toString());
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
@@ -90,8 +174,9 @@ class _ProfilePageState extends State<ProfilePage> {
       body: loading
           ? const Center(child: CircularProgressIndicator())
           : ListView(
+              controller: scrollController,
               children: [
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(right: 10, left: 10),
                   child: DividerLine(),
                 ),
@@ -142,7 +227,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     )),
                 Padding(
-                  padding: EdgeInsets.only(left: 20, top: 5, right: 10),
+                  padding: const EdgeInsets.only(left: 20, top: 5, right: 10),
                   child: Text(
                     "Projects",
                     style: TextStyle(
@@ -153,6 +238,23 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                 ),
+                Column(
+                  children: profileProjects.map((project) {
+                    return InkWell(
+                      child: ProjectTile(project: project),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ViewProject(
+                              project: project,
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }).toList(),
+                )
               ],
             ),
     );

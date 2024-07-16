@@ -65,9 +65,9 @@ class _DiscoverState extends State<Discover> {
 
     var token = await sharedPref.readToken();
 
-    print("Fetching projects WITH A QUERY OF: $_query");
-    print("Fetching projects WITH A SEARCH BY OF: $_dropdownSearchByValue");
-    print("Fetching projects WITH A SORT BY OF: $_dropdownSortByValue");
+    // print("Fetching projects WITH A QUERY OF: $_query");
+    // print("Fetching projects WITH A SEARCH BY OF: $_dropdownSearchByValue");
+    // print("Fetching projects WITH A SORT BY OF: $_dropdownSortByValue");
 
     var reqBody = {
       "token": token,
@@ -78,7 +78,7 @@ class _DiscoverState extends State<Discover> {
       "query": _query,
 
       "count": 4,
-      "initial": initial,
+      "initial": initial ? 8 : 4,
 
       // cursor
       "projectId": initial
@@ -282,17 +282,17 @@ class _DiscoverState extends State<Discover> {
                     itemBuilder: (BuildContext context, int index) {
                       var project = projects[index];
                       return InkWell(
-                          child: ProjectTile(project: project),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ViewProject(
-                                  project: project,
-                                ),
+                        child: ProjectTile(project: project),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ViewProject(
+                                project: project,
                               ),
-                            );
-                          },
+                            ),
+                          );
+                        },
                       );
                     },
                   ),

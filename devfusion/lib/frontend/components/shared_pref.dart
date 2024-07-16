@@ -38,7 +38,7 @@ class SharedPref {
 
     bool isSaved = await pref.setBool("darkMode", isDarkMode);
     debugPrint(isSaved.toString());
-    print("darkMode read:$isDarkMode");
+    // print("darkMode read:$isDarkMode");
   }
 
   Future<bool?> readDarkMode() async {
@@ -48,7 +48,7 @@ class SharedPref {
     if (value != null) {
       debugPrint(value.toString());
     }
-    print("darkMode read:$value");
+    // print("darkMode read:$value");
     return value;
   }
 }
