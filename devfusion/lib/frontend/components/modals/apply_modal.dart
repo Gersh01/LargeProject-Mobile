@@ -110,7 +110,7 @@ class ApplyModal extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  color: const Color.fromRGBO(17, 24, 39, 1),
+                  color: Theme.of(context).primaryColorDark,
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -154,7 +154,7 @@ class ApplyModal extends StatelessWidget {
         ],
         actionsAlignment: MainAxisAlignment.spaceBetween,
         elevation: 20,
-        backgroundColor: Colors.blue,
+        backgroundColor: Theme.of(context).primaryColorLight,
       ),
       barrierDismissible: false,
     );
