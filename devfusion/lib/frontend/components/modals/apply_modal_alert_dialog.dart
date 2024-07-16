@@ -134,7 +134,10 @@ class _ApplyModalAlertDialogState extends State<ApplyModalAlertDialog> {
                 color: Theme.of(context).primaryColorDark,
               ),
               child: DropdownButtonFormField<String>(
-                padding: EdgeInsets.only(left: 5, right: 5),
+                decoration: const InputDecoration(
+                  contentPadding: EdgeInsets.only(left: 5, right: 5),
+                  enabledBorder: InputBorder.none,
+                ),
                 isExpanded: true,
                 hint: hintText,
                 // style: const TextStyle(color: Colors.deepPurple),
