@@ -50,6 +50,9 @@ class _JoinedProjectsTileState extends State<JoinedProjectsTile> {
     }
 
     // String yourRole = widget.project.teamMembers.firstWhere((element) => element
+    String yourRole = widget.project.teamMembers
+        .firstWhere((element) => element.username == widget.username)
+        .role;
 
     title = title.length > titleLength
         ? "${title.substring(0, titleLength)}..."
@@ -63,14 +66,6 @@ class _JoinedProjectsTileState extends State<JoinedProjectsTile> {
       decoration: BoxDecoration(
         color: Theme.of(context).focusColor,
         borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 3),
-          ),
-        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,7 +153,8 @@ class _JoinedProjectsTileState extends State<JoinedProjectsTile> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  //TechBubble(technology: "I'll do this later"),
+
+                  TechBubble(technology: yourRole, editMode: false),
 
                   const Divider(
                     color: Colors.grey,

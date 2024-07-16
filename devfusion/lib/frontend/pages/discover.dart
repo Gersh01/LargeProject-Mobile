@@ -10,6 +10,7 @@ import '../components/project_tile.dart';
 import '../utils/utility.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../components/Divider.dart';
 
 class Discover extends StatefulWidget {
   const Discover({super.key});
@@ -173,6 +174,9 @@ class _DiscoverState extends State<Discover> {
                           child: Padding(
                             padding: const EdgeInsets.all(10),
                             child: DropdownButton(
+                              underline: Container(
+                                height: 0,
+                              ),
                               isDense: true,
                               items: const [
                                 DropdownMenuItem(
@@ -251,6 +255,10 @@ class _DiscoverState extends State<Discover> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: DropdownButton(
+                      underline: Container(
+                        height: 0,
+                      ),
+                      dropdownColor: Theme.of(context).primaryColorLight,
                       items: const [
                         DropdownMenuItem(
                           value: 'recent',
@@ -264,7 +272,7 @@ class _DiscoverState extends State<Discover> {
                       value: _dropdownSortByValue,
                       onChanged: dropdownSortByCallback),
                 ),
-
+                DividerLine(),
                 //Project Cards
                 Expanded(
                   child: ListView.builder(
@@ -272,7 +280,8 @@ class _DiscoverState extends State<Discover> {
                     itemCount: projects.length,
                     itemBuilder: (BuildContext context, int index) {
                       var project = projects[index];
-                      return ProjectTile(project: project);
+                      return 
+                        ProjectTile(project: project);
                     },
                   ),
                 ),

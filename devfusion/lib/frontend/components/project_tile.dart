@@ -1,3 +1,4 @@
+import 'package:devfusion/frontend/components/Divider.dart';
 import 'package:flutter/material.dart';
 
 import '../json/Project.dart';
@@ -101,8 +102,8 @@ class _ProjectTileState extends State<ProjectTile> {
                         flex: 2,
                         child: Text(
                           title,
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
+                          style: const TextStyle(
+                            color: Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
@@ -117,6 +118,7 @@ class _ProjectTileState extends State<ProjectTile> {
                         ),
                         child: Text(
                           positionLeftText,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: Theme.of(context).hintColor,
                             fontWeight: FontWeight.bold,
@@ -131,22 +133,22 @@ class _ProjectTileState extends State<ProjectTile> {
                       children: [
                         Text(
                           currentCount.toString(),
-                          style: TextStyle(
-                            color: Theme.of(context).hintColor,
+                          style: const TextStyle(
+                            color: Colors.white,
                             fontSize: 16,
                           ),
                         ),
                         const SizedBox(width: 10),
-                        Icon(
+                        const Icon(
                           Icons.person,
-                          color: Theme.of(context).hintColor,
+                          color: Colors.white,
                         ),
                       ],
                     ),
                     Text(
                       numDaysTilStartText,
-                      style: TextStyle(
-                        color: Theme.of(context).hintColor,
+                      style: const TextStyle(
+                        color: Colors.white,
                         fontSize: 16,
                       ),
                     )
@@ -184,11 +186,7 @@ class _ProjectTileState extends State<ProjectTile> {
                     ),
                   ),
 
-                  Divider(
-                    // color: Theme.of(context).primaryColor,
-                    color: Color(0xff6B7280),
-                    thickness: 1,
-                  ),
+                  const DividerLine(),
 
                   Container(
                     decoration: BoxDecoration(

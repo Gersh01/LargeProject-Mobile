@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import '../components/profile_pictures.dart';
 import '../json/Profile.dart';
 import 'package:http/http.dart' as http;
+import '../components/Divider.dart';
 
 class ProfilePage extends StatefulWidget {
   final String? urlExtension;
@@ -90,6 +91,10 @@ class _ProfilePageState extends State<ProfilePage> {
           ? const Center(child: CircularProgressIndicator())
           : ListView(
               children: [
+                Padding(
+                  padding: EdgeInsets.only(right: 10, left: 10),
+                  child: DividerLine(),
+                ),
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: Row(

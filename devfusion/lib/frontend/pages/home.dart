@@ -90,29 +90,34 @@ class _HomeState extends State<Home> {
     return Scaffold(
       body: _children[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        onTap: _onItemTapped,
-        currentIndex: _selectedIndex,
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
-            icon: const Icon(Icons.assistant_navigation),
-            label: 'Discover'),
-          BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
-            icon: const Icon(Icons.search),
-            label: 'Projects'),
-          BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
-            icon: const Icon(Icons.person),
-            label: 'Profile'),
-          BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
-            icon: const Icon(Icons.settings),
-            label: 'Settings'),
-        ]
-      ),
+          backgroundColor: Theme.of(context).primaryColor,
+          onTap: _onItemTapped,
+          currentIndex: _selectedIndex,
+          type: BottomNavigationBarType.fixed,
+          items: [
+            BottomNavigationBarItem(
+                backgroundColor: Theme.of(context).primaryColor,
+                icon: Icon(
+                    color: Theme.of(context).hintColor,
+                    Icons.image_search_outlined),
+                label: 'Discover'),
+            BottomNavigationBarItem(
+                backgroundColor: Theme.of(context).primaryColor,
+                icon: Icon(
+                    color: Theme.of(context).hintColor, Icons.folder_outlined),
+                label: 'Projects'),
+            BottomNavigationBarItem(
+                backgroundColor: Theme.of(context).primaryColor,
+                icon: Icon(
+                    color: Theme.of(context).hintColor, Icons.person_outlined),
+                label: 'Profile'),
+            BottomNavigationBarItem(
+                backgroundColor: Theme.of(context).primaryColor,
+                icon: Icon(
+                    color: Theme.of(context).hintColor,
+                    Icons.settings_outlined),
+                label: 'Settings'),
+            ]),
     );
   }
 }
