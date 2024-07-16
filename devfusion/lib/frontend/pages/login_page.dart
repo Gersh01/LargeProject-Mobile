@@ -8,6 +8,9 @@ import '../components/input_field.dart';
 import '../components/DevFusionColoredText.dart';
 import 'package:http/http.dart' as http;
 import '../utils/utility.dart';
+import '/themes/theme.dart';
+import 'package:provider/provider.dart';
+import 'package:devfusion/themes/theme_provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -93,6 +96,12 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: (Provider.of<ThemeProvider>(context).themeData == null)
+          ? lightMode
+          : Provider.of<ThemeProvider>(context).themeData,
+      darkTheme: (Provider.of<ThemeProvider>(context).themeData == null)
+          ? darkMode
+          : Provider.of<ThemeProvider>(context).themeData,
       //Background
       home: Scaffold(
         body: ListView(
@@ -124,12 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                             Center(
                               child: Text(
                                 'Login',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'League Spartan',
-                                  color: Theme.of(context).hintColor,
-                                ),
+                                style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 18),
                               ),
                             ),
                           ],
@@ -144,8 +148,6 @@ class _LoginPageState extends State<LoginPage> {
                             children: [
                               InputField(
                                 color: Theme.of(context).hintColor,
-                                backgroundColor:
-                                    Theme.of(context).primaryColorDark,
                                 placeholderText: 'Username',
                                 controller: _usernameController,
                                 validator: usernameValidator,
@@ -154,8 +156,6 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               InputField(
                                 color: Theme.of(context).hintColor,
-                                backgroundColor:
-                                    Theme.of(context).primaryColorDark,
                                 placeholderText: 'Password',
                                 isObscure: passwordVisible,
                                 controller: _passwordController,
@@ -190,12 +190,7 @@ class _LoginPageState extends State<LoginPage> {
                                     child: InkWell(
                                       child: Text(
                                         'Forgot Password',
-                                        style: TextStyle(
-                                          color: Theme.of(context).hintColor,
-                                          fontSize: 12,
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                                        style: Theme.of(context).textTheme.bodySmall,
                                       ),
                                       onTap: () {
                                         Navigator.pushNamed(
@@ -227,11 +222,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: InkWell(
                           child: Text(
                             'Sign Up Instead',
-                            style: TextStyle(
-                              color: Theme.of(context).hintColor,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: Theme.of(context).textTheme.bodySmall
                           ),
                           onTap: () {
                             Navigator.pushNamed(context, '/signup');

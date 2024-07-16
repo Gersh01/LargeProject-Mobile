@@ -260,6 +260,7 @@ class _ProjectsState extends State<Projects>
             ),
           ],
         ),
+        backgroundColor: Theme.of(context).primaryColor
       ),
     );
   }

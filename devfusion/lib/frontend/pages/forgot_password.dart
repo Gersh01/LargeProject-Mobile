@@ -8,6 +8,10 @@ import '../components/input_field.dart';
 
 import 'package:http/http.dart' as http;
 
+import '/themes/theme.dart';
+import 'package:provider/provider.dart';
+import 'package:devfusion/themes/theme_provider.dart';
+
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
 
@@ -77,6 +81,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     final formKey = GlobalKey<FormState>();
 
     return MaterialApp(
+      theme: (Provider.of<ThemeProvider>(context).themeData == null)
+          ? lightMode
+          : Provider.of<ThemeProvider>(context).themeData,
+      darkTheme: (Provider.of<ThemeProvider>(context).themeData == null)
+          ? darkMode
+          : Provider.of<ThemeProvider>(context).themeData,
+      debugShowCheckedModeBanner: false,
+
       home: Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(30.0),
@@ -113,12 +125,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       // Center(
                       Text(
                         'Forgot Password',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'League Spartan',
-                          color: Theme.of(context).hintColor,
-                        ),
+                        style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 18)
                       ),
                       // ),
                     ],

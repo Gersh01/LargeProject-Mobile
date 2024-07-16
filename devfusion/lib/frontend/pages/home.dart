@@ -90,27 +90,29 @@ class _HomeState extends State<Home> {
     return Scaffold(
       body: _children[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-          onTap: _onItemTapped,
-          currentIndex: _selectedIndex,
-          type: BottomNavigationBarType.fixed,
-          items: const [
-            BottomNavigationBarItem(
-                backgroundColor: Color.fromRGBO(31, 41, 55, 1),
-                icon: Icon(Icons.assistant_navigation),
-                label: 'Discover'),
-            BottomNavigationBarItem(
-                backgroundColor: Color.fromRGBO(31, 41, 55, 1),
-                icon: Icon(Icons.search),
-                label: 'Projects'),
-            BottomNavigationBarItem(
-                backgroundColor: Color.fromRGBO(31, 41, 55, 1),
-                icon: Icon(Icons.circle),
-                label: 'Profile'),
-            BottomNavigationBarItem(
-                backgroundColor: Color.fromRGBO(31, 41, 55, 1),
-                icon: Icon(Icons.settings),
-                label: 'Settings'),
-          ]),
+        backgroundColor: Theme.of(context).primaryColor,
+        onTap: _onItemTapped,
+        currentIndex: _selectedIndex,
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+            backgroundColor: Theme.of(context).primaryColor,
+            icon: const Icon(Icons.assistant_navigation),
+            label: 'Discover'),
+          BottomNavigationBarItem(
+            backgroundColor: Theme.of(context).primaryColor,
+            icon: const Icon(Icons.search),
+            label: 'Projects'),
+          BottomNavigationBarItem(
+            backgroundColor: Theme.of(context).primaryColor,
+            icon: const Icon(Icons.person),
+            label: 'Profile'),
+          BottomNavigationBarItem(
+            backgroundColor: Theme.of(context).primaryColor,
+            icon: const Icon(Icons.settings),
+            label: 'Settings'),
+        ]
+      ),
     );
   }
 }

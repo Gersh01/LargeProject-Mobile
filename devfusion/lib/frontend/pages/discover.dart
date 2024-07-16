@@ -140,6 +140,7 @@ class _DiscoverState extends State<Discover> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         title: Text(
           'Discover',
@@ -162,7 +163,7 @@ class _DiscoverState extends State<Discover> {
                       child: Container(
                         margin: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColorLight,
+                          color: Theme.of(context).primaryColorDark,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Theme(
