@@ -48,9 +48,9 @@ class _TechnologiesField extends State<TechnologiesField> {
     var newTechnologies;
     bool exists = false;
     userTechnologies = widget.technologies;
-    for (int i = 0; i < widget.technologies.length; i++) {
-      if (_dropDownValue == widget.technologies[i]) {
-        exists == true;
+    for (int i = 0; i < userTechnologies.length; i++) {
+      if (_dropDownValue.toString() == userTechnologies[i]) {
+        exists = true;
       }
     }
     if (_dropDownValue != "Searching..." && exists == false) {
@@ -87,9 +87,8 @@ class _TechnologiesField extends State<TechnologiesField> {
       String? token = await sharedPref.readToken();
 
       newTechnologies = userTechnologies;
-      print(newTechnologies);
       newTechnologies.remove(techName);
-      print(newTechnologies);
+
       var reqBody = {
         "token": token,
         "userId": widget.userInfo?.userId,
@@ -212,10 +211,11 @@ class _TechnologiesField extends State<TechnologiesField> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: DropdownButton(
-                            padding: EdgeInsets.all(2),
+                            padding: const EdgeInsets.all(2),
                             items: updatedTechList
                                 .map((e) => DropdownMenuItem(
-                                      child: Text(e),
+                                      child: Text(
+                                          overflow: TextOverflow.ellipsis, e),
                                       value: e,
                                     ))
                                 .toList(),
