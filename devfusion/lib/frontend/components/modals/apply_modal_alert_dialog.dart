@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:devfusion/frontend/components/Button.dart';
-import 'package:devfusion/frontend/components/modals/apply_dropdown_menu.dart';
 import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:devfusion/frontend/utils/utility.dart';
 import 'package:devfusion/themes/theme.dart';
@@ -56,6 +55,15 @@ class _ApplyModalAlertDialogState extends State<ApplyModalAlertDialog> {
   }
 
   void apply(String role) async {
+    if (selectedRole == "Select an Available Role" ||
+        selectedRole == "No Roles Available" ||
+        selectedRole == "") {
+      setState(() {
+        error = "Choose an available role";
+        errorCount = 1;
+      });
+      return;
+    }
     print("selectedRole: ${selectedRole}");
     getUserCredentials();
     String? token = await sharedPref.readToken();
@@ -126,6 +134,14 @@ class _ApplyModalAlertDialogState extends State<ApplyModalAlertDialog> {
                 color: Theme.of(context).primaryColorDark,
               ),
               child: DropdownButtonFormField<String>(
+                decoration: const InputDecoration(
+                  contentPadding: EdgeInsets.only(left: 5, right: 5),
+                  enabledBorder: InputBorder.none,
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                ),
                 isExpanded: true,
                 hint: hintText,
                 // style: const TextStyle(color: Colors.deepPurple),

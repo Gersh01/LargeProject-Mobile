@@ -25,11 +25,11 @@ class _DfNavBarState extends State<DfNavBar> {
         onTap: _onItemTapped,
         currentIndex: _selectedIndex,
         type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(backgroundColor: Color.fromRGBO(31, 41, 55, 1), icon: Icon(Icons.assistant_navigation), label: 'projects'),
-          BottomNavigationBarItem(backgroundColor: Color.fromRGBO(31, 41, 55, 1), icon: Icon(Icons.add_to_queue_rounded), label:'create'),
-          BottomNavigationBarItem(backgroundColor: Color.fromRGBO(31, 41, 55, 1), icon: Icon(Icons.search), label:'discover'),
-          BottomNavigationBarItem(backgroundColor: Color.fromRGBO(31, 41, 55, 1), icon: Icon(Icons.circle), label:'profile'),
+        items: [
+          BottomNavigationBarItem(backgroundColor: Theme.of(context).primaryColorDark, icon: const Icon(Icons.assistant_navigation), label: 'projects'),
+          BottomNavigationBarItem(backgroundColor: Theme.of(context).primaryColorDark, icon: const Icon(Icons.add_to_queue_rounded), label:'create'),
+          BottomNavigationBarItem(backgroundColor: Theme.of(context).primaryColorDark, icon: const Icon(Icons.search), label:'discover'),
+          BottomNavigationBarItem(backgroundColor: Theme.of(context).primaryColorDark, icon: const Icon(Icons.person), label:'profile'),
         ]
       );
   }

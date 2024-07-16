@@ -19,7 +19,6 @@ class _MyProjectsTileState extends State<MyProjectsTile> {
   final titleLength = 30;
   final descriptionLength = 120;
 
-
   @override
   Widget build(BuildContext context) {
     String title = widget.project.title;
@@ -30,14 +29,14 @@ class _MyProjectsTileState extends State<MyProjectsTile> {
     String daysText = "";
 
     if (widget.project.projectStartDate.isAfter(DateTime.now())) {
-      int days = widget.project.projectStartDate.difference(DateTime.now()).inDays;
+      int days =
+          widget.project.projectStartDate.difference(DateTime.now()).inDays;
 
       if (days > 1) {
         daysText = "$days days until Start";
       } else {
         daysText = "$days day until Start";
       }
-
     } else {
       int days = widget.project.deadline.difference(DateTime.now()).inDays;
 
@@ -64,6 +63,7 @@ class _MyProjectsTileState extends State<MyProjectsTile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          //No idea where this is located
           Container(
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(
@@ -77,8 +77,12 @@ class _MyProjectsTileState extends State<MyProjectsTile> {
                       bottomLeft: Radius.circular(10),
                       topRight: Radius.circular(10),
                       topLeft: Radius.circular(10)),
-                  color: Theme.of(context).focusColor,
-                  ),
+                  gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context).focusColor,
+                      Theme.of(context).highlightColor
+                    ],
+                  )),
               child: Column(children: [
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -88,8 +92,8 @@ class _MyProjectsTileState extends State<MyProjectsTile> {
                         flex: 2,
                         child: Text(
                           title,
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
+                          style: const TextStyle(
+                            color: Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
@@ -130,19 +134,19 @@ class _MyProjectsTileState extends State<MyProjectsTile> {
           Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(10),
-                      bottomRight: Radius.circular(10),
-                      bottomLeft: Radius.circular(10)),
-                  color: Theme.of(context).primaryColor,
+                borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10)),
+                color: Theme.of(context).primaryColorDark,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     "Description",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Theme.of(context).hintColor,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -150,8 +154,8 @@ class _MyProjectsTileState extends State<MyProjectsTile> {
                   // const SizedBox(height: 10),
                   Text(
                     description,
-                    style: const TextStyle(
-                      color: Colors.black,
+                    style: TextStyle(
+                      color: Theme.of(context).hintColor,
                       fontSize: 16,
                     ),
                   ),

@@ -11,6 +11,7 @@ import '../utils/utility.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../components/Divider.dart';
+import '../pages/view_project.dart';
 
 class Discover extends StatefulWidget {
   const Discover({super.key});
@@ -164,7 +165,7 @@ class _DiscoverState extends State<Discover> {
                       child: Container(
                         margin: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColorLight,
+                          color: Theme.of(context).primaryColorDark,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Theme(
@@ -280,8 +281,19 @@ class _DiscoverState extends State<Discover> {
                     itemCount: projects.length,
                     itemBuilder: (BuildContext context, int index) {
                       var project = projects[index];
-                      return 
-                        ProjectTile(project: project);
+                      return InkWell(
+                          // child: ProjectTile(project: project),
+                          // onTap: () {
+                          //   Navigator.push(
+                          //     context,
+                          //     // MaterialPageRoute(
+                          //     //   // builder: (context) => ViewProject(
+                          //     //   //   project: project,
+                          //     //   // ),
+                          //     // ),
+                          //   );
+                          // },
+                          );
                     },
                   ),
                 ),
