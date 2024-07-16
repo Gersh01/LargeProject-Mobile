@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../components/manage_team/members_per_role.dart';
 import '../components/Divider.dart';
 import '../components/bubbles/tech_bubble.dart';
 import '../json/Project.dart';
@@ -8,6 +8,7 @@ import '../json/communication.dart';
 import '../json/team_member.dart';
 import '../components/Button.dart';
 import '../pages/members_page.dart';
+import '../components/manage_team/role_bubbles.dart';
 
 class ViewProject extends StatefulWidget {
   final Project project;
@@ -19,6 +20,32 @@ class ViewProject extends StatefulWidget {
 }
 
 class _ViewProjectState extends State<ViewProject> {
+  late List<MembersPerRole> roleInfo;
+  late List<TeamMember> teamMembers;
+
+  void getMembersPerRole() {
+    roleInfo = [];
+    for (int i = 0; i < widget.project.roles.length; i++) {
+      teamMembers = [];
+      for (int j = 0; j < widget.project.teamMembers.length; j++) {
+        if (widget.project.roles[i].role ==
+            widget.project.teamMembers[j].role) {
+          teamMembers.add(widget.project.teamMembers[j]);
+        }
+      }
+      roleInfo.add(MembersPerRole(
+          widget.project.roles[i].role,
+          widget.project.roles[i].count,
+          widget.project.roles[i].description,
+          teamMembers));
+    }
+  }
+
+  void initState() {
+    super.initState();
+    getMembersPerRole();
+  }
+
   @override
   Widget build(BuildContext context) {
     print(widget.project.title);
@@ -90,35 +117,11 @@ class _ViewProjectState extends State<ViewProject> {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             ]),
           ),
-          for (Role role in widget.project.roles)
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
-                        bottomLeft: Radius.circular(10)),
-                    color: Theme.of(context).primaryColorDark,
-                  ),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(role.role),
-                        Divider(),
-                        Text("Description",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        Text(role.description),
-                        Divider(),
-                        Text("Current Members",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        for (TeamMember member in widget.project.teamMembers)
-                          if (member.role == role.role)
-                            Wrap(children: [Text(member.username)])
-                      ]))
-            ]),
+          Column(
+            children: roleInfo.map((info) {
+              return Container(child: RoleBubbles(roleInfo: info));
+            }).toList(),
+          ),
           Text("Technologies"),
           Wrap(children: [
             for (String tech in widget.project.technologies)

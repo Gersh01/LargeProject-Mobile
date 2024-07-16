@@ -80,6 +80,18 @@ class _RoleBubbles extends State<RoleBubbles> {
                 ))
               ],
             ),
+            Padding(
+                padding: EdgeInsets.all(10),
+                child: Container(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "${widget.roleInfo.description}",
+                    style: TextStyle(
+                        color: Theme.of(context).hintColor,
+                        fontSize: 14,
+                        fontFamily: "poppins"),
+                  ),
+                )),
             const Padding(
               padding: EdgeInsets.all(10),
               child: DividerLine(),

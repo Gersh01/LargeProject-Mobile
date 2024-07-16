@@ -62,8 +62,11 @@ class _MembersPageState extends State<MembersPage> {
           teamMembers.add(widget.projectData.teamMembers[j]);
         }
       }
-      roleInfo.add(MembersPerRole(widget.projectData.roles[i].role,
-          widget.projectData.roles[i].count, teamMembers));
+      roleInfo.add(MembersPerRole(
+          widget.projectData.roles[i].role,
+          widget.projectData.roles[i].count,
+          widget.projectData.roles[i].description,
+          teamMembers));
     }
   }
 
