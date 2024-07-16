@@ -1,6 +1,9 @@
+import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:devfusion/themes/theme.dart';
+import 'package:devfusion/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class InputField extends StatelessWidget {
   final String? placeholderText;
@@ -87,7 +90,10 @@ class InputField extends StatelessWidget {
               borderRadius: const BorderRadius.all(
                 Radius.circular(5),
               ),
-              color: Theme.of(context).primaryColorDark,
+              // color: Theme.of(context).primaryColorDark,
+              color: (Provider.of<ThemeProvider>(context).themeData == darkMode)
+                  ? darkPrimaryVariant
+                  : lightPrimaryVariant,
             ),
 
             child: Padding(
@@ -99,33 +105,60 @@ class InputField extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 2.0),
                     child: Row(
                       children: [
-
                         //Chooses Icon for field based on placeholder text
-                        placeholderText=='Username'?
-                          const Icon(Icons.account_circle_outlined, size: 14) 
-                        :placeholderText=='Password'?
-                          const Icon(Icons.lock_open, size: 14)
-                        :placeholderText=='Email'?
-                          const Icon(Icons.mail_outline, size: 14)
-                        :Container(),
-                        
+                        placeholderText == 'Username'
+                            ? Icon(Icons.account_circle_outlined,
+                                color: (Provider.of<ThemeProvider>(context)
+                                            .themeData ==
+                                        darkMode)
+                                    ? Colors.white
+                                    : Colors.black,
+                                size: 14)
+                            : placeholderText == 'Password'
+                                ? Icon(
+                                    Icons.lock_open,
+                                    size: 14,
+                                    color: (Provider.of<ThemeProvider>(context)
+                                                .themeData ==
+                                            darkMode)
+                                        ? Colors.white
+                                        : Colors.black,
+                                  )
+                                : placeholderText == 'Email'
+                                    ? Icon(
+                                        Icons.mail_outline,
+                                        size: 14,
+                                        color:
+                                            (Provider.of<ThemeProvider>(context)
+                                                        .themeData ==
+                                                    darkMode)
+                                                ? Colors.white
+                                                : Colors.black,
+                                      )
+                                    : Container(),
+
                         //Places padding between icon and text only if icon is present
-                        placeholderText=='Username'?
-                          const SizedBox(width: 5)
-                        :placeholderText=='Password'?
-                          const SizedBox(width: 5)
-                        :placeholderText=='Email'?
-                          const SizedBox(width: 5)
-                        :Container(),
+                        placeholderText == 'Username'
+                            ? const SizedBox(width: 5)
+                            : placeholderText == 'Password'
+                                ? const SizedBox(width: 5)
+                                : placeholderText == 'Email'
+                                    ? const SizedBox(width: 5)
+                                    : Container(),
 
                         Text(
                           placeholderText!,
-                          style: Theme.of(context).textTheme.labelMedium,
+                          // style: Theme.of(context).textTheme.labelMedium,
+                          style: TextStyle(
+                            color: (Provider.of<ThemeProvider>(context)
+                                        .themeData ==
+                                    darkMode)
+                                ? Colors.white
+                                : Colors.black,
+                          ),
                         ),
                       ],
                     ),
-
-                    
                   ),
                   SizedBox(
                     height: 22,
@@ -137,7 +170,10 @@ class InputField extends StatelessWidget {
                       autocorrect: false,
                       validator: validator,
                       controller: controller,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 14),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(fontSize: 14),
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding:
@@ -146,7 +182,17 @@ class InputField extends StatelessWidget {
                         // border: const OutlineInputBorder(),
                         hintText: getHintText(),
                         errorStyle: const TextStyle(fontSize: 0),
-                        hintStyle: Theme.of(context).textTheme.bodySmall?.copyWith(color: color),
+                        hintStyle: TextStyle(
+                          color:
+                              (Provider.of<ThemeProvider>(context).themeData ==
+                                      darkMode)
+                                  ? Colors.white
+                                  : Colors.black,
+                        ),
+                        // hintStyle: Theme.of(context)
+                        //     .textTheme
+                        //     .bodySmall
+                        //     ?.copyWith(color: color),
                         suffixIcon: Transform.scale(
                           scale: 1,
                           child: suffixIcon,

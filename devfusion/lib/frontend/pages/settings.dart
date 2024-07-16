@@ -496,7 +496,9 @@ class _SettingsState extends State<Settings> {
                       sharedPref.removeToken();
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const Lander()),
+                        MaterialPageRoute(
+                          builder: (context) => const Lander(),
+                        ),
                       );
                     },
                   ),
