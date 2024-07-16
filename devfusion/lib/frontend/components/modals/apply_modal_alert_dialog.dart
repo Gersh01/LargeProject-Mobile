@@ -9,13 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ApplyModalAlertDialog extends StatefulWidget {
-  final BuildContext context;
   final String projectId;
   final List<String> givenRoles;
 
   const ApplyModalAlertDialog({
     super.key,
-    required this.context,
     required this.projectId,
     required this.givenRoles,
   });
@@ -26,7 +24,7 @@ class ApplyModalAlertDialog extends StatefulWidget {
 
 class _ApplyModalAlertDialogState extends State<ApplyModalAlertDialog> {
   SharedPref sharedPref = SharedPref();
-  String userId = "";
+  String? userId;
   String error = "";
   double errorCount = 0;
   String selectedRole = "";
@@ -46,9 +44,10 @@ class _ApplyModalAlertDialogState extends State<ApplyModalAlertDialog> {
       print("settings jwt sucessful");
       var jsonResponse = jsonDecode(response.body);
       sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
-      setState(() {
-        userId = jsonResponse['id'];
-      });
+      userId = jsonResponse['id'];
+      // setState(() {
+      //   userId = jsonResponse['id'];
+      // });
     } else {
       print("settings jwt unsucessful");
     }
@@ -65,7 +64,7 @@ class _ApplyModalAlertDialogState extends State<ApplyModalAlertDialog> {
       return;
     }
     print("selectedRole: ${selectedRole}");
-    getUserCredentials();
+
     String? token = await sharedPref.readToken();
     var reqBody = {
       "role": selectedRole,
@@ -93,6 +92,7 @@ class _ApplyModalAlertDialogState extends State<ApplyModalAlertDialog> {
 
   @override
   void initState() {
+    getUserCredentials();
     if (widget.givenRoles.isNotEmpty) {
       hintText = const Text(
         "Select an Available Role",
@@ -104,7 +104,6 @@ class _ApplyModalAlertDialogState extends State<ApplyModalAlertDialog> {
         overflow: TextOverflow.ellipsis,
       );
     }
-    // _dropdownValue = widget.roles[0];
     super.initState();
   }
 

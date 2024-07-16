@@ -1,7 +1,8 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:devfusion/frontend/components/joined_projects_tile.dart';
-import 'package:devfusion/frontend/components/project_tile.dart';
+// import 'package:devfusion/frontend/components/project_tile.dart';
 import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:devfusion/frontend/json/Project.dart';
 import 'package:devfusion/frontend/utils/utility.dart';
@@ -29,8 +30,8 @@ class _ProjectsState extends State<Projects>
   List<Project> ownedProjects = [];
   List<Project> joinedProjects = [];
   bool loading = true;
-  bool isRetrievingOwnedProjects = true;
-  bool isRetrievingJoinedProjects = true;
+  bool isRetrievingOwnedProjects = false;
+  bool isRetrievingJoinedProjects = false;
   bool endOfOwnedProject = false;
   bool endOfJoinedProject = false;
 
@@ -42,7 +43,10 @@ class _ProjectsState extends State<Projects>
   void initState() {
     super.initState();
 
-    fetchProjects(true);
+    // fetchProjects(true);
+    fetchUser();
+    fetchOwnedProjects(true);
+    fetchJoinedProjects(true);
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     ownedProjectsScrollController = ScrollController()..addListener(onScroll);
     joinedProjectsScrollController = ScrollController()..addListener(onScroll);
@@ -60,20 +64,19 @@ class _ProjectsState extends State<Projects>
     if (_tabController.index == 0 &&
         ownedProjectsScrollController.position.extentAfter < 500) {
       if (!isRetrievingOwnedProjects && !loading && !endOfOwnedProject) {
-        fetchProjects(false);
+        fetchOwnedProjects(false);
       }
     } else {
       // Detect joined project scroll position
       if (joinedProjectsScrollController.position.extentAfter < 500) {
         if (!isRetrievingJoinedProjects && !loading && !endOfJoinedProject) {
-          fetchProjects(false);
+          fetchJoinedProjects(false);
         }
       }
     }
   }
 
-  // fetch all projects
-  Future fetchProjects(bool initial) async {
+  Future fetchUser() async {
     SharedPref sharedPref = SharedPref();
 
     var token = await sharedPref.readToken();
@@ -96,92 +99,97 @@ class _ProjectsState extends State<Projects>
     } else {
       print("settings jwt unsucessful");
     }
+  }
+
+  Future fetchOwnedProjects(bool initial) async {
+    SharedPref sharedPref = SharedPref();
+
+    var token = await sharedPref.readToken();
 
     var reqBody = {
       "token": token,
-
       "searchBy": "title",
       "sortBy": "recent",
       "query": "",
-      "count": 4,
+      "count": initial ? 8 : 4,
       "initial": initial,
 
       // cursor
       "projectId": initial
           ? "000000000000000000000000"
-          : (_tabController.index == 0
-              ? ownedProjects[ownedProjects.length - 1].id
-              : joinedProjects[joinedProjects.length - 1].id),
+          : ownedProjects[ownedProjects.length - 1].id
     };
 
-    var ownedProjectsResponse;
-    var joinedProjectsResponse;
+    setState(() {
+      isRetrievingOwnedProjects = true;
+    });
+    var response = await http.post(
+      Uri.parse(ownedProjectsUrl),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(reqBody),
+    );
 
-    if (initial) {
-      ownedProjectsResponse = await http.post(
-        Uri.parse(ownedProjectsUrl),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode(reqBody),
-      );
-
-      joinedProjectsResponse = await http.post(
-        Uri.parse(joinedProjectsUrl),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode(reqBody),
-      );
-    } else {
-      if (_tabController.index == 0) {
-        setState(() {
-          isRetrievingOwnedProjects = true;
-        });
-
-        ownedProjectsResponse = await http.post(
-          Uri.parse(ownedProjectsUrl),
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode(reqBody),
-        );
-      } else {
-        setState(() {
-          isRetrievingJoinedProjects = true;
-        });
-        joinedProjectsResponse = await http.post(
-          Uri.parse(joinedProjectsResponse),
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode(reqBody),
-        );
-      }
-    }
-
-    // Parsing retrieved owned projects
-    if (ownedProjectsResponse.statusCode == 200) {
-      var jsonResponse = jsonDecode(ownedProjectsResponse.body);
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(response.body);
       sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
 
       var projectsData = jsonResponse['results'];
 
+      List<Project> retrievedProjects = [];
+
+      for (int i = 0; i < projectsData.length; i++) {
+        retrievedProjects.add(Project.fromJson(projectsData[i]));
+      }
+
       // Set endOfProjects to true if reach the end
-      if (projectsData.length == 0) {
+      if (retrievedProjects.isEmpty) {
         setState(() {
           endOfOwnedProject = true;
         });
       }
 
-      for (int i = 0; i < projectsData.length; i++) {
-        ownedProjects.add(Project.fromJson(projectsData[i]));
-      }
-
       setState(() {
+        loading = false;
+        ownedProjects = [...ownedProjects, ...retrievedProjects];
         isRetrievingOwnedProjects = false;
       });
     } else {
-      String jsonDataString = ownedProjectsResponse.body.toString();
-      var _data = jsonDecode(jsonDataString);
+      // String jsonDataString = response.body.toString();
+      // var _data = jsonDecode(jsonDataString);
       return Future.value("Failed to fetch projects");
     }
+  }
 
-    // Parsing retrieved joined projects
-    if (joinedProjectsResponse.statusCode == 200) {
-      var jsonResponse = jsonDecode(joinedProjectsResponse.body);
+  Future fetchJoinedProjects(bool initial) async {
+    SharedPref sharedPref = SharedPref();
+
+    var token = await sharedPref.readToken();
+
+    var reqBody = {
+      "token": token,
+      "searchBy": "title",
+      "sortBy": "recent",
+      "query": "",
+      "count": initial ? 8 : 4,
+      "initial": initial,
+
+      // cursor
+      "projectId": initial
+          ? "000000000000000000000000"
+          : joinedProjects[joinedProjects.length - 1].id
+    };
+
+    setState(() {
+      isRetrievingJoinedProjects = true;
+    });
+    var response = await http.post(
+      Uri.parse(joinedProjectsUrl),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(reqBody),
+    );
+
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(response.body);
       sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
 
       var projectsData = jsonResponse['results'];
@@ -193,22 +201,20 @@ class _ProjectsState extends State<Projects>
         });
       }
 
+      List<Project> retrievedProjects = [];
+
       for (int i = 0; i < projectsData.length; i++) {
-        joinedProjects.add(Project.fromJson(projectsData[i]));
+        retrievedProjects.add(Project.fromJson(projectsData[i]));
       }
       setState(() {
+        loading = false;
+        joinedProjects = [...joinedProjects, ...retrievedProjects];
         isRetrievingJoinedProjects = false;
       });
     } else {
-      String jsonDataString = joinedProjectsResponse.body.toString();
-      var _data = jsonDecode(jsonDataString);
+      // String jsonDataString = response.body.toString();
+      // var _data = jsonDecode(jsonDataString);
       return Future.value("Failed to fetch projects");
-    }
-
-    if (loading) {
-      setState(() {
-        loading = false;
-      });
     }
   }
 
