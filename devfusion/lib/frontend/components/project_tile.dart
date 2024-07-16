@@ -1,3 +1,4 @@
+import 'package:devfusion/frontend/components/Divider.dart';
 import 'package:flutter/material.dart';
 
 import '../json/Project.dart';
@@ -117,6 +118,7 @@ class _ProjectTileState extends State<ProjectTile> {
                         ),
                         child: Text(
                           positionLeftText,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: Theme.of(context).hintColor,
                             fontWeight: FontWeight.bold,
@@ -184,11 +186,7 @@ class _ProjectTileState extends State<ProjectTile> {
                     ),
                   ),
 
-                  Divider(
-                    // color: Theme.of(context).primaryColor,
-                    color: Color(0xff6B7280),
-                    thickness: 1,
-                  ),
+                  const DividerLine(),
 
                   Container(
                     decoration: BoxDecoration(
