@@ -253,7 +253,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         BioFields(
-                          myProfile: true,
+                          myProfile: profile,
                           bioMessage: userProfile?.bio ?? "",
                           userProfile: userProfile,
                         )
@@ -265,7 +265,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         TechnologiesField(
-                          myProfile: true,
+                          myProfile: profile,
                           technologies: userProfile?.technologies ?? [],
                           userInfo: userProfile,
                         )
