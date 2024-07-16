@@ -280,20 +280,8 @@ class _DiscoverState extends State<Discover> {
                     itemCount: projects.length,
                     itemBuilder: (BuildContext context, int index) {
                       var project = projects[index];
-                      return InkWell(
-                        
-                        ProjectTile(project: project),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ProjectsPage(
-                                project: project,
-                              ),
-                            ),
-                          );
-                        },
-                      );
+                      return 
+                        ProjectTile(project: project);
                     },
                   ),
                 ),
