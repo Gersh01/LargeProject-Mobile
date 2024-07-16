@@ -108,34 +108,18 @@ class InputField extends StatelessWidget {
                         //Chooses Icon for field based on placeholder text
                         placeholderText == 'Username'
                             ? Icon(Icons.account_circle_outlined,
-                                // color: (Provider.of<ThemeProvider>(context)
-                                //             .themeData ==
-                                //         darkMode)
-                                //     ? Colors.white
-                                //     : Colors.black,
-                                color: color,
-                                size: 14)
+                                color: color, size: 14)
                             : placeholderText == 'Password'
                                 ? Icon(
                                     Icons.lock_open,
                                     size: 14,
-                                    // color: (Provider.of<ThemeProvider>(context)
-                                    //             .themeData ==
-                                    //         darkMode)
-                                    //     ? Colors.white
-                                    //     : Colors.black,
                                     color: color,
                                   )
                                 : placeholderText == 'Email'
                                     ? Icon(
                                         Icons.mail_outline,
                                         size: 14,
-                                        color:
-                                            (Provider.of<ThemeProvider>(context)
-                                                        .themeData ==
-                                                    darkMode)
-                                                ? Colors.white
-                                                : Colors.black,
+                                        color: color,
                                       )
                                     : Container(),
 
@@ -152,13 +136,9 @@ class InputField extends StatelessWidget {
                           placeholderText!,
                           // style: Theme.of(context).textTheme.labelMedium,
                           style: TextStyle(
-                            // color: (Provider.of<ThemeProvider>(context)
-                            //             .themeData ==
-                            //         darkMode)
-                            //     ? Colors.white
-                            //     : Colors.black,
-                            color: color,
-                          ),
+                              fontFamily: 'PoppinsSemibold',
+                              fontSize: 14,
+                              color: color),
                         ),
                       ],
                     ),
@@ -173,10 +153,11 @@ class InputField extends StatelessWidget {
                       autocorrect: false,
                       validator: validator,
                       controller: controller,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium
-                          ?.copyWith(fontSize: 14),
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 14,
+                        color: color,
+                      ),
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding:
@@ -186,11 +167,9 @@ class InputField extends StatelessWidget {
                         hintText: getHintText(),
                         errorStyle: const TextStyle(fontSize: 0),
                         hintStyle: TextStyle(
-                          color:
-                              (Provider.of<ThemeProvider>(context).themeData ==
-                                      darkMode)
-                                  ? Colors.white
-                                  : Colors.black,
+                          color: color,
+                          fontSize: 14,
+                          fontFamily: 'PoppinsSemibold',
                         ),
                         // hintStyle: Theme.of(context)
                         //     .textTheme
