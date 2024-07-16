@@ -117,6 +117,7 @@ class _ViewProjectState extends State<ViewProject> {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             ]),
           ),
+          //These are the role bubbles with the user_bubbles inside
           Column(
             children: roleInfo.map((info) {
               return Container(child: RoleBubbles(roleInfo: info));
