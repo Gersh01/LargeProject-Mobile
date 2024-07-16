@@ -9,13 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ApplyModalAlertDialog extends StatefulWidget {
-  final BuildContext context;
   final String projectId;
   final List<String> givenRoles;
 
   const ApplyModalAlertDialog({
     super.key,
-    required this.context,
     required this.projectId,
     required this.givenRoles,
   });

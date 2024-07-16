@@ -16,7 +16,7 @@ class ApplyModal extends StatelessWidget {
     return showDialog(
       context: context,
       builder: (_) => ApplyModalAlertDialog(
-        context: context,
+        // context: context,
         projectId: projectId,
         givenRoles: givenRoles,
       ),
