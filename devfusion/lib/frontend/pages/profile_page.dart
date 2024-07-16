@@ -35,6 +35,30 @@ class _ProfilePageState extends State<ProfilePage> {
   bool isRetrievingProjects = true;
   bool endOfProject = false;
 
+  Future getTheirUserInfo() async {
+    String? token = await sharedPref.readToken();
+    var reqBody = {"token": token};
+
+    var response = await http.post(
+      Uri.parse("$getUserUrl${widget.userId}"),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(reqBody),
+    );
+
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(response.body);
+      print("Users information");
+      print(jsonResponse);
+      setState(() {
+        userProfile = Profile.fromJson(jsonResponse);
+        loading = false;
+      });
+    } else {
+      print("Getting users profile failed");
+      print(response.statusCode);
+    }
+  }
+
   Future getUserInfo() async {
     String? token = await sharedPref.readToken();
     var reqBody = {"token": token};
@@ -59,23 +83,39 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future fetchUserProjects(bool initial) async {
     SharedPref sharedPref = SharedPref();
-
+    var reqBody;
     var token = await sharedPref.readToken();
+    if (widget.userId == null) {
+      reqBody = {
+        "token": token,
+        "searchBy": "title",
+        "sortBy": "recent",
+        "query": "",
+        "count": initial ? 8 : 4,
+        "initial": initial,
+        "userId": userProfile?.userId ?? "",
 
-    var reqBody = {
-      "token": token,
-      "searchBy": "title",
-      "sortBy": "recent",
-      "query": "",
-      "count": initial ? 8 : 4,
-      "initial": initial,
-      "userId": userProfile?.userId ?? "",
+        // cursor
+        "projectId": initial
+            ? "000000000000000000000000"
+            : profileProjects[profileProjects.length - 1].id
+      };
+    } else {
+      reqBody = {
+        "token": token,
+        "searchBy": "title",
+        "sortBy": "recent",
+        "query": "",
+        "count": initial ? 8 : 4,
+        "initial": initial,
+        "userId": widget.userId ?? "",
 
-      // cursor
-      "projectId": initial
-          ? "000000000000000000000000"
-          : profileProjects[profileProjects.length - 1].id
-    };
+        // cursor
+        "projectId": initial
+            ? "000000000000000000000000"
+            : profileProjects[profileProjects.length - 1].id
+      };
+    }
 
     setState(() {
       isRetrievingProjects = true;
@@ -133,11 +173,15 @@ class _ProfilePageState extends State<ProfilePage> {
         }
       }
     });
-    getUserInfo();
+    if (widget.userId == null) {
+      getUserInfo();
+    } else {
+      profile = false;
+      getTheirUserInfo();
+    }
+
     scrollController = ScrollController()..addListener(onScroll);
     fetchUserProjects(true);
-    //getUserProjects();
-    // checkUrlPath();
   }
 
   @override
