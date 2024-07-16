@@ -476,8 +476,8 @@ class _SettingsState extends State<Settings> {
 //
                       final applyModal = ApplyModal(
                         context: context,
-                        applyFunction: () {},
-                        roles: const ["API", "Frontend"],
+                        projectId: "-1",
+                        givenRoles: const ["API", "Frontend"],
                       );
                       applyModal.buildApplyModal();
 //
