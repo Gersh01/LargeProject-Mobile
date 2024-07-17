@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:devfusion/frontend/components/Button.dart';
 import 'package:devfusion/frontend/components/bubbles/communication_bubble.dart';
+import 'package:devfusion/frontend/components/modals/confirm_cancel_modal.dart';
 import 'package:devfusion/frontend/components/small_button.dart';
 import 'package:devfusion/frontend/json/Profile.dart';
 import 'package:devfusion/frontend/pages/application_page.dart';
@@ -121,7 +122,7 @@ class _ViewProjectState extends State<ViewProject> {
     String? token = await sharedPref.readToken();
     var reqBody = {
       "token": token,
-      "projectId": project!.id,
+      "projectId": project.id,
     };
 
     var response = await http.post(
@@ -146,7 +147,7 @@ class _ViewProjectState extends State<ViewProject> {
     };
 
     var response = await http.delete(
-      Uri.parse("$deleteProjectUrl${project!.id}"),
+      Uri.parse("$deleteProjectUrl${project.id}"),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(reqBody),
     );
@@ -206,8 +207,6 @@ class _ViewProjectState extends State<ViewProject> {
       body: jsonEncode(reqBody),
     );
 
-    print(response.body);
-
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
       sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
@@ -223,7 +222,7 @@ class _ViewProjectState extends State<ViewProject> {
   void getVisitorType() async {
     await getUserInfo();
     // Check if user is owner
-    if (userProfile!.userId == project?.ownerId) {
+    if (userProfile!.userId == project.ownerId) {
       setState(() {
         visitorType = VisitorType.owner;
       });
@@ -231,8 +230,8 @@ class _ViewProjectState extends State<ViewProject> {
     }
 
     // Check if user is a project manager or member
-    for (var i = 0; i < (project?.teamMembers.length ?? 0); i++) {
-      TeamMember member = project!.teamMembers[i];
+    for (var i = 0; i < (project.teamMembers.length); i++) {
+      TeamMember member = project.teamMembers[i];
 
       if (member.userId == userProfile!.userId) {
         if (member.role == "Project Manager") {
@@ -265,7 +264,14 @@ class _ViewProjectState extends State<ViewProject> {
       backgroundColor: approve,
       textColor: Colors.white,
       onPressed: () {
-        beginProject();
+        final confirmModal = ConfirmCancelModal(
+          context: context,
+          title: const Text("Confirm Beginning Project?"),
+          approveFunction: () {
+            beginProject();
+          },
+        );
+        confirmModal.buildConfirmCancelModal();
       },
     );
 
@@ -288,7 +294,14 @@ class _ViewProjectState extends State<ViewProject> {
       backgroundColor: danger,
       textColor: Colors.white,
       onPressed: () {
-        deleteProject();
+        final confirmModal = ConfirmCancelModal(
+          context: context,
+          title: const Text("Confirm Deletion of Project?"),
+          approveFunction: () {
+            deleteProject();
+          },
+        );
+        confirmModal.buildConfirmCancelModal();
       },
     );
 
@@ -311,7 +324,14 @@ class _ViewProjectState extends State<ViewProject> {
       backgroundColor: danger,
       textColor: Colors.white,
       onPressed: () {
-        leaveProject();
+        final confirmModal = ConfirmCancelModal(
+          context: context,
+          title: const Text("Confirm Leaving Project"),
+          approveFunction: () {
+            leaveProject();
+          },
+        );
+        confirmModal.buildConfirmCancelModal();
       },
     );
 
@@ -409,12 +429,16 @@ class _ViewProjectState extends State<ViewProject> {
                 "Position Requirements",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
+              const SizedBox(height: 10),
               Column(
                 children: roleInfo.map((info) {
-                  return RoleBubbles(roleInfo: info);
+                  return Container(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: RoleBubbles(roleInfo: info),
+                  );
                 }).toList(),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               const Text(
                 "Technologies",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),

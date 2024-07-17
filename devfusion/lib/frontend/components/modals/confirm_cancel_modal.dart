@@ -45,11 +45,14 @@ class ConfirmCancelModal extends StatelessWidget {
               placeholderText: 'Approve',
               backgroundColor: approve,
               textColor: Colors.white,
-              onPressed: () async {
-                (approveFunction != null)
-                    ? approveFunction
-                    : Navigator.pop(context);
-              },
+              onPressed: (approveFunction != null)
+                  ? () {
+                      approveFunction!();
+                      Navigator.pop(context);
+                    }
+                  : () {
+                      Navigator.pop(context);
+                    },
             ),
             const SizedBox(
               height: 5,
