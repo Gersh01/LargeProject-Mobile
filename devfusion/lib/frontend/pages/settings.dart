@@ -447,47 +447,10 @@ class _SettingsState extends State<Settings> {
                     backgroundColor: neutral,
                     textColor: Colors.white,
                     onPressed: () {
-                      final confirmCancelModal = ConfirmCancelModal(
-                        context: context,
-                      );
-                      //   context: context,
-                      //   firstTextButton: TextButton(
-                      //     onPressed: () {
-                      //       Navigator.of(context).pop();
-                      //     },
-                      //     child: const Text("Cancel"),
-                      //   ),
-                      //   secondTextButton: TextButton(
-                      //     onPressed: () {
-                      //       Navigator.of(context).pop();
-                      //     },
-                      //     child: const Text(
-                      //       "Confirm",
-                      //     ),
-                      //   ),
-                      //   title: const Text(
-                      //     "Title",
-                      //     textAlign: TextAlign.center,
-                      //   ),
-                      //   content: const Text(
-                      //     "Content",
-                      //     textAlign: TextAlign.center,
-                      //   ),
-                      // );
-                      confirmCancelModal.buildConfirmCancelModal();
-//
-//
-                      // final applyModal = ApplyModal(
-                      //   context: context,
-                      //   projectId: "-1",
-                      //   givenRoles: const ["API", "Frontend"],
-                      // );
-                      // applyModal.buildApplyModal();
-//
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => const AboutUs()),
-                      // );
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                          builder: (context) => const AboutUs()));
                     },
                   ),
                   Button(
