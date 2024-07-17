@@ -130,6 +130,7 @@ class _MembersPageState extends State<MembersPage> {
       body: loading
           ? const Center(child: CircularProgressIndicator())
           : ListView(
+              padding: EdgeInsets.only(left: 10, right: 10, top: 10),
               children: [
                 DividerLine(),
                 Padding(
@@ -146,17 +147,23 @@ class _MembersPageState extends State<MembersPage> {
                 ),
                 Column(
                   children: roleInfo.map((info) {
-                    return Container(child: RoleBubbles(roleInfo: info));
+                    return Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: RoleBubbles(roleInfo: info));
                   }).toList(),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 Column(
                   children: rolesPerMembers.map((member) {
                     return Container(
+                        margin: EdgeInsets.only(bottom: 10),
                         child: ManageMemberTile(
-                      projectId: projectId,
-                      members: teamMembers,
-                      membersRoleInfo: member,
-                    ));
+                          projectId: projectId,
+                          members: widget.projectData.teamMembers,
+                          membersRoleInfo: member,
+                        ));
                   }).toList(),
                 )
               ],

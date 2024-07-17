@@ -13,8 +13,14 @@ class TeamMember {
     );
   }
 
+  Map<String, dynamic> toJson() => {
+        'role': role,
+        'username': username,
+        'userId': userId,
+      };
+
   @override
   String toString() {
-    return "{role: $role, userId: $userId, username: $username";
+    return "{role: $role, userId: $userId, username: $username}";
   }
 }

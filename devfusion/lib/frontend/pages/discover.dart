@@ -174,31 +174,36 @@ class _DiscoverState extends State<Discover> {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(10),
-                            child: DropdownButton(
-                              underline: Container(
-                                height: 0,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Theme.of(context).primaryColorLight),
+                              child: DropdownButton(
+                                underline: Container(
+                                  height: 0,
+                                ),
+                                focusColor: Theme.of(context).primaryColorLight,
+                                isDense: true,
+                                items: const [
+                                  DropdownMenuItem(
+                                    value: 'title',
+                                    child: Text('Title'),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 'technologies',
+                                    child: Text('Technologies'),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 'description',
+                                    child: Text('Description'),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 'roles',
+                                    child: Text('Roles'),
+                                  )
+                                ],
+                                value: _dropdownSearchByValue,
+                                onChanged: dropdownSearchByCallback,
                               ),
-                              isDense: true,
-                              items: const [
-                                DropdownMenuItem(
-                                  value: 'title',
-                                  child: Text('Title'),
-                                ),
-                                DropdownMenuItem(
-                                  value: 'technologies',
-                                  child: Text('Technologies'),
-                                ),
-                                DropdownMenuItem(
-                                  value: 'description',
-                                  child: Text('Description'),
-                                ),
-                                DropdownMenuItem(
-                                  value: 'roles',
-                                  child: Text('Roles'),
-                                )
-                              ],
-                              value: _dropdownSearchByValue,
-                              onChanged: dropdownSearchByCallback,
                             ),
                           ),
                         ),
