@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:devfusion/frontend/components/input_field.dart';
 import 'package:devfusion/frontend/components/SizedButton.dart';
 import 'package:devfusion/frontend/components/modals/apply_modal.dart';
+import 'package:devfusion/frontend/components/modals/confirm_cancel_modal.dart';
 // import 'package:devfusion/frontend/components/modals/apply_modal.dart';
 // import 'package:devfusion/frontend/components/modals/confirm_cancel_modal.dart';
 import 'package:devfusion/frontend/components/profile_pictures.dart';
@@ -446,7 +447,9 @@ class _SettingsState extends State<Settings> {
                     backgroundColor: neutral,
                     textColor: Colors.white,
                     onPressed: () {
-                      // final confirmCancelModal = ConfirmCancelModal(
+                      final confirmCancelModal = ConfirmCancelModal(
+                        context: context,
+                      );
                       //   context: context,
                       //   firstTextButton: TextButton(
                       //     onPressed: () {
@@ -471,15 +474,15 @@ class _SettingsState extends State<Settings> {
                       //     textAlign: TextAlign.center,
                       //   ),
                       // );
-                      // confirmCancelModal.buildConfirmCancelModal();
+                      confirmCancelModal.buildConfirmCancelModal();
 //
 //
-                      final applyModal = ApplyModal(
-                        context: context,
-                        projectId: "-1",
-                        givenRoles: const ["API", "Frontend"],
-                      );
-                      applyModal.buildApplyModal();
+                      // final applyModal = ApplyModal(
+                      //   context: context,
+                      //   projectId: "-1",
+                      //   givenRoles: const ["API", "Frontend"],
+                      // );
+                      // applyModal.buildApplyModal();
 //
                       // Navigator.push(
                       //   context,
