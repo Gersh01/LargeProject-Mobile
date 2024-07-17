@@ -141,7 +141,7 @@ class _MyProjectsTileState extends State<MyProjectsTile> {
                 color: Theme.of(context).primaryColorDark,
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
                     "Description",

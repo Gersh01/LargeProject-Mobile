@@ -60,6 +60,10 @@ class _ProjectsState extends State<Projects>
   }
 
   void onScroll() {
+    if (!ownedProjectsScrollController.hasClients ||
+        !joinedProjectsScrollController.hasClients) {
+      return;
+    }
     // Detect owned project scroll position
     if (_tabController.index == 0 &&
         ownedProjectsScrollController.position.extentAfter < 500) {
