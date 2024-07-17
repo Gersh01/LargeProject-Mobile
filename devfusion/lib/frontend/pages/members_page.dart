@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:devfusion/frontend/components/Divider.dart';
 import 'package:devfusion/frontend/components/manage_team/role_bubbles.dart';
+import 'package:devfusion/frontend/components/manage_team/roles_per_member.dart';
 import 'package:devfusion/frontend/json/team_member.dart';
 import 'package:devfusion/frontend/utils/utility.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,8 @@ import '../components/shared_pref.dart';
 import '../json/Profile.dart';
 import 'package:http/http.dart' as http;
 import '../components/manage_team/members_per_role.dart';
+import '../components/manage_team/manage_member_tile.dart';
+import '../components/manage_team/roles_per_member.dart';
 
 class MembersPage extends StatefulWidget {
   final Project projectData;
@@ -26,7 +29,10 @@ class MembersPage extends StatefulWidget {
 class _MembersPageState extends State<MembersPage> {
   SharedPref sharedPref = SharedPref();
   late List<MembersPerRole> roleInfo;
-  late List<TeamMember> teamMembers;
+  late List<TeamMember>? teamMembers = widget.projectData.teamMembers;
+  late List<RolesPerMember> rolesPerMembers;
+  late List<String> membersProssibleRoles;
+  late String projectId = widget.projectData.id;
   bool loading = true;
   late Profile? userProfile;
 
@@ -52,6 +58,7 @@ class _MembersPageState extends State<MembersPage> {
     }
   }
 
+  //Gets the members for every role
   void getMembersPerRole() {
     roleInfo = [];
     for (int i = 0; i < widget.projectData.roles.length; i++) {
@@ -59,7 +66,7 @@ class _MembersPageState extends State<MembersPage> {
       for (int j = 0; j < widget.projectData.teamMembers.length; j++) {
         if (widget.projectData.roles[i].role ==
             widget.projectData.teamMembers[j].role) {
-          teamMembers.add(widget.projectData.teamMembers[j]);
+          teamMembers!.add(widget.projectData.teamMembers[j]);
         }
       }
       roleInfo.add(MembersPerRole(
@@ -70,11 +77,30 @@ class _MembersPageState extends State<MembersPage> {
     }
   }
 
+  //Finds available roles the user can join
+  void getRolesPerMember() {
+    rolesPerMembers = [];
+    for (int i = 0; i < widget.projectData.teamMembers.length; i++) {
+      membersProssibleRoles = [];
+      for (int j = 0; j < widget.projectData.roles.length; j++) {
+        if (widget.projectData.teamMembers[i].role !=
+            widget.projectData.roles[j].role) {
+          membersProssibleRoles.add(widget.projectData.roles[j].role);
+        }
+      }
+      rolesPerMembers.add(RolesPerMember(
+          widget.projectData.teamMembers[i].username,
+          widget.projectData.teamMembers[i].role,
+          membersProssibleRoles));
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     getUserInfo();
     getMembersPerRole();
+    getRolesPerMember();
   }
 
   @override
@@ -121,6 +147,16 @@ class _MembersPageState extends State<MembersPage> {
                 Column(
                   children: roleInfo.map((info) {
                     return Container(child: RoleBubbles(roleInfo: info));
+                  }).toList(),
+                ),
+                Column(
+                  children: rolesPerMembers.map((member) {
+                    return Container(
+                        child: ManageMemberTile(
+                      projectId: projectId,
+                      members: teamMembers,
+                      membersRoleInfo: member,
+                    ));
                   }).toList(),
                 )
               ],

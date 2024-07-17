@@ -32,7 +32,9 @@ class _UserBubble extends State<UserBubble> {
         child: Text(
           "@${widget.username}",
           style: TextStyle(
+              decoration: TextDecoration.underline,
               fontSize: 18,
+              fontWeight: FontWeight.bold,
               color: Theme.of(context).hintColor,
               fontStyle: FontStyle.italic),
         ));
