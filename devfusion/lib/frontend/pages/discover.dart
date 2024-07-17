@@ -162,21 +162,19 @@ class _DiscoverState extends State<Discover> {
                 Row(
                   children: [
                     Expanded(
-                      child: Container(
-                        margin: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColorDark,
-                          borderRadius: BorderRadius.circular(10),
+                      child: Theme(
+                        data: Theme.of(context).copyWith(
+                          canvasColor: Theme.of(context).primaryColorLight,
                         ),
-                        child: Theme(
-                          data: Theme.of(context).copyWith(
-                            canvasColor: Theme.of(context).primaryColorLight,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Theme.of(context).primaryColorLight),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Container(
+                            padding: EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Theme.of(context).primaryColorLight),
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
                               child: DropdownButton(
                                 underline: Container(
                                   height: 0,
@@ -201,6 +199,7 @@ class _DiscoverState extends State<Discover> {
                                     child: Text('Roles'),
                                   )
                                 ],
+                                isExpanded: true,
                                 value: _dropdownSearchByValue,
                                 onChanged: dropdownSearchByCallback,
                               ),
@@ -210,20 +209,11 @@ class _DiscoverState extends State<Discover> {
                       ),
                     ),
 
-                    SizedBox(
-                        width: 10,
-                        height: 40,
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColorLight,
-                          ),
-                        )),
-
                     //Search Bar
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.all(0),
-                        child: TextField(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: TextFormField(
                           onChanged: (text) {
                             print("TEXT: $text");
                             setState(() {
@@ -241,18 +231,31 @@ class _DiscoverState extends State<Discover> {
                             hintStyle: TextStyle(
                               color: Theme.of(context).hintColor,
                             ),
-                            prefixIcon: Icon(Icons.search),
-                            filled: true,
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Icon(Icons.search),
+                            ),
+                            filled: false,
                             fillColor: Theme.of(context).primaryColorLight,
                             border: const OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
+                                  BorderRadius.all(Radius.circular(5)),
                               borderSide: BorderSide.none,
                             ),
                           ),
                         ),
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: SizedBox(
+                          height: 35,
+                          width: 5,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Theme.of(context).hintColor),
+                          )),
+                    )
                   ],
                 ),
 
