@@ -1,14 +1,29 @@
+import 'dart:developer';
+
+import 'package:devfusion/frontend/components/Button.dart';
+import 'package:devfusion/frontend/components/bubbles/communication_bubble.dart';
+import 'package:devfusion/frontend/components/small_button.dart';
+import 'package:devfusion/frontend/json/Profile.dart';
+import 'package:devfusion/frontend/pages/application_page.dart';
+import 'package:devfusion/frontend/utils/utility.dart';
+import 'package:devfusion/themes/theme.dart';
 import 'package:flutter/material.dart';
 import '../components/manage_team/members_per_role.dart';
-import '../components/Divider.dart';
 import '../components/bubbles/tech_bubble.dart';
 import '../json/Project.dart';
-import '../json/Role.dart';
-import '../json/communication.dart';
 import '../json/team_member.dart';
-import '../components/Button.dart';
 import '../pages/members_page.dart';
 import '../components/manage_team/role_bubbles.dart';
+import 'package:devfusion/frontend/components/shared_pref.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+enum VisitorType {
+  visitor,
+  member,
+  owner,
+  projectManager,
+}
 
 class ViewProject extends StatefulWidget {
   final Project project;
@@ -22,121 +37,415 @@ class ViewProject extends StatefulWidget {
 class _ViewProjectState extends State<ViewProject> {
   late List<MembersPerRole> roleInfo;
   late List<TeamMember> teamMembers;
+  Profile? userProfile;
+  bool loading = true;
+  VisitorType? visitorType;
+  List<Widget> controls = [];
+  String? roleToApply;
+  late Project project;
 
   void getMembersPerRole() {
     roleInfo = [];
-    for (int i = 0; i < widget.project.roles.length; i++) {
+    for (int i = 0; i < project.roles.length; i++) {
       teamMembers = [];
-      for (int j = 0; j < widget.project.teamMembers.length; j++) {
-        if (widget.project.roles[i].role ==
-            widget.project.teamMembers[j].role) {
-          teamMembers.add(widget.project.teamMembers[j]);
+      for (int j = 0; j < project.teamMembers.length; j++) {
+        if (project.roles[i].role == project.teamMembers[j].role) {
+          teamMembers.add(project.teamMembers[j]);
         }
       }
-      roleInfo.add(MembersPerRole(
-          widget.project.roles[i].role,
-          widget.project.roles[i].count,
-          widget.project.roles[i].description,
-          teamMembers));
+      roleInfo.add(
+        MembersPerRole(project.roles[i].role, project.roles[i].count,
+            project.roles[i].description, teamMembers),
+      );
     }
   }
 
+  Future retrieveProject() async {
+    SharedPref sharedPref = SharedPref();
+    String? token = await sharedPref.readToken();
+    var reqBody = {
+      "token": token,
+      "projectId": project.id,
+      "projectStartDate": DateTime.now().toString(),
+      "isStarted": true,
+    };
+    var request = http.Request(
+      'GET',
+      Uri.parse("$getProjectUrl${project.id}"),
+    )..headers.addAll(
+        {"Content-Type": "application/json"},
+      );
+
+    request.body = jsonEncode(reqBody);
+    var response = await request.send();
+
+    if (response.statusCode == 200) {
+      var projectData = await response.stream.bytesToString();
+
+      setState(
+        () {
+          project = Project.fromJson(
+            jsonDecode(projectData)['project'],
+          );
+        },
+      );
+    }
+  }
+
+  void beginProject() async {
+    SharedPref sharedPref = SharedPref();
+    String? token = await sharedPref.readToken();
+    var reqBody = {
+      "token": token,
+      "projectId": project.id,
+      "projectStartDate": DateTime.now().toString(),
+      "isStarted": true,
+    };
+
+    var response = await http.put(
+      Uri.parse(editProjectUrl),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(reqBody),
+    );
+
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(response.body);
+      sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
+    } else {
+      log("settings jwt unsucessful");
+    }
+  }
+
+  void leaveProject() async {
+    SharedPref sharedPref = SharedPref();
+    String? token = await sharedPref.readToken();
+    var reqBody = {
+      "token": token,
+      "projectId": project!.id,
+    };
+
+    var response = await http.post(
+      Uri.parse(leaveProjectUrl),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(reqBody),
+    );
+
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(response.body);
+      sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
+    } else {
+      log("settings jwt unsucessful");
+    }
+  }
+
+  void deleteProject() async {
+    SharedPref sharedPref = SharedPref();
+    String? token = await sharedPref.readToken();
+    var reqBody = {
+      "token": token,
+    };
+
+    var response = await http.delete(
+      Uri.parse("$deleteProjectUrl${project!.id}"),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(reqBody),
+    );
+
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(response.body);
+      sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
+      Navigator.of(context).pop();
+    } else {
+      log("settings jwt unsucessful");
+    }
+  }
+
+  void applyProject() async {
+    SharedPref sharedPref = SharedPref();
+    String? token = await sharedPref.readToken();
+    var reqBody = {
+      "token": token,
+      "projectId": project.id,
+      "userId": userProfile!.userId,
+      "role": roleToApply,
+    };
+
+    var response = await http.post(
+      Uri.parse(applyInboxUrl),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(reqBody),
+    );
+
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(response.body);
+      sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
+    } else {
+      log("settings jwt unsucessful");
+    }
+  }
+
+  @override
   void initState() {
     super.initState();
+    setState(() {
+      project = widget.project;
+    });
+    retrieveProject();
     getMembersPerRole();
+    getVisitorType();
+  }
+
+  Future<void> getUserInfo() async {
+    SharedPref sharedPref = SharedPref();
+    String? token = await sharedPref.readToken();
+    var reqBody = {"token": token};
+
+    var response = await http.post(
+      Uri.parse(jwtUrl),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(reqBody),
+    );
+
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(response.body);
+      sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
+      setState(() {
+        userProfile = Profile.fromJson(jsonResponse);
+        loading = false;
+      });
+    } else {
+      log("settings jwt unsucessful");
+    }
+  }
+
+  void getVisitorType() async {
+    await getUserInfo();
+    // Check if user is owner
+    if (userProfile!.userId == project?.ownerId) {
+      setState(() {
+        visitorType = VisitorType.owner;
+      });
+      return;
+    }
+
+    // Check if user is a project manager or member
+    for (var i = 0; i < (project?.teamMembers.length ?? 0); i++) {
+      TeamMember member = project!.teamMembers[i];
+
+      if (member.userId == userProfile!.userId) {
+        if (member.role == "Project Manager") {
+          setState(() {
+            visitorType = VisitorType.projectManager;
+          });
+          return;
+        } else {
+          setState(() {
+            visitorType = VisitorType.member;
+          });
+          return;
+        }
+      }
+    }
+
+    setState(() {
+      visitorType = VisitorType.visitor;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    print(widget.project.title);
+    int memberCount = project.teamMembers.length;
 
-    int currentCount = widget.project.teamMembers.length;
+    String daysText = getDaysText(project.projectStartDate, project.deadline);
 
-    String daysText = "";
+    Widget beginProjectButton = SmallButton(
+      placeholderText: "Begin",
+      backgroundColor: approve,
+      textColor: Colors.white,
+      onPressed: () {
+        beginProject();
+      },
+    );
 
-    if (widget.project.projectStartDate.isAfter(DateTime.now())) {
-      int days =
-          widget.project.projectStartDate.difference(DateTime.now()).inDays;
+    Widget manageTeamButton = SmallButton(
+      placeholderText: "Manage Team",
+      backgroundColor: neutral,
+      textColor: Colors.white,
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MembersPage(projectData: project),
+          ),
+        );
+      },
+    );
 
-      if (days > 1) {
-        daysText = "$days days until Start";
-      } else {
-        daysText = "$days day until Start";
+    Widget deleteProjectButton = SmallButton(
+      placeholderText: "Delete",
+      backgroundColor: danger,
+      textColor: Colors.white,
+      onPressed: () {
+        deleteProject();
+      },
+    );
+
+    Widget inboxButton = SmallButton(
+      placeholderText: "Inbox",
+      backgroundColor: neutral,
+      textColor: Colors.white,
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ApplicationPage(projectId: project.id),
+          ),
+        );
+      },
+    );
+
+    Widget leaveProjectButton = SmallButton(
+      placeholderText: "Leave",
+      backgroundColor: danger,
+      textColor: Colors.white,
+      onPressed: () {
+        leaveProject();
+      },
+    );
+
+    Widget applyProjectButton = SmallButton(
+      placeholderText: "Apply",
+      backgroundColor: approve,
+      textColor: Colors.white,
+      onPressed: () {
+        applyProject();
+      },
+    );
+
+    List<Widget> tempControls = [];
+
+    if (visitorType == VisitorType.owner) {
+      if (!project.isStarted) {
+        tempControls.add(beginProjectButton);
       }
-    } else {
-      int days = widget.project.deadline.difference(DateTime.now()).inDays;
-
-      if (days > 1) {
-        daysText = "$days days until project begins";
-      } else {
-        daysText = "$days day until project begins";
+      tempControls.addAll([manageTeamButton, deleteProjectButton, inboxButton]);
+    } else if (visitorType == VisitorType.projectManager) {
+      if (!project.isStarted) {
+        tempControls.add(beginProjectButton);
       }
+      tempControls.addAll([manageTeamButton, inboxButton]);
+    } else if (visitorType == VisitorType.member) {
+      tempControls = [leaveProjectButton];
+    } else if (visitorType == VisitorType.visitor) {
+      tempControls = [applyProjectButton];
     }
 
+    setState(() {
+      controls = [...tempControls];
+    });
+
     return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
+      appBar: AppBar(
+        title: const Text("Back"),
         backgroundColor: Theme.of(context).primaryColor,
-        appBar: AppBar(),
-        body: ListView(children: [
-          Center(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(widget.project.title),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Row(children: [
-                  Text(
-                    currentCount.toString(),
-                    textAlign: TextAlign.left,
-                  ),
-                  Icon(Icons.person)
-                ]),
-                Row(
-                  children: [
-                    Icon(Icons.access_time_filled),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.only(
+          top: 10,
+          left: 10,
+          right: 10,
+        ),
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                project.title,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Wrap(
+                spacing: 5,
+                children: controls,
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(children: [
                     Text(
-                      daysText,
+                      memberCount.toString(),
                       textAlign: TextAlign.left,
                     ),
-                  ],
-                )
-              ]),
-              Divider(),
-              Text("Description",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              Text(widget.project.description),
-              Button(
-                placeholderText: "Manage Team",
-                onPressed: () => {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              MembersPage(projectData: widget.project)))
-                },
-              ),
-              Text("Position Requirements",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            ]),
-          ),
-          //These are the role bubbles with the user_bubbles inside
-          Column(
-            children: roleInfo.map((info) {
-              return Container(child: RoleBubbles(roleInfo: info));
-            }).toList(),
-          ),
-          Text("Technologies"),
-          Wrap(children: [
-            for (String tech in widget.project.technologies)
-              TechBubble(technology: tech, editMode: false)
-          ]),
-          Text("Communications"),
-          for (Communication communication in widget.project.communications)
-            Container(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    const Icon(Icons.person)
+                  ]),
+                  Row(
                     children: [
-                  Text(communication.name),
-                  Text(communication.link)
-                ]))
-        ]));
+                      const Icon(Icons.access_time_filled),
+                      Text(
+                        daysText,
+                        textAlign: TextAlign.left,
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              const SizedBox(height: 10),
+              const Divider(),
+              const SizedBox(height: 10),
+              const Text(
+                "Description",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              Text(project.description),
+              const SizedBox(height: 20),
+              const Text(
+                "Position Requirements",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              Column(
+                children: roleInfo.map((info) {
+                  return RoleBubbles(roleInfo: info);
+                }).toList(),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                "Technologies",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              Wrap(
+                spacing: 5,
+                children: project.technologies.map((tech) {
+                  return TechBubble(technology: tech, editMode: false);
+                }).toList(),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                "Communications",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: project.communications.map((comm) {
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: CommunicationBubble(
+                        communication: comm, hideLink: false),
+                  );
+                }).toList(),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }

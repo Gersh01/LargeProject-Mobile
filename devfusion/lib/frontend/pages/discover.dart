@@ -65,10 +65,6 @@ class _DiscoverState extends State<Discover> {
 
     var token = await sharedPref.readToken();
 
-    // print("Fetching projects WITH A QUERY OF: $_query");
-    // print("Fetching projects WITH A SEARCH BY OF: $_dropdownSearchByValue");
-    // print("Fetching projects WITH A SORT BY OF: $_dropdownSortByValue");
-
     var reqBody = {
       "token": token,
 
@@ -77,8 +73,8 @@ class _DiscoverState extends State<Discover> {
 
       "query": _query,
 
-      "count": 4,
-      "initial": initial ? 8 : 4,
+      "count": initial ? 8 : 4,
+      "initial": initial,
 
       // cursor
       "projectId": initial
@@ -104,16 +100,22 @@ class _DiscoverState extends State<Discover> {
         });
       }
 
+      List<Project> retrievedProjects = [];
+
       for (int i = 0; i < projectsData.length; i++) {
-        projects.add(Project.fromJson(projectsData[i]));
+        retrievedProjects.add(
+          Project.fromJson(projectsData[i]),
+        );
       }
+
       setState(() {
+        projects = [...projects, ...retrievedProjects];
         loading = false;
         isRetrievingProjects = false;
       });
     } else {
-      String jsonDataString = response.body.toString();
-      var _data = jsonDecode(jsonDataString);
+      // String jsonDataString = response.body.toString();
+      // var _data = jsonDecode(jsonDataString);
       return Future.value("Failed to fetch projects");
     }
   }

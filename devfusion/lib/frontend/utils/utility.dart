@@ -531,6 +531,32 @@ Color getBubbleColor(String? text) {
   return bubbleBgColors[hash % bubbleBgColors.length];
 }
 
+String getDaysText(DateTime projectStartDate, DateTime deadline) {
+  String daysText = "";
+
+  if (projectStartDate.isAfter(DateTime.now())) {
+    int days = projectStartDate.difference(DateTime.now()).inDays;
+
+    if (days > 1) {
+      daysText = "$days days until Start";
+    } else {
+      daysText = "$days day until Start";
+    }
+  } else if (deadline.isAfter(DateTime.now())) {
+    int days = deadline.difference(DateTime.now()).inDays;
+
+    if (days > 1) {
+      daysText = "$days days until project begins";
+    } else {
+      daysText = "$days day until project begins";
+    }
+  } else {
+    daysText = "Project completed";
+  }
+
+  return daysText;
+}
+
 //Variables for Cloudinary
 const cloudinaryUrl = 'https://api.cloudinary.com/v1_1/dlj2rlloi/upload';
 const cloudinaryApiKey = '153675853953957';
