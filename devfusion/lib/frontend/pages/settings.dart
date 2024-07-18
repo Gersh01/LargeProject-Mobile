@@ -448,6 +448,7 @@ class _SettingsState extends State<Settings> {
                     backgroundColor: neutral,
                     textColor: Colors.white,
                     onPressed: () {
+
                       Navigator.push(
                           context,
                           MaterialPageRoute(

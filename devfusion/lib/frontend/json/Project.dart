@@ -5,6 +5,7 @@ import 'package:devfusion/frontend/json/team_member.dart';
 class Project {
   final String id;
   final String title;
+  final String ownerId;
   final bool isOpen;
   final bool isDone;
   final bool isStarted;
@@ -19,6 +20,7 @@ class Project {
   Project(
     this.id,
     this.title,
+    this.ownerId,
     this.description,
     this.isOpen,
     this.isDone,
@@ -35,6 +37,7 @@ class Project {
     return Project(
       json['_id'] as String,
       json['title'] as String,
+      json['ownerID'] as String,
       json['description'] as String,
       json['isOpen'] as bool,
       json['isDone'] as bool,

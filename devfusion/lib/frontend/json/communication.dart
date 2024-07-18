@@ -11,6 +11,14 @@ class Communication {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['name'] = name;
+    data['link'] = link;
+
+    return data;
+  }
+
   @override
   String toString() {
     return "{name: $name, link: $link}";

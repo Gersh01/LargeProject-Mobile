@@ -31,7 +31,7 @@ class _TechnologiesField extends State<TechnologiesField> {
   bool editMode = false;
 
   final TextEditingController _techSearchController = TextEditingController();
-  String _dropDownValue = "Searching...";
+  String _selectedValue = "";
   List<String> updatedTechList = [];
   List<String> userTechnologies = [];
   SharedPref sharedPref = SharedPref();
@@ -49,15 +49,15 @@ class _TechnologiesField extends State<TechnologiesField> {
     bool exists = false;
     userTechnologies = widget.technologies;
     for (int i = 0; i < userTechnologies.length; i++) {
-      if (_dropDownValue.toString() == userTechnologies[i]) {
+      if (_selectedValue.toString() == userTechnologies[i]) {
         exists = true;
       }
     }
-    if (_dropDownValue != "Searching..." && exists == false) {
+    if (_selectedValue != "" && exists == false) {
       String? token = await sharedPref.readToken();
 
       newTechnologies = widget.technologies;
-      newTechnologies.add(_dropDownValue);
+      newTechnologies.add(_selectedValue);
 
       var reqBody = {
         "token": token,
@@ -112,7 +112,6 @@ class _TechnologiesField extends State<TechnologiesField> {
 
   void getTechnologiesList(String tech) {
     List<String> techList = getTechnolgies(_techSearchController.text);
-    techList.insert(0, "Searching...");
     setState(() {
       updatedTechList = techList;
     });
@@ -120,10 +119,7 @@ class _TechnologiesField extends State<TechnologiesField> {
 
   void dropDownCallback(String? selectedValue) {
     if (selectedValue is String) {
-      setState(() {
-        _dropDownValue = selectedValue;
-      });
-      print("Setting the dropdownvalue = " + _dropDownValue.toString());
+      _selectedValue = selectedValue;
     }
   }
 
@@ -175,63 +171,70 @@ class _TechnologiesField extends State<TechnologiesField> {
               ? Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 10.0, top: 5),
+                      padding: const EdgeInsets.only(
+                        left: 10.0,
+                      ),
                       child: Container(
                           width: 300,
-                          padding: const EdgeInsets.only(left: 5.0, top: 5.0),
+                          padding: const EdgeInsets.only(
+                              left: 5.0, top: 5, bottom: 5),
                           decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColorDark,
+                              color: Theme.of(context).primaryColorLight,
                               borderRadius: BorderRadius.circular(10)),
-                          child: SizedBox(
-                              height: 30,
-                              child: TextFormField(
-                                inputFormatters: [
-                                  LengthLimitingTextInputFormatter(20)
-                                ],
-                                controller: _techSearchController,
-                                onChanged: getTechnologiesList,
-                                style: TextStyle(
-                                  color: Theme.of(context).hintColor,
-                                ),
-                                decoration: const InputDecoration(
-                                    isDense: true,
-                                    border: InputBorder.none,
-                                    contentPadding: EdgeInsets.zero,
-                                    hintText: "Type to search"),
-                              ))),
+                          child: TextFormField(
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(20)
+                            ],
+                            controller: _techSearchController,
+                            onChanged: getTechnologiesList,
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: Theme.of(context).hintColor,
+                            ),
+                            decoration: const InputDecoration(
+                                isDense: true,
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.zero,
+                                hintText: "Type to search"),
+                          )),
                     ),
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 10.0, top: 5),
+                      padding: const EdgeInsets.only(left: 10.0),
                       child: Container(
-                          height: 34,
+                          height: 37,
                           decoration: BoxDecoration(
                             color: Theme.of(context).primaryColorLight,
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: DropdownButton(
-                            padding: const EdgeInsets.all(2),
-                            items: updatedTechList
-                                .map((e) => DropdownMenuItem(
-                                      child: Text(
-                                          overflow: TextOverflow.ellipsis, e),
-                                      value: e,
-                                    ))
-                                .toList(),
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Theme.of(context).hintColor),
-                            value: _dropDownValue,
-                            dropdownColor: Theme.of(context).primaryColorLight,
-                            menuMaxHeight: 200,
-                            isExpanded: true,
-                            onChanged: dropDownCallback,
-                            hint: Text("Searching..."),
-                            underline: Container(
-                              height: 0,
-                            ),
-                          )),
+                          child: DropdownButtonFormField<String>(
+                              decoration: const InputDecoration(
+                                contentPadding: EdgeInsets.only(
+                                    left: 5, bottom: 10, right: 5),
+                                enabledBorder: InputBorder.none,
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                              ),
+                              isExpanded: true,
+                              dropdownColor:
+                                  Theme.of(context).primaryColorLight,
+                              hint: const Text('Searching...'),
+                              onChanged: dropDownCallback,
+                              items: updatedTechList.map((String tech) {
+                                return DropdownMenuItem<String>(
+                                  value: tech,
+                                  child: Text(
+                                    tech,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  ),
+                                );
+                              }).toList())),
                     ),
                   ),
                   Padding(
@@ -246,21 +249,29 @@ class _TechnologiesField extends State<TechnologiesField> {
                 ])
               : Text(""),
           Expanded(
-            child: ListView(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: Wrap(
-                      spacing: 8,
-                      clipBehavior: Clip.hardEdge,
-                      children: userTechnologies.map((techBubbles) {
-                        return TechBubble(
-                            technology: techBubbles,
-                            editMode: editMode,
-                            delete: deleteTechnology);
-                      }).toList()),
-                ),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: ListView(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(2),
+                    decoration: editMode
+                        ? BoxDecoration(
+                            color: Theme.of(context).primaryColorLight,
+                            borderRadius: BorderRadius.circular(10))
+                        : null,
+                    child: Wrap(
+                        spacing: 8,
+                        clipBehavior: Clip.hardEdge,
+                        children: userTechnologies.map((techBubbles) {
+                          return TechBubble(
+                              technology: techBubbles,
+                              editMode: editMode,
+                              delete: deleteTechnology);
+                        }).toList()),
+                  ),
+                ],
+              ),
             ),
           )
         ],

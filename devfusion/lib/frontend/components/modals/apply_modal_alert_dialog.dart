@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:devfusion/frontend/components/Button.dart';
 import 'package:devfusion/frontend/components/shared_pref.dart';
@@ -25,12 +26,20 @@ class ApplyModalAlertDialog extends StatefulWidget {
 class _ApplyModalAlertDialogState extends State<ApplyModalAlertDialog> {
   SharedPref sharedPref = SharedPref();
   String? userId;
+  String success = "";
+  double successCount = 0;
   String error = "";
   double errorCount = 0;
   String selectedRole = "";
   Text? hintText;
+  TextEditingController descriptionController = TextEditingController();
 
   void getUserCredentials() async {
+    setState(() {
+      successCount = 0;
+      errorCount = 0;
+    });
+
     String? token = await sharedPref.readToken();
     var reqBody = {"token": token};
 
@@ -45,15 +54,12 @@ class _ApplyModalAlertDialogState extends State<ApplyModalAlertDialog> {
       var jsonResponse = jsonDecode(response.body);
       sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
       userId = jsonResponse['id'];
-      // setState(() {
-      //   userId = jsonResponse['id'];
-      // });
     } else {
-      print("settings jwt unsucessful");
+      log("settings jwt unsucessful");
     }
   }
 
-  void apply(String role) async {
+  Future apply(String role) async {
     if (selectedRole == "Select an Available Role" ||
         selectedRole == "No Roles Available" ||
         selectedRole == "") {
@@ -63,14 +69,15 @@ class _ApplyModalAlertDialogState extends State<ApplyModalAlertDialog> {
       });
       return;
     }
-    print("selectedRole: ${selectedRole}");
 
     String? token = await sharedPref.readToken();
+
     var reqBody = {
       "role": selectedRole,
       "projectId": widget.projectId,
       "userId": userId,
-      "token": token
+      "token": token,
+      "description": descriptionController.text,
     };
 
     var response = await http.post(
@@ -79,9 +86,13 @@ class _ApplyModalAlertDialogState extends State<ApplyModalAlertDialog> {
       body: jsonEncode(reqBody),
     );
     var jsonResponse = jsonDecode(response.body);
-    if (response.statusCode == 200) {
+
+    if (response.statusCode == 201) {
       sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
-      setState(() {});
+      setState(() {
+        success = "Applied";
+        successCount = 1;
+      });
     } else {
       setState(() {
         error = jsonResponse['error'];
@@ -107,15 +118,14 @@ class _ApplyModalAlertDialogState extends State<ApplyModalAlertDialog> {
     super.initState();
   }
 
-  TextEditingController descriptionController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text("Application"),
       content: SizedBox(
         width: 50,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        child: ListView(
+          shrinkWrap: true,
           children: [
             const Align(
               alignment: Alignment.centerLeft,
@@ -199,8 +209,18 @@ class _ApplyModalAlertDialogState extends State<ApplyModalAlertDialog> {
             ),
             Text(
               error,
-              style: TextStyle(color: danger, fontSize: 14 * errorCount),
+              style: TextStyle(
+                color: danger,
+                fontSize: 14 * errorCount,
+              ),
             ),
+            Text(
+              success,
+              style: TextStyle(
+                color: approve,
+                fontSize: 14,
+              ),
+            )
           ],
         ),
       ),

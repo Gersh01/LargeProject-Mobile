@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class ConfirmCancelModal extends StatelessWidget {
   final BuildContext context;
-  final Text? title;
+  final String? title;
   final Function? approveFunction;
   const ConfirmCancelModal({
     super.key,
@@ -20,13 +20,16 @@ class ConfirmCancelModal extends StatelessWidget {
       builder: (_) => AlertDialog(
         // insetPadding: const EdgeInsets.only(left: 100, right: 100),
         title: (title != null)
-            ? title
+            ? Text(
+                "$title",
+                textAlign: TextAlign.center,
+              )
             : const Text(
                 "Are You Sure?",
                 textAlign: TextAlign.center,
               ),
         titleTextStyle: TextStyle(
-            fontSize: 36,
+            fontSize: 28,
             fontFamily: 'League Spartan',
             color: Theme.of(context).hintColor),
         content: Column(
@@ -42,14 +45,17 @@ class ConfirmCancelModal extends StatelessWidget {
                 color: Colors.white,
               ),
               // width: 120,
-              placeholderText: 'Approve',
+              placeholderText: 'Confirm',
               backgroundColor: approve,
               textColor: Colors.white,
-              onPressed: () async {
-                (approveFunction != null)
-                    ? approveFunction
-                    : Navigator.pop(context);
-              },
+              onPressed: (approveFunction != null)
+                  ? () {
+                      approveFunction!();
+                      Navigator.pop(context);
+                    }
+                  : () {
+                      Navigator.pop(context);
+                    },
             ),
             const SizedBox(
               height: 5,
