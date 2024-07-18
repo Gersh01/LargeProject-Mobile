@@ -18,7 +18,7 @@ class AboutUs extends StatelessWidget{
           onPressed: () => Navigator.of(context).pop,
         ),
         title: Text(
-          'About us',
+          'About Us',
           style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize:40)
         ),
         backgroundColor: Theme.of(context).primaryColor,
@@ -70,20 +70,20 @@ class AboutUs extends StatelessWidget{
                               ),
 
                               Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+
                                 children: [
                                   Text(
                                     'Alex Gershfeld',
                                     style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 18),
                                   ),
 
-                                  Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: SizedButton(
-                                        height: 24,
-                                        backgroundColor: Theme.of(context).focusColor,
-                                        placeholderText: 'Github',
-                                        textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 14, color: Colors.white)),
-                                  )
+                                  SizedButton(
+                                    height: 24,
+                                    backgroundColor: Theme.of(context).focusColor,
+                                    placeholderText: 'Github',
+                                    textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 20, color: Colors.white),
+                                    ),
                                 ],
                               )
                             ]
@@ -129,6 +129,8 @@ class AboutUs extends StatelessWidget{
                                   ),
 
                                   Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+
                                     children: [
                                       Text(
                                         'Xutao Gao',
@@ -139,7 +141,7 @@ class AboutUs extends StatelessWidget{
                                           height: 24,
                                           backgroundColor: Theme.of(context).focusColor,
                                           placeholderText: 'Github',
-                                          textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 14, color: Colors.white))
+                                          textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 20, color: Colors.white))
                                     ],
                                   )
                                 ]
@@ -163,6 +165,8 @@ class AboutUs extends StatelessWidget{
                                   ),
 
                                   Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+
                                     children: [
                                       Text(
                                         'James Salzer',
@@ -173,7 +177,7 @@ class AboutUs extends StatelessWidget{
                                           height: 24,
                                           backgroundColor: Theme.of(context).focusColor,
                                           placeholderText: 'Github',
-                                          textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 14, color: Colors.white))
+                                          textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 20, color: Colors.white))
                                     ],
                                   )
                                 ]
@@ -197,6 +201,8 @@ class AboutUs extends StatelessWidget{
                                   ),
 
                                   Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+
                                     children: [
                                       Text(
                                         'Jacob Peach',
@@ -207,7 +213,7 @@ class AboutUs extends StatelessWidget{
                                           height: 24,
                                           backgroundColor: Theme.of(context).focusColor,
                                           placeholderText: 'Github',
-                                          textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 14, color: Colors.white))
+                                          textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 20, color: Colors.white))
                                     ],
                                   )
                                 ]
@@ -255,6 +261,8 @@ class AboutUs extends StatelessWidget{
                                   ),
 
                                   Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+
                                     children: [
                                       Text(
                                         'Golden Lin',
@@ -265,7 +273,7 @@ class AboutUs extends StatelessWidget{
                                           height: 24,
                                           backgroundColor: Theme.of(context).focusColor,
                                           placeholderText: 'Github',
-                                          textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 14, color: Colors.white))
+                                          textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 20, color: Colors.white))
                                     ],
                                   )
                                 ]
@@ -290,6 +298,8 @@ class AboutUs extends StatelessWidget{
                                   ),
 
                                   Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+
                                     children: [
                                       Text(
                                         'Alperen Yazmaci',
@@ -297,10 +307,11 @@ class AboutUs extends StatelessWidget{
                                       ),
 
                                       SizedButton(
-                                          height: 24,
-                                          backgroundColor: Theme.of(context).focusColor,
-                                          placeholderText: 'Github',
-                                          textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 14, color: Colors.white))
+                                    
+                                        height: 24,
+                                        backgroundColor: Theme.of(context).focusColor,
+                                        placeholderText: 'Github',
+                                        textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 20, color: Colors.white)),
                                     ],
                                   )
                                 ]
@@ -347,6 +358,8 @@ class AboutUs extends StatelessWidget{
                                   ),
 
                                   Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+
                                     children: [
                                       Text(
                                         'Tony Chau',
@@ -357,7 +370,7 @@ class AboutUs extends StatelessWidget{
                                           height: 24,
                                           backgroundColor: Theme.of(context).focusColor,
                                           placeholderText: 'Github',
-                                          textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 14, color: Colors.white))
+                                          textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 20, color: Colors.white))
                                     ],
                                   )
                                 ]

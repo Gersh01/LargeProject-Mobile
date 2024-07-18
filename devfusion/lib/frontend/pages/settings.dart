@@ -11,6 +11,7 @@ import 'package:devfusion/frontend/components/profile_pictures.dart';
 import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:devfusion/frontend/pages/lander.dart';
 import 'package:devfusion/frontend/pages/reset_password.dart';
+import 'package:devfusion/frontend/pages/about-us-page.dart';
 import 'package:devfusion/frontend/utils/utility.dart';
 import 'package:devfusion/themes/theme.dart';
 import 'package:devfusion/themes/theme_provider.dart';
