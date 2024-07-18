@@ -13,6 +13,15 @@ class Role {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['role'] = role;
+    data['count'] = count;
+    data['description'] = description;
+
+    return data;
+  }
+
   @override
   String toString() {
     return "{role: $role, count: $count}";

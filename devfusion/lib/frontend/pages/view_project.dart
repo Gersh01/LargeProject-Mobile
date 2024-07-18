@@ -1,6 +1,4 @@
 import 'dart:developer';
-
-import 'package:devfusion/frontend/components/Button.dart';
 import 'package:devfusion/frontend/components/bubbles/communication_bubble.dart';
 import 'package:devfusion/frontend/components/modals/confirm_cancel_modal.dart';
 import 'package:devfusion/frontend/components/small_button.dart';
@@ -66,9 +64,6 @@ class _ViewProjectState extends State<ViewProject> {
     String? token = await sharedPref.readToken();
     var reqBody = {
       "token": token,
-      "projectId": project.id,
-      "projectStartDate": DateTime.now().toString(),
-      "isStarted": true,
     };
     var request = http.Request(
       'GET',
@@ -90,6 +85,8 @@ class _ViewProjectState extends State<ViewProject> {
           );
         },
       );
+      getMembersPerRole();
+      getVisitorType();
     }
   }
 
@@ -99,8 +96,15 @@ class _ViewProjectState extends State<ViewProject> {
     var reqBody = {
       "token": token,
       "projectId": project.id,
+      "title": project.title,
       "projectStartDate": DateTime.now().toString(),
+      "deadline": project.deadline.toString(),
+      "description": project.description,
       "isStarted": true,
+      "roles": project.roles.map((role) => role.toJson()).toList(),
+      "technologies": project.technologies,
+      "communications":
+          project.communications.map((comm) => comm.toJson()).toList(),
     };
 
     var response = await http.put(
@@ -112,6 +116,7 @@ class _ViewProjectState extends State<ViewProject> {
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
       sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
+      retrieveProject();
     } else {
       log("settings jwt unsucessful");
     }
@@ -132,10 +137,9 @@ class _ViewProjectState extends State<ViewProject> {
     );
 
     if (response.statusCode == 200) {
-      var jsonResponse = jsonDecode(response.body);
-      sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
+      retrieveProject();
     } else {
-      log("settings jwt unsucessful");
+      log(response.statusCode.toString());
     }
   }
 
@@ -355,7 +359,7 @@ class _ViewProjectState extends State<ViewProject> {
       if (!project.isStarted) {
         tempControls.add(beginProjectButton);
       }
-      tempControls.addAll([manageTeamButton, inboxButton]);
+      tempControls.addAll([manageTeamButton, inboxButton, leaveProjectButton]);
     } else if (visitorType == VisitorType.member) {
       tempControls = [leaveProjectButton];
     } else if (visitorType == VisitorType.visitor) {
@@ -369,7 +373,10 @@ class _ViewProjectState extends State<ViewProject> {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
-        title: const Text("Back"),
+        title: const Text(
+          "Back",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: ListView(
