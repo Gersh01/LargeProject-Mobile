@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:devfusion/frontend/components/bubbles/communication_bubble.dart';
+import 'package:devfusion/frontend/components/modals/apply_modal.dart';
 import 'package:devfusion/frontend/components/modals/confirm_cancel_modal.dart';
 import 'package:devfusion/frontend/components/small_button.dart';
 import 'package:devfusion/frontend/json/Profile.dart';
@@ -165,30 +166,6 @@ class _ViewProjectState extends State<ViewProject> {
     }
   }
 
-  void applyProject() async {
-    SharedPref sharedPref = SharedPref();
-    String? token = await sharedPref.readToken();
-    var reqBody = {
-      "token": token,
-      "projectId": project.id,
-      "userId": userProfile!.userId,
-      "role": roleToApply,
-    };
-
-    var response = await http.post(
-      Uri.parse(applyInboxUrl),
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode(reqBody),
-    );
-
-    if (response.statusCode == 200) {
-      var jsonResponse = jsonDecode(response.body);
-      sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
-    } else {
-      log("settings jwt unsucessful");
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -255,6 +232,26 @@ class _ViewProjectState extends State<ViewProject> {
     setState(() {
       visitorType = VisitorType.visitor;
     });
+  }
+
+  List<String> getAvailableRoles() {
+    List<String> availableRoles = [];
+
+    for (var i = 0; i < project.roles.length; i++) {
+      var count = project.roles[i].count;
+
+      for (var j = 0; j < project.teamMembers.length; j++) {
+        if (project.teamMembers[j].role == project.roles[i].role) {
+          count--;
+        }
+      }
+
+      if (count > 0) {
+        availableRoles.add(project.roles[i].role);
+      }
+    }
+
+    return availableRoles;
   }
 
   @override
@@ -344,7 +341,12 @@ class _ViewProjectState extends State<ViewProject> {
       backgroundColor: approve,
       textColor: Colors.white,
       onPressed: () {
-        applyProject();
+        final applyModal = ApplyModal(
+          context: context,
+          projectId: project.id,
+          givenRoles: getAvailableRoles(),
+        );
+        applyModal.buildApplyModal();
       },
     );
 
