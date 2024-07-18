@@ -53,7 +53,7 @@ class _TechnologiesField extends State<TechnologiesField> {
         exists = true;
       }
     }
-    if (_selectedValue != "Searching..." && exists == false) {
+    if (_selectedValue != "" && exists == false) {
       String? token = await sharedPref.readToken();
 
       newTechnologies = widget.technologies;
@@ -112,7 +112,6 @@ class _TechnologiesField extends State<TechnologiesField> {
 
   void getTechnologiesList(String tech) {
     List<String> techList = getTechnolgies(_techSearchController.text);
-    techList.insert(0, "Searching...");
     setState(() {
       updatedTechList = techList;
     });
