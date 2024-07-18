@@ -11,6 +11,7 @@ import 'package:devfusion/frontend/components/profile_pictures.dart';
 import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:devfusion/frontend/pages/lander.dart';
 import 'package:devfusion/frontend/pages/reset_password.dart';
+import 'package:devfusion/frontend/pages/about-us-page.dart';
 import 'package:devfusion/frontend/utils/utility.dart';
 import 'package:devfusion/themes/theme.dart';
 import 'package:devfusion/themes/theme_provider.dart';
@@ -447,24 +448,11 @@ class _SettingsState extends State<Settings> {
                     backgroundColor: neutral,
                     textColor: Colors.white,
                     onPressed: () {
-                      final confirmCancelModal = ConfirmCancelModal(
-                        context: context,
-                        title: "Title",
-                      );
-                      confirmCancelModal.buildConfirmCancelModal();
-//
-//
-                      // final applyModal = ApplyModal(
-                      //   context: context,
-                      //   projectId: "-1",
-                      //   givenRoles: const ["API", "Frontend"],
-                      // );
-                      // applyModal.buildApplyModal();
-//
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => const AboutUs()),
-                      // );
+
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                          builder: (context) => const AboutUs()));
                     },
                   ),
                   Button(
