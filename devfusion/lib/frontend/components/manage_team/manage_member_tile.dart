@@ -32,10 +32,8 @@ class _ManageMemberTile extends State<ManageMemberTile> {
   }
 
   void dropDownCallback(String? selectedValue) {
-    print(selectedValue);
     if (selectedValue is String) {
       _selectedValue = selectedValue;
-      print(_selectedValue);
     }
   }
 
@@ -55,25 +53,18 @@ class _ManageMemberTile extends State<ManageMemberTile> {
         newMembersRoles.add(widget.members![i]);
       }
     }
-
-    print(newMembersRoles);
-    print(
-        "The select value for ${widget.membersRoleInfo.username} is switched to ${_selectedValue} for project ${widget.projectId}");
-
     var reqBody = {
       "token": token,
       "projectId": widget.projectId,
       "teamMembers": newMembersRoles
     };
-    print(reqBody);
+
     var response = await http.put(Uri.parse(editTeamMembersUrl),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(reqBody));
-    print(reqBody);
 
     var response2 = jsonDecode(response.body);
     if (response.statusCode == 200) {
-      print("The user info has been updated");
     } else {
       print(response2['error']);
       print(response2.statusCode);
@@ -88,27 +79,21 @@ class _ManageMemberTile extends State<ManageMemberTile> {
         newMembersRoles.add(widget.members![i]);
       }
     }
-    print(
-        "The select user ${widget.membersRoleInfo.username} is being removed");
-    print(newMembersRoles);
 
     var reqBody = {
       "token": token,
       "projectId": widget.projectId,
       "teamMembers": newMembersRoles
     };
-    print(reqBody);
+
     var response = await http.put(Uri.parse(editTeamMembersUrl),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(reqBody));
-    print(reqBody);
 
     var response2 = jsonDecode(response.body);
     if (response.statusCode == 200) {
-      print("The user info has been Deleted");
     } else {
       print(response2['error']);
-      print(response2.statusCode);
     }
   }
 

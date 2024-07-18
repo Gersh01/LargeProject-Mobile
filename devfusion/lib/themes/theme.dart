@@ -6,6 +6,7 @@ const lightPrimaryVariant = Color(0xFFF9FAFB);
 const lightSecondary = Color(0xFFE5E7EB);
 const lightAccent = Color(0xFFFB923C);
 const lightAccentVariant = Color(0xFFF97316);
+const lightSearchBar = Color(0xffe5e7eb);
 
 //Dark Mode
 const darkPrimary = Color(0xFF1F2937);
@@ -24,6 +25,7 @@ ThemeData lightMode = ThemeData(
     primaryColor: lightPrimary,
     primaryColorLight: lightPrimaryVariant,
     primaryColorDark: lightSecondary,
+    dialogBackgroundColor: lightSearchBar,
     focusColor: lightAccent,
     highlightColor: lightAccentVariant,
     hintColor: Colors.black,
@@ -48,6 +50,7 @@ ThemeData lightMode = ThemeData(
 
 ThemeData darkMode = ThemeData(
     brightness: Brightness.dark,
+    dialogBackgroundColor: darkSecondary,
     primaryColor: darkPrimary,
     primaryColorLight: darkSecondary,
     primaryColorDark: darkPrimaryVariant,

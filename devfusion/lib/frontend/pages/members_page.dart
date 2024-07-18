@@ -148,17 +148,17 @@ class _MembersPageState extends State<MembersPage> {
                 Column(
                   children: roleInfo.map((info) {
                     return Container(
-                        margin: EdgeInsets.only(bottom: 10),
+                        margin: EdgeInsets.only(bottom: 15),
                         child: RoleBubbles(roleInfo: info));
                   }).toList(),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 Column(
                   children: rolesPerMembers.map((member) {
                     return Container(
-                        margin: EdgeInsets.only(bottom: 10),
+                        margin: EdgeInsets.only(bottom: 15),
                         child: ManageMemberTile(
                           projectId: projectId,
                           members: widget.projectData.teamMembers,

@@ -166,7 +166,7 @@ class _DiscoverState extends State<Discover> {
                     Expanded(
                       child: Theme(
                         data: Theme.of(context).copyWith(
-                          canvasColor: Theme.of(context).primaryColorLight,
+                          canvasColor: Theme.of(context).dialogBackgroundColor,
                         ),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 10.0),
@@ -174,14 +174,15 @@ class _DiscoverState extends State<Discover> {
                             padding: EdgeInsets.all(2),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
-                                color: Theme.of(context).primaryColorLight),
+                                color: Theme.of(context).dialogBackgroundColor),
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: DropdownButton(
                                 underline: Container(
                                   height: 0,
                                 ),
-                                focusColor: Theme.of(context).primaryColorLight,
+                                focusColor:
+                                    Theme.of(context).dialogBackgroundColor,
                                 isDense: true,
                                 items: const [
                                   DropdownMenuItem(
