@@ -125,12 +125,12 @@ class InputField extends StatelessWidget {
 
                         //Places padding between icon and text only if icon is present
                         placeholderText == 'Username'
-                            ? const SizedBox(width: 5)
-                            : placeholderText == 'Password'
-                                ? const SizedBox(width: 5)
-                                : placeholderText == 'Email'
-                                    ? const SizedBox(width: 5)
-                                    : Container(),
+                          ? const SizedBox(width: 5)
+                        : placeholderText == 'Password'
+                          ? const SizedBox(width: 5)
+                        : placeholderText == 'Email'
+                          ? const SizedBox(width: 5)
+                        : Container(),
 
                         Text(
                           placeholderText!,

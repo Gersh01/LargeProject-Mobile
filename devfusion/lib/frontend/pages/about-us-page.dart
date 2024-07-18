@@ -1,8 +1,32 @@
 import 'package:flutter/material.dart';
 import '../components/profile_pictures.dart';
 import '../components/SizedButton.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../components/Button.dart';
+
 
 class AboutUs extends StatelessWidget{
+
+  
+  _launchURLBrowser(String link) async {
+
+    dynamic url;
+    link == 'alex'? url = Uri.parse('https://github.com/Gersh01')
+    : link == 'xutao'? url = Uri.parse('https://github.com/XutaoG')
+    : link == 'james'? url = Uri.parse('https://github.com/jsalzer312')
+    : link == 'jacob'? url = Uri.parse('https://github.com/GoldenLin9')
+    : link == 'golden'? url = Uri.parse('https://github.com/JPEACH34')
+    : link == 'Alperen'? url = Uri.parse('https://github.com/alperenyazmaci')
+    : link == 'tony'? url = Uri.parse('https://github.com/tonych312312')
+    : url = Uri.parse('https://github.com/Gersh01/LargeProject-Mobile');
+
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
 
   const AboutUs({super.key});
 
@@ -83,6 +107,7 @@ class AboutUs extends StatelessWidget{
                                     backgroundColor: Theme.of(context).focusColor,
                                     placeholderText: 'Github',
                                     textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 20, color: Colors.white),
+                                    onPressed: () => _launchURLBrowser('alex')
                                     ),
                                 ],
                               )
@@ -141,7 +166,9 @@ class AboutUs extends StatelessWidget{
                                           height: 24,
                                           backgroundColor: Theme.of(context).focusColor,
                                           placeholderText: 'Github',
-                                          textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 20, color: Colors.white))
+                                          textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 20, color: Colors.white),
+                                          onPressed: () => _launchURLBrowser('xutao')
+                                          )
                                     ],
                                   )
                                 ]
@@ -177,7 +204,8 @@ class AboutUs extends StatelessWidget{
                                           height: 24,
                                           backgroundColor: Theme.of(context).focusColor,
                                           placeholderText: 'Github',
-                                          textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 20, color: Colors.white))
+                                          textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 20, color: Colors.white),
+                                          onPressed: () => _launchURLBrowser('james'))
                                     ],
                                   )
                                 ]
@@ -213,7 +241,8 @@ class AboutUs extends StatelessWidget{
                                           height: 24,
                                           backgroundColor: Theme.of(context).focusColor,
                                           placeholderText: 'Github',
-                                          textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 20, color: Colors.white))
+                                          textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 20, color: Colors.white),
+                                          onPressed: () => _launchURLBrowser('jacob'))
                                     ],
                                   )
                                 ]
@@ -273,7 +302,8 @@ class AboutUs extends StatelessWidget{
                                           height: 24,
                                           backgroundColor: Theme.of(context).focusColor,
                                           placeholderText: 'Github',
-                                          textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 20, color: Colors.white))
+                                          textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 20, color: Colors.white),
+                                          onPressed: () => _launchURLBrowser('golden'))
                                     ],
                                   )
                                 ]
@@ -311,7 +341,8 @@ class AboutUs extends StatelessWidget{
                                         height: 24,
                                         backgroundColor: Theme.of(context).focusColor,
                                         placeholderText: 'Github',
-                                        textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 20, color: Colors.white)),
+                                        textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 20, color: Colors.white),
+                                        onPressed: () => _launchURLBrowser('alperen')),
                                     ],
                                   )
                                 ]
@@ -370,7 +401,8 @@ class AboutUs extends StatelessWidget{
                                           height: 24,
                                           backgroundColor: Theme.of(context).focusColor,
                                           placeholderText: 'Github',
-                                          textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 20, color: Colors.white))
+                                          textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 20, color: Colors.white),
+                                          onPressed: () => _launchURLBrowser('tony'))
                                     ],
                                   )
                                 ]
@@ -380,9 +412,19 @@ class AboutUs extends StatelessWidget{
                       ),
                     )
                 ),
-              )
-            ]
+              ),
+              
+              Expanded(
+                child: Button(
+                  placeholderText: 'Github',
+                  backgroundColor: Theme.of(context).focusColor,
+                  textStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 20, color: Colors.white), 
+                  onPressed: () => _launchURLBrowser('')
                 ),
+              )
+            
+            ]
+          ),
         )
       )
     );
