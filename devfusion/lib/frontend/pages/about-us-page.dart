@@ -39,7 +39,7 @@ class AboutUs extends StatelessWidget{
             Icons.arrow_back,
             color: Theme.of(context).hintColor
           ),
-          onPressed: () => Navigator.of(context).pop,
+          onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
           'About Us',
