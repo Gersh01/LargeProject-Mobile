@@ -42,7 +42,7 @@ class ConfirmCancelModal extends StatelessWidget {
                 color: Colors.white,
               ),
               // width: 120,
-              placeholderText: 'Approve',
+              placeholderText: 'Confirm',
               backgroundColor: approve,
               textColor: Colors.white,
               onPressed: (approveFunction != null)

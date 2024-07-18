@@ -449,31 +449,8 @@ class _SettingsState extends State<Settings> {
                     onPressed: () {
                       final confirmCancelModal = ConfirmCancelModal(
                         context: context,
+                        title: const Text("Title"),
                       );
-                      //   context: context,
-                      //   firstTextButton: TextButton(
-                      //     onPressed: () {
-                      //       Navigator.of(context).pop();
-                      //     },
-                      //     child: const Text("Cancel"),
-                      //   ),
-                      //   secondTextButton: TextButton(
-                      //     onPressed: () {
-                      //       Navigator.of(context).pop();
-                      //     },
-                      //     child: const Text(
-                      //       "Confirm",
-                      //     ),
-                      //   ),
-                      //   title: const Text(
-                      //     "Title",
-                      //     textAlign: TextAlign.center,
-                      //   ),
-                      //   content: const Text(
-                      //     "Content",
-                      //     textAlign: TextAlign.center,
-                      //   ),
-                      // );
                       confirmCancelModal.buildConfirmCancelModal();
 //
 //
