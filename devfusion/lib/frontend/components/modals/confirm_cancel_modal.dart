@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class ConfirmCancelModal extends StatelessWidget {
   final BuildContext context;
-  final Text? title;
+  final String? title;
   final Function? approveFunction;
   const ConfirmCancelModal({
     super.key,
@@ -20,13 +20,16 @@ class ConfirmCancelModal extends StatelessWidget {
       builder: (_) => AlertDialog(
         // insetPadding: const EdgeInsets.only(left: 100, right: 100),
         title: (title != null)
-            ? title
+            ? Text(
+                "$title",
+                textAlign: TextAlign.center,
+              )
             : const Text(
                 "Are You Sure?",
                 textAlign: TextAlign.center,
               ),
         titleTextStyle: TextStyle(
-            fontSize: 36,
+            fontSize: 28,
             fontFamily: 'League Spartan',
             color: Theme.of(context).hintColor),
         content: Column(

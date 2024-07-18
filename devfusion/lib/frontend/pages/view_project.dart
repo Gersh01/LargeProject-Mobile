@@ -266,7 +266,7 @@ class _ViewProjectState extends State<ViewProject> {
       onPressed: () {
         final confirmModal = ConfirmCancelModal(
           context: context,
-          title: const Text("Confirm Beginning Project?"),
+          title: "Confirm Beginning Project?",
           approveFunction: () {
             beginProject();
           },
@@ -296,7 +296,7 @@ class _ViewProjectState extends State<ViewProject> {
       onPressed: () {
         final confirmModal = ConfirmCancelModal(
           context: context,
-          title: const Text("Confirm Deletion of Project?"),
+          title: "Confirm Deletion of Project?",
           approveFunction: () {
             deleteProject();
           },
@@ -326,7 +326,7 @@ class _ViewProjectState extends State<ViewProject> {
       onPressed: () {
         final confirmModal = ConfirmCancelModal(
           context: context,
-          title: const Text("Confirm Leaving Project"),
+          title: "Confirm Leaving Project",
           approveFunction: () {
             leaveProject();
           },

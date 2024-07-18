@@ -6,6 +6,7 @@ import '../manage_team/roles_per_member.dart';
 import '../shared_pref.dart';
 import '../../utils/utility.dart';
 import 'package:http/http.dart' as http;
+import '../modals/confirm_cancel_modal.dart';
 
 class ManageMemberTile extends StatefulWidget {
   final RolesPerMember membersRoleInfo;
@@ -25,6 +26,7 @@ class ManageMemberTile extends StatefulWidget {
 class _ManageMemberTile extends State<ManageMemberTile> {
   SharedPref sharedPref = SharedPref();
   String _selectedValue = "";
+
   void initState() {
     super.initState();
   }
@@ -108,6 +110,14 @@ class _ManageMemberTile extends State<ManageMemberTile> {
       print(response2['error']);
       print(response2.statusCode);
     }
+  }
+
+  void showAcceptModal() {
+    var confirmCancelModal = ConfirmCancelModal(
+        context: context,
+        title: "Are you sure you want to remove the user?",
+        approveFunction: removeMember);
+    confirmCancelModal.buildConfirmCancelModal();
   }
 
   @override
@@ -243,7 +253,7 @@ class _ManageMemberTile extends State<ManageMemberTile> {
                   ),
                   //Removing the user from the project
                   ElevatedButton(
-                    onPressed: removeMember,
+                    onPressed: showAcceptModal,
                     style: ButtonStyle(
                         shape: WidgetStateProperty.all(
                             const RoundedRectangleBorder(

@@ -449,7 +449,7 @@ class _SettingsState extends State<Settings> {
                     onPressed: () {
                       final confirmCancelModal = ConfirmCancelModal(
                         context: context,
-                        title: const Text("Title"),
+                        title: "Title",
                       );
                       confirmCancelModal.buildConfirmCancelModal();
 //
