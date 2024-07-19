@@ -229,24 +229,24 @@ class _SettingsState extends State<Settings> {
                 child: ProfilePictures(imageUrl: profilePicUrl),
               ),
               Expanded(child: Container()),
-              SizedButton(
-                height: 25,
-                textStyle: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'League Spartan',
-                  color: Colors.white,
-                ),
-                // width: 120,
-                placeholderText: 'Upload',
-                backgroundColor: Theme.of(context).focusColor,
-                textColor: Colors.white,
-                onPressed: () async {
-                  if (nameFormKey.currentState!.validate()) {
-                    _pickImage;
-                  }
-                },
-              ),
+              // SizedButton(
+              //   height: 25,
+              //   textStyle: const TextStyle(
+              //     fontSize: 12,
+              //     fontWeight: FontWeight.bold,
+              //     fontFamily: 'League Spartan',
+              //     color: Colors.white,
+              //   ),
+              //   // width: 120,
+              //   placeholderText: 'Upload',
+              //   backgroundColor: Theme.of(context).focusColor,
+              //   textColor: Colors.white,
+              //   onPressed: () async {
+              //     if (nameFormKey.currentState!.validate()) {
+              //       _pickImage;
+              //     }
+              //   },
+              // ),
             ],
           ),
           const Divider(
@@ -448,11 +448,7 @@ class _SettingsState extends State<Settings> {
                     backgroundColor: neutral,
                     textColor: Colors.white,
                     onPressed: () {
-
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                          builder: (context) => const AboutUs()));
+                      Navigator.pushNamed(context, '/aboutUs');
                     },
                   ),
                   Button(

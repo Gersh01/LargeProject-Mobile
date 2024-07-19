@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:devfusion/frontend/pages/about-us-page.dart';
 import 'package:devfusion/frontend/pages/members_page.dart';
 import 'package:devfusion/frontend/utils/utility.dart';
 import 'package:devfusion/themes/theme_provider.dart';
@@ -79,6 +80,7 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => const SignUpPage(),
         '/home': (context) => const Home(),
         '/profile': (context) => const ProfilePage(),
+        '/aboutUs': (context) => const AboutUs(),
       },
       // Set the inital rout to be /home if user is signed in, otherwise set it /lander
       initialRoute: (isSignedIn) ? '/home' : '/lander',
