@@ -1,16 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:devfusion/frontend/components/joined_projects_tile.dart';
-// import 'package:devfusion/frontend/components/project_tile.dart';
+import 'package:devfusion/frontend/components/my_projects_tile.dart';
 import 'package:devfusion/frontend/components/shared_pref.dart';
+import 'package:devfusion/frontend/json/Profile.dart';
 import 'package:devfusion/frontend/json/Project.dart';
 import 'package:devfusion/frontend/utils/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-import '../components/my_projects_tile.dart';
-import '../json/Profile.dart';
 import 'view_project.dart';
 
 class Projects extends StatefulWidget {
@@ -35,15 +32,11 @@ class _ProjectsState extends State<Projects>
   bool endOfOwnedProject = false;
   bool endOfJoinedProject = false;
 
-  late Profile? userProfile = null;
-
-  String username = "";
+  late Profile? userProfile;
 
   @override
   void initState() {
     super.initState();
-
-    // fetchProjects(true);
     fetchUser();
     fetchOwnedProjects(true);
     fetchJoinedProjects(true);
@@ -98,7 +91,6 @@ class _ProjectsState extends State<Projects>
       sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
       setState(() {
         userProfile = Profile.fromJson(jsonResponse);
-        username = userProfile!.username;
       });
     } else {
       print("settings jwt unsucessful");
@@ -230,15 +222,15 @@ class _ProjectsState extends State<Projects>
       //This is the color selector
       color: Theme.of(context).primaryColorDark,
       shape: BoxShape.rectangle,
-      borderRadius: _tabController.index == 0
-          ? const BorderRadius.only(
-              topLeft: Radius.circular(10),
-              bottomLeft: Radius.circular(10),
-            )
-          : const BorderRadius.only(
-              topRight: Radius.circular(10),
-              bottomRight: Radius.circular(10),
-            ),
+      // borderRadius: _tabController.index == 0
+      //     ? const BorderRadius.only(
+      //         topLeft: Radius.circular(10),
+      //         bottomLeft: Radius.circular(10),
+      //       )
+      //     : const BorderRadius.only(
+      //         topRight: Radius.circular(10),
+      //         bottomRight: Radius.circular(10),
+      //       ),
     );
 
     return DefaultTabController(
@@ -257,72 +249,95 @@ class _ProjectsState extends State<Projects>
             ),
           ),
           bottom: TabBar(
+            isScrollable: false,
             onTap: (index) {
               setState(() {
                 _tabController.index = index;
               });
             },
             //The unselected text color
-            unselectedLabelColor: Colors.white,
+            unselectedLabelColor: Theme.of(context).hintColor,
             indicator: decoration,
-            dividerColor: Colors.grey,
-            tabs: [
-              SizedBox(
-                  width: width,
-                  child: const Tab(
-                    text: 'My Projects',
-                  )),
-              SizedBox(width: width, child: const Tab(text: 'Joined Projects')),
+            // dividerColor: Colors.grey,
+            indicatorSize: TabBarIndicatorSize.tab,
+            tabs: const [
+              SizedBox(child: Tab(text: 'My Projects')),
+              SizedBox(child: Tab(text: 'Joined Projects')),
             ],
             //Changes the color of the text
-            labelColor: Colors.white,
+            labelColor: Theme.of(context).hintColor,
           ),
         ),
-        body: TabBarView(
-          controller: _tabController,
-          children: [
-            ListView.builder(
-              controller: ownedProjectsScrollController,
-              itemCount: ownedProjects.length,
-              itemBuilder: (BuildContext context, int index) {
-                var project = ownedProjects[index];
-                return InkWell(
-                  child: MyProjectsTile(project: project),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ViewProject(
-                          project: project,
+        body: Container(
+          padding: const EdgeInsets.all(10),
+          child: TabBarView(
+            controller: _tabController,
+            children: [
+              ListView.builder(
+                controller: ownedProjectsScrollController,
+                itemCount: ownedProjects.length,
+                itemBuilder: (BuildContext context, int index) {
+                  var project = ownedProjects[index];
+                  return InkWell(
+                    child: Container(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: MyProjectsTile(project: project),
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ViewProject(
+                            project: project,
+                          ),
                         ),
+                      ).then((val) {
+                        if (val == "delete") {
+                          setState(() {
+                            ownedProjects = [];
+                          });
+                          fetchOwnedProjects(true);
+                        }
+                      });
+                    },
+                  );
+                },
+              ),
+              ListView.builder(
+                controller: joinedProjectsScrollController,
+                itemCount: joinedProjects.length,
+                itemBuilder: (BuildContext context, int index) {
+                  var project = joinedProjects[index];
+                  return InkWell(
+                    child: Container(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: JoinedProjectsTile(
+                        project: project,
+                        username: userProfile!.username,
                       ),
-                    );
-                  },
-                );
-              },
-            ),
-            ListView.builder(
-              controller: joinedProjectsScrollController,
-              itemCount: joinedProjects.length,
-              itemBuilder: (BuildContext context, int index) {
-                var project = joinedProjects[index];
-                return InkWell(
-                  child:
-                      JoinedProjectsTile(project: project, username: username),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ViewProject(
-                          project: project,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ViewProject(
+                            project: project,
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-          ],
+                      ).then((val) {
+                        if (val == "delete") {
+                          setState(() {
+                            joinedProjects = [];
+                          });
+                          fetchJoinedProjects(true);
+                        }
+                      });
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

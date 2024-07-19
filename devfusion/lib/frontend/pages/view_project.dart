@@ -160,7 +160,7 @@ class _ViewProjectState extends State<ViewProject> {
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
       sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
-      Navigator.of(context).pop();
+      Navigator.of(context).pop("delete");
     } else {
       log("settings jwt unsucessful");
     }
@@ -281,12 +281,15 @@ class _ViewProjectState extends State<ViewProject> {
       backgroundColor: neutral,
       textColor: Colors.white,
       onPressed: () {
-        Navigator.push(
-          context,
+        Navigator.of(context)
+            .push(
           MaterialPageRoute(
             builder: (context) => MembersPage(projectData: project),
           ),
-        );
+        )
+            .then((_) {
+          retrieveProject();
+        });
       },
     );
 

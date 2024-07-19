@@ -5,6 +5,6 @@ class DividerLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Divider(height: 10, thickness: 1, indent: 10, endIndent: 10);
+    return const Divider(height: 10, thickness: 1);
   }
 }

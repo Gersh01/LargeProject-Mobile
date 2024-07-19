@@ -55,9 +55,13 @@ class _MyProjectsTileState extends State<MyProjectsTile> {
         : description;
 
     return Container(
-      margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Theme.of(context).focusColor,
+        gradient: LinearGradient(
+          colors: [
+            Theme.of(context).focusColor,
+            Theme.of(context).highlightColor
+          ],
+        ),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -68,7 +72,7 @@ class _MyProjectsTileState extends State<MyProjectsTile> {
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).primaryColorDark,
             ),
             child: Container(
               padding: const EdgeInsets.all(10),
