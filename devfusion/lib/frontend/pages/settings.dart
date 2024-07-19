@@ -42,7 +42,7 @@ class _SettingsState extends State<Settings> {
   bool dark = false;
 
   String profilePicUrl =
-      "https://res.cloudinary.com/dlj2rlloi/image/upload/v1720043202/ef7zmzl5hokpnb3zd6en.png";
+      "https://res.cloudinary.com/dlj2rlloi/image/upload/v1721333449/profileImage_hqdvzt.webp";
 
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
