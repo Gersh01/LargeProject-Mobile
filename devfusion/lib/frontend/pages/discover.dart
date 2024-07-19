@@ -1,11 +1,7 @@
 import 'dart:async';
-import 'dart:ffi';
-
 import 'package:devfusion/frontend/components/shared_pref.dart';
 import 'package:devfusion/frontend/json/Project.dart';
-import 'package:devfusion/frontend/pages/projects_page.dart';
 import 'package:flutter/material.dart';
-import '../../themes/theme.dart';
 import '../components/project_tile.dart';
 import '../utils/utility.dart';
 import 'package:http/http.dart' as http;
@@ -171,7 +167,7 @@ class _DiscoverState extends State<Discover> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 10.0),
                           child: Container(
-                            padding: EdgeInsets.all(2),
+                            padding: const EdgeInsets.all(2),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
                                 color: Theme.of(context).dialogBackgroundColor),
@@ -218,14 +214,8 @@ class _DiscoverState extends State<Discover> {
                         padding: const EdgeInsets.only(top: 4),
                         child: TextFormField(
                           onChanged: (text) {
-                            print("TEXT: $text");
                             setState(() {
-                              print(
-                                  "PROJECTS LENGTH BEFORE:  ${projects.length}");
                               projects.clear();
-                              print(
-                                  "PROJECTS LENGTH AFTER:  ${projects.length}");
-                              _query = text;
                               fetchProjects(true);
                             });
                           },
@@ -234,8 +224,8 @@ class _DiscoverState extends State<Discover> {
                             hintStyle: TextStyle(
                               color: Theme.of(context).hintColor,
                             ),
-                            prefixIcon: Padding(
-                              padding: const EdgeInsets.all(5),
+                            prefixIcon: const Padding(
+                              padding: EdgeInsets.all(5),
                               child: Icon(Icons.search),
                             ),
                             filled: false,
@@ -252,12 +242,13 @@ class _DiscoverState extends State<Discover> {
                     Padding(
                       padding: const EdgeInsets.only(right: 10.0),
                       child: SizedBox(
-                          height: 35,
-                          width: 5,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Theme.of(context).hintColor),
-                          )),
+                        height: 35,
+                        width: 5,
+                        child: Container(
+                          decoration:
+                              BoxDecoration(color: Theme.of(context).hintColor),
+                        ),
+                      ),
                     )
                   ],
                 ),
@@ -284,28 +275,43 @@ class _DiscoverState extends State<Discover> {
                       value: _dropdownSortByValue,
                       onChanged: dropdownSortByCallback),
                 ),
-                DividerLine(),
+                const DividerLine(),
                 //Project Cards
                 Expanded(
-                  child: ListView.builder(
-                    controller: scrollController,
-                    itemCount: projects.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      var project = projects[index];
-                      return InkWell(
-                        child: ProjectTile(project: project),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ViewProject(
-                                project: project,
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    child: ListView.builder(
+                      controller: scrollController,
+                      itemCount: projects.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        var project = projects[index];
+                        return InkWell(
+                          child: Container(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: ProjectTile(project: project),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ViewProject(
+                                  project: project,
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                      );
-                    },
+                            ).then(
+                              (val) {
+                                if (val == "delete") {
+                                  setState(() {
+                                    projects = [];
+                                  });
+                                  fetchProjects(true);
+                                }
+                              },
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
                 ),
               ],

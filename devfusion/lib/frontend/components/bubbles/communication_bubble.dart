@@ -37,6 +37,7 @@ class _CommunicationBubble extends State<CommunicationBubble> {
           widget.communication.name,
           style: const TextStyle(
             fontSize: 16,
+            color: Colors.white,
             fontWeight: FontWeight.w700,
           ),
         ),

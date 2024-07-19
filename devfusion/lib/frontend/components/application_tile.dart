@@ -55,7 +55,7 @@ class _ApplicationTileState extends State<ApplicationTile> {
             : widget.appliedUser.description;
 
     return Container(
-      margin: const EdgeInsets.all(10),
+      // margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
