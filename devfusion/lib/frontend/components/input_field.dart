@@ -1,8 +1,6 @@
 import 'package:devfusion/themes/theme.dart';
-import 'package:devfusion/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
 class InputField extends StatelessWidget {
   final String? placeholderText;
@@ -125,12 +123,12 @@ class InputField extends StatelessWidget {
 
                         //Places padding between icon and text only if icon is present
                         placeholderText == 'Username'
-                          ? const SizedBox(width: 5)
-                        : placeholderText == 'Password'
-                          ? const SizedBox(width: 5)
-                        : placeholderText == 'Email'
-                          ? const SizedBox(width: 5)
-                        : Container(),
+                            ? const SizedBox(width: 5)
+                            : placeholderText == 'Password'
+                                ? const SizedBox(width: 5)
+                                : placeholderText == 'Email'
+                                    ? const SizedBox(width: 5)
+                                    : Container(),
 
                         Text(
                           placeholderText!,

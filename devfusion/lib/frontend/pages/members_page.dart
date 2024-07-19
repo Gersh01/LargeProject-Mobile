@@ -5,14 +5,12 @@ import 'package:devfusion/frontend/components/manage_team/roles_per_member.dart'
 import 'package:devfusion/frontend/json/team_member.dart';
 import 'package:devfusion/frontend/utils/utility.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import '../json/Project.dart';
 import '../components/shared_pref.dart';
 import '../json/Profile.dart';
 import 'package:http/http.dart' as http;
 import '../components/manage_team/members_per_role.dart';
 import '../components/manage_team/manage_member_tile.dart';
-import '../components/manage_team/roles_per_member.dart';
 
 class MembersPage extends StatefulWidget {
   final Project projectData;
@@ -118,7 +116,7 @@ class _MembersPageState extends State<MembersPage> {
         title: Text(
           'Manage Team',
           style: TextStyle(
-            fontSize: 32,
+            fontSize: 24,
             fontWeight: FontWeight.bold,
             fontFamily: 'League Spartan',
             color: Theme.of(context).hintColor,
@@ -130,11 +128,11 @@ class _MembersPageState extends State<MembersPage> {
       body: loading
           ? const Center(child: CircularProgressIndicator())
           : ListView(
-              padding: EdgeInsets.only(left: 10, right: 10, top: 10),
+              padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
               children: [
-                DividerLine(),
+                const DividerLine(),
                 Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: Text(
                     "Current Positions",
                     style: TextStyle(
@@ -148,17 +146,17 @@ class _MembersPageState extends State<MembersPage> {
                 Column(
                   children: roleInfo.map((info) {
                     return Container(
-                        margin: EdgeInsets.only(bottom: 15),
+                        margin: const EdgeInsets.only(bottom: 15),
                         child: RoleBubbles(roleInfo: info));
                   }).toList(),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Column(
                   children: rolesPerMembers.map((member) {
                     return Container(
-                        margin: EdgeInsets.only(bottom: 15),
+                        margin: const EdgeInsets.only(bottom: 15),
                         child: ManageMemberTile(
                           projectId: projectId,
                           members: widget.projectData.teamMembers,

@@ -1,22 +1,19 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:devfusion/frontend/components/Divider.dart';
 import 'package:devfusion/frontend/components/input_field.dart';
 import 'package:devfusion/frontend/components/SizedButton.dart';
-import 'package:devfusion/frontend/components/modals/apply_modal.dart';
-import 'package:devfusion/frontend/components/modals/confirm_cancel_modal.dart';
 // import 'package:devfusion/frontend/components/modals/apply_modal.dart';
 // import 'package:devfusion/frontend/components/modals/confirm_cancel_modal.dart';
 import 'package:devfusion/frontend/components/profile_pictures.dart';
 import 'package:devfusion/frontend/components/shared_pref.dart';
-import 'package:devfusion/frontend/pages/lander.dart';
 import 'package:devfusion/frontend/pages/reset_password.dart';
-import 'package:devfusion/frontend/pages/about-us-page.dart';
 import 'package:devfusion/frontend/utils/utility.dart';
 import 'package:devfusion/themes/theme.dart';
 import 'package:devfusion/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
 
@@ -96,7 +93,7 @@ class _SettingsState extends State<Settings> {
     );
 
     if (response.statusCode == 200) {
-      print("settings jwt sucessful");
+      log("settings jwt sucessful");
       var jsonResponse = jsonDecode(response.body);
       sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
       setState(() {
@@ -107,7 +104,7 @@ class _SettingsState extends State<Settings> {
         profilePicUrl = jsonResponse['link'];
       });
     } else {
-      print("settings jwt unsucessful");
+      log("settings jwt unsucessful");
     }
   }
 
@@ -126,13 +123,12 @@ class _SettingsState extends State<Settings> {
     );
 
     if (response.statusCode == 200) {
-      print("settings update name sucessful");
+      log("settings update name sucessful");
       var jsonResponse = jsonDecode(response.body);
       sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
       getUserCredentials();
     } else {
-      print(
-          "settings update name unsucessful. Status code: ${response.statusCode}");
+      log("settings update name unsucessful. Status code: ${response.statusCode}");
     }
   }
 
@@ -219,232 +215,175 @@ class _SettingsState extends State<Settings> {
         ),
         backgroundColor: Theme.of(context).primaryColor,
       ),
-      body: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
+      body: OverflowBox(
+        alignment: Alignment.topCenter,
+        minHeight: 0,
+        maxHeight: double.infinity,
+        child: Container(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                margin: const EdgeInsets.all(10.0),
-                child: ProfilePictures(imageUrl: profilePicUrl),
-              ),
-              Expanded(child: Container()),
-              // SizedButton(
-              //   height: 25,
-              //   textStyle: const TextStyle(
-              //     fontSize: 12,
-              //     fontWeight: FontWeight.bold,
-              //     fontFamily: 'League Spartan',
-              //     color: Colors.white,
-              //   ),
-              //   // width: 120,
-              //   placeholderText: 'Upload',
-              //   backgroundColor: Theme.of(context).focusColor,
-              //   textColor: Colors.white,
-              //   onPressed: () async {
-              //     if (nameFormKey.currentState!.validate()) {
-              //       _pickImage;
-              //     }
-              //   },
-              // ),
-            ],
-          ),
-          const Divider(
-            height: 10,
-            thickness: 1,
-            indent: 10,
-            endIndent: 10,
-          ),
-          Column(
-            children: [
-              Container(
-                alignment: Alignment.topLeft,
-                padding: const EdgeInsets.only(left: 10),
-                child: Text(
-                  'Name',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'League Spartan',
-                    color: Theme.of(context).hintColor,
-                  ),
-                ),
-              ),
-              Form(
-                key: nameFormKey,
-                child: Row(
-                  children: [
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: InputField(
-                        color: Theme.of(context).hintColor,
-                        backgroundColor: Theme.of(context).primaryColorDark,
-                        placeholderText: 'First Name',
-                        controller: _firstNameController,
-                        validator: validateFirstName,
-                        errorTextList: firstNameErrorList,
-                        errorCount: firstNameErrorDouble,
-                        hintText: firstName,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: InputField(
-                        color: Theme.of(context).hintColor,
-                        backgroundColor: Theme.of(context).primaryColorDark,
-                        placeholderText: 'Last Name',
-                        controller: _lastNameController,
-                        validator: validateLastName,
-                        errorTextList: lastNameErrorList,
-                        errorCount: lastNameErrorDouble,
-                        hintText: lastName,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                  ],
-                ),
-              ),
-              Row(
+              Column(
                 children: [
-                  Expanded(child: Container()),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: SizedButton(
-                      height: 25,
-                      textStyle: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'League Spartan',
-                        color: Colors.white,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      ProfilePictures(imageUrl: profilePicUrl),
+                      Expanded(child: Container()),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  const DividerLine(),
+                  const SizedBox(height: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Name',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'League Spartan',
+                          color: Theme.of(context).hintColor,
+                        ),
                       ),
-                      // width: 120,
-                      placeholderText: 'Save',
-                      backgroundColor: Theme.of(context).focusColor,
-                      textColor: Colors.white,
-                      onPressed: () async {
-                        if (nameFormKey.currentState!.validate()) {
-                          updateName();
-                        }
-                      },
-                    ),
+                      Form(
+                        key: nameFormKey,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: InputField(
+                                color: Theme.of(context).hintColor,
+                                backgroundColor:
+                                    Theme.of(context).primaryColorDark,
+                                placeholderText: 'First Name',
+                                controller: _firstNameController,
+                                validator: validateFirstName,
+                                errorTextList: firstNameErrorList,
+                                errorCount: firstNameErrorDouble,
+                                hintText: firstName,
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: InputField(
+                                color: Theme.of(context).hintColor,
+                                backgroundColor:
+                                    Theme.of(context).primaryColorDark,
+                                placeholderText: 'Last Name',
+                                controller: _lastNameController,
+                                validator: validateLastName,
+                                errorTextList: lastNameErrorList,
+                                errorCount: lastNameErrorDouble,
+                                hintText: lastName,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SizedButton(
+                            height: 30,
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'League Spartan',
+                              color: Colors.white,
+                            ),
+                            // width: 120,
+                            placeholderText: 'Save',
+                            backgroundColor: Theme.of(context).focusColor,
+                            textColor: Colors.white,
+                            onPressed: () async {
+                              if (nameFormKey.currentState!.validate()) {
+                                updateName();
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const DividerLine(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Display Mode',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'League Spartan',
+                          color: Theme.of(context).hintColor,
+                        ),
+                      ),
+                      Switch.adaptive(
+                        activeTrackColor: darkAccent,
+                        inactiveTrackColor: lightAccent,
+                        thumbColor: (dark)
+                            ? const WidgetStatePropertyAll<Color>(
+                                darkPrimaryVariant)
+                            : const WidgetStatePropertyAll<Color>(
+                                lightPrimaryVariant),
+                        value: dark,
+                        onChanged: (bool value) {
+                          setState(() {
+                            dark = value;
+                            Provider.of<ThemeProvider>(context, listen: false)
+                                .toggleTheme(dark);
+                          });
+                          sharedPref.writeDarkMode(isDarkMode: dark);
+                        },
+                      ),
+                    ],
+                  ),
+                  const DividerLine(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Password',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'League Spartan',
+                          color: Theme.of(context).hintColor,
+                        ),
+                      ),
+                      SizedButton(
+                        // width: 130,
+                        height: 30,
+                        textStyle: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'League Spartan',
+                          color: Colors.white,
+                        ),
+                        placeholderText: 'Reset Password',
+                        backgroundColor: danger,
+                        textColor: Colors.white,
+                        onPressed: () async {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ResetPassword(),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
-          const Divider(
-            height: 10,
-            thickness: 1,
-            indent: 10,
-            endIndent: 10,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                alignment: Alignment.topLeft,
-                padding: const EdgeInsets.only(left: 10),
-                child: Text(
-                  'Display Mode',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'League Spartan',
-                    color: Theme.of(context).hintColor,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: Switch.adaptive(
-                  activeTrackColor: darkAccent,
-                  inactiveTrackColor: lightAccent,
-                  thumbColor: (dark)
-                      ? const MaterialStatePropertyAll<Color>(
-                          darkPrimaryVariant)
-                      : const MaterialStatePropertyAll<Color>(
-                          lightPrimaryVariant),
-                  value: dark,
-                  onChanged: (bool value) {
-                    setState(() {
-                      dark = value;
-                      // if (Provider.of<ThemeProvider>(context).themeData ==
-                      //     null) {
-                      //   if (dark) {
-                      //     Provider.of<ThemeProvider>(context)
-                      //         .setToggleTheme(darkMode);
-                      //   } else {
-                      //     Provider.of<ThemeProvider>(context)
-                      //         .setToggleTheme(lightMode);
-                      //   }
-                      // } else {
-                      //   Provider.of<ThemeProvider>(context, listen: false)
-                      //       .toggleTheme();
-                      // }
-                      Provider.of<ThemeProvider>(context, listen: false)
-                          .toggleTheme(dark);
-                    });
-                    sharedPref.writeDarkMode(isDarkMode: dark);
-                  },
-                ),
-              ),
-            ],
-          ),
-          const Divider(
-            height: 10,
-            thickness: 1,
-            indent: 10,
-            endIndent: 10,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                alignment: Alignment.topLeft,
-                padding: const EdgeInsets.only(left: 10),
-                child: Text(
-                  'Password',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'League Spartan',
-                    color: Theme.of(context).hintColor,
-                  ),
-                ),
-              ),
-              SizedButton(
-                // width: 130,
-                height: 25,
-                textStyle: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'League Spartan',
-                  color: Colors.white,
-                ),
-                placeholderText: 'Reset Password',
-                backgroundColor: danger,
-                textColor: Colors.white,
-                onPressed: () async {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ResetPassword(),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-          Expanded(child: Container()),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              margin: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
-              child: Column(
+              const SizedBox(height: 50),
+              Column(
                 children: [
                   Button(
                     placeholderText: 'About Us',
-                    // backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
                     backgroundColor: neutral,
                     textColor: Colors.white,
                     onPressed: () {
@@ -453,7 +392,6 @@ class _SettingsState extends State<Settings> {
                   ),
                   Button(
                     placeholderText: 'Logout',
-                    // backgroundColor: const Color.fromRGBO(124, 58, 237, 1),
                     backgroundColor: danger,
                     textColor: Colors.white,
                     onPressed: () {
@@ -463,9 +401,9 @@ class _SettingsState extends State<Settings> {
                   ),
                 ],
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

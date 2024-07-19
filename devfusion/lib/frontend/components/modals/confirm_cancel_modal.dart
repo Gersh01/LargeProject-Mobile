@@ -1,5 +1,4 @@
 import 'package:devfusion/frontend/components/Button.dart';
-import 'package:devfusion/frontend/components/SizedButton.dart';
 import 'package:devfusion/themes/theme.dart';
 import 'package:flutter/material.dart';
 

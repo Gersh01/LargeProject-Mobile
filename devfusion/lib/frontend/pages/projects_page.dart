@@ -93,7 +93,7 @@ class _ProjectsState extends State<Projects>
         userProfile = Profile.fromJson(jsonResponse);
       });
     } else {
-      print("settings jwt unsucessful");
+      log("settings jwt unsucessful");
     }
   }
 
@@ -216,21 +216,9 @@ class _ProjectsState extends State<Projects>
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width / 2;
-
     BoxDecoration decoration = BoxDecoration(
-      //This is the color selector
       color: Theme.of(context).primaryColorDark,
       shape: BoxShape.rectangle,
-      // borderRadius: _tabController.index == 0
-      //     ? const BorderRadius.only(
-      //         topLeft: Radius.circular(10),
-      //         bottomLeft: Radius.circular(10),
-      //       )
-      //     : const BorderRadius.only(
-      //         topRight: Radius.circular(10),
-      //         bottomRight: Radius.circular(10),
-      //       ),
     );
 
     return DefaultTabController(
@@ -258,7 +246,6 @@ class _ProjectsState extends State<Projects>
             //The unselected text color
             unselectedLabelColor: Theme.of(context).hintColor,
             indicator: decoration,
-            // dividerColor: Colors.grey,
             indicatorSize: TabBarIndicatorSize.tab,
             tabs: const [
               SizedBox(child: Tab(text: 'My Projects')),
@@ -266,6 +253,7 @@ class _ProjectsState extends State<Projects>
             ],
             //Changes the color of the text
             labelColor: Theme.of(context).hintColor,
+            // labelColor: Colors.transparent,
           ),
         ),
         body: Container(

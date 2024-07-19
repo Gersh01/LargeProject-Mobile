@@ -275,7 +275,10 @@ class _DiscoverState extends State<Discover> {
                       value: _dropdownSortByValue,
                       onChanged: dropdownSortByCallback),
                 ),
-                const DividerLine(),
+                const Padding(
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  child: DividerLine(),
+                ),
                 //Project Cards
                 Expanded(
                   child: Container(

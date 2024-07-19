@@ -50,7 +50,7 @@ class _ApplyModalAlertDialogState extends State<ApplyModalAlertDialog> {
     );
 
     if (response.statusCode == 200) {
-      print("settings jwt sucessful");
+      log("settings jwt sucessful");
       var jsonResponse = jsonDecode(response.body);
       sharedPref.writeToken(jwtToken: jsonResponse['newToken']);
       userId = jsonResponse['id'];
@@ -121,7 +121,12 @@ class _ApplyModalAlertDialogState extends State<ApplyModalAlertDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Application"),
+      title: const Text(
+        "Application",
+        style: TextStyle(
+          fontSize: 22,
+        ),
+      ),
       content: SizedBox(
         width: 50,
         child: ListView(
@@ -216,7 +221,7 @@ class _ApplyModalAlertDialogState extends State<ApplyModalAlertDialog> {
             ),
             Text(
               success,
-              style: TextStyle(
+              style: const TextStyle(
                 color: approve,
                 fontSize: 14,
               ),
@@ -228,7 +233,7 @@ class _ApplyModalAlertDialogState extends State<ApplyModalAlertDialog> {
         Button(
           // height: 25,
           textStyle: const TextStyle(
-            fontSize: 12,
+            fontSize: 16,
             fontWeight: FontWeight.bold,
             fontFamily: 'League Spartan',
             color: Colors.white,
@@ -244,7 +249,7 @@ class _ApplyModalAlertDialogState extends State<ApplyModalAlertDialog> {
         Button(
           // height: 25,
           textStyle: const TextStyle(
-            fontSize: 12,
+            fontSize: 16,
             fontWeight: FontWeight.bold,
             fontFamily: 'League Spartan',
             color: Colors.white,

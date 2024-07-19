@@ -64,17 +64,9 @@ class _ApplicationPageState extends State<ApplicationPage> {
         title: const Text(
           'Applications',
           style: TextStyle(
-            fontSize: 32,
+            fontSize: 24,
             fontWeight: FontWeight.bold,
             fontFamily: 'League Spartan',
-            color: Colors.white,
-            shadows: [
-              Shadow(
-                offset: Offset(0, 4.0),
-                blurRadius: 20.0,
-                color: Color.fromRGBO(0, 0, 0, 0.4),
-              ),
-            ],
           ),
         ),
         backgroundColor: Theme.of(context).primaryColor,

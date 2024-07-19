@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../json/Project.dart';
-import '../json/Role.dart';
-import '../json/team_member.dart';
-import 'bubbles/tech_bubble.dart';
 
 //ignore: must_be_immutable
 class MyProjectsTile extends StatefulWidget {

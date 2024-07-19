@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:devfusion/frontend/json/team_member.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class ManageMemberTile extends StatefulWidget {
     this.members,
   });
 
+  @override
   State<ManageMemberTile> createState() => _ManageMemberTile();
 }
 
@@ -27,6 +29,7 @@ class _ManageMemberTile extends State<ManageMemberTile> {
   SharedPref sharedPref = SharedPref();
   String _selectedValue = "";
 
+  @override
   void initState() {
     super.initState();
   }
@@ -42,8 +45,6 @@ class _ManageMemberTile extends State<ManageMemberTile> {
     List<TeamMember> newMembersRoles = [];
     for (int i = 0; i < widget.members!.length; i++) {
       if (widget.members?[i].username == widget.membersRoleInfo.username) {
-        print(
-            "${widget.members?[i].username} == ${widget.membersRoleInfo.username}");
         newMembersRoles.add(TeamMember(
           _selectedValue,
           widget.members![i].userId,
@@ -66,8 +67,8 @@ class _ManageMemberTile extends State<ManageMemberTile> {
     var response2 = jsonDecode(response.body);
     if (response.statusCode == 200) {
     } else {
-      print(response2['error']);
-      print(response2.statusCode);
+      log(response2['error']);
+      log(response2.statusCode);
     }
   }
 
@@ -93,7 +94,7 @@ class _ManageMemberTile extends State<ManageMemberTile> {
     var response2 = jsonDecode(response.body);
     if (response.statusCode == 200) {
     } else {
-      print(response2['error']);
+      log(response2['error']);
     }
   }
 
@@ -108,7 +109,7 @@ class _ManageMemberTile extends State<ManageMemberTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        constraints: BoxConstraints(minHeight: 180),
+        constraints: const BoxConstraints(minHeight: 180),
         decoration: BoxDecoration(
             color: Theme.of(context).primaryColorLight,
             borderRadius: BorderRadius.circular(10)),
@@ -131,7 +132,7 @@ class _ManageMemberTile extends State<ManageMemberTile> {
                       child: Padding(
                         padding: const EdgeInsets.all(10),
                         child: Text(
-                          "${widget.membersRoleInfo!.username}",
+                          widget.membersRoleInfo.username,
                           style: TextStyle(
                               decoration: TextDecoration.underline,
                               fontSize: 18,
@@ -157,7 +158,7 @@ class _ManageMemberTile extends State<ManageMemberTile> {
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: Text(
-                      "${widget.membersRoleInfo!.role}",
+                      widget.membersRoleInfo.role,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -203,7 +204,7 @@ class _ManageMemberTile extends State<ManageMemberTile> {
                             child: Text(
                               role,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 16),
                             ),
                           );
@@ -214,7 +215,7 @@ class _ManageMemberTile extends State<ManageMemberTile> {
             ),
             //Updating the users Roles
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
