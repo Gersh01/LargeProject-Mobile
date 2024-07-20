@@ -31,8 +31,7 @@ class _ProjectTileState extends State<ProjectTile> {
     List<String> technologies = widget.project.technologies;
 
     int currentCount = widget.project.teamMembers.length;
-    int numDaysTilStart =
-        widget.project.projectStartDate.difference(DateTime.now()).inDays;
+
 
     int positionLeft = 0;
 
@@ -50,9 +49,27 @@ class _ProjectTileState extends State<ProjectTile> {
       }
     }
 
-    String numDaysTilStartText = numDaysTilStart > 1
-        ? "$numDaysTilStart days left to join"
-        : "$numDaysTilStart day left to join";
+    String daysText = "";
+
+    if (widget.project.projectStartDate.isAfter(DateTime.now())) {
+      int days =
+          widget.project.projectStartDate.difference(DateTime.now()).inDays;
+
+      if (days > 1) {
+        daysText = "$days days until Start";
+      } else {
+        daysText = "$days day until Start";
+      }
+    } else {
+      int days = widget.project.deadline.difference(DateTime.now()).inDays;
+
+      if (days > 1) {
+        daysText = "$days days until project begins";
+      } else {
+        daysText = "$days day until project begins";
+      }
+    }
+
 
     String positionLeftText = positionLeft > 1
         ? "$positionLeft Positions Left"
@@ -150,7 +167,7 @@ class _ProjectTileState extends State<ProjectTile> {
                       ],
                     ),
                     Text(
-                      numDaysTilStartText,
+                      daysText,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
