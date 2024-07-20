@@ -30,17 +30,17 @@ class _MyProjectsTileState extends State<MyProjectsTile> {
           widget.project.projectStartDate.difference(DateTime.now()).inDays;
 
       if (days > 1) {
-        daysText = "$days days until Start";
+        daysText = "$days days until project begins";
       } else {
-        daysText = "$days day until Start";
+        daysText = "$days day until project begins";
       }
     } else {
       int days = widget.project.deadline.difference(DateTime.now()).inDays;
 
       if (days > 1) {
-        daysText = "$days days until project begins";
+        daysText = "due in $days days";
       } else {
-        daysText = "$days day until project begins";
+        daysText = "due in $days days";
       }
     }
 
@@ -116,16 +116,27 @@ class _MyProjectsTileState extends State<MyProjectsTile> {
                         const SizedBox(width: 10),
                         const Icon(
                           Icons.person,
+                          size: 20.0,
                           color: Colors.white,
                         ),
                       ],
                     ),
-                    Text(
-                      daysText,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.access_time_filled_outlined,
+                          size: 20.0,
+                          color: Colors.white,
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          daysText,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        )
+                      ],
                     )
                   ],
                 )
