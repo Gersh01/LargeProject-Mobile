@@ -215,6 +215,7 @@ class _DiscoverState extends State<Discover> {
                         child: TextFormField(
                           onChanged: (text) {
                             setState(() {
+                              _query = text;
                               projects.clear();
                               fetchProjects(true);
                             });
