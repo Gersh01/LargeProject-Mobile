@@ -47,15 +47,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
-      print("Users information");
-      print(jsonResponse);
       setState(() {
         userProfile = Profile.fromJson(jsonResponse);
         loading = false;
       });
     } else {
-      print("Getting users profile failed");
-      print(response.statusCode);
+      log("Getting users profile failed");
     }
   }
 
@@ -77,45 +74,31 @@ class _ProfilePageState extends State<ProfilePage> {
         loading = false;
       });
     } else {
-      print("settings jwt unsucessful");
+      log("settings jwt unsucessful");
     }
   }
 
   Future fetchUserProjects(bool initial) async {
     SharedPref sharedPref = SharedPref();
-    var reqBody;
+    // var reqBody;
     var token = await sharedPref.readToken();
-    if (widget.userId == null) {
-      reqBody = {
-        "token": token,
-        "searchBy": "title",
-        "sortBy": "recent",
-        "query": "",
-        "count": initial ? 8 : 4,
-        "initial": initial,
-        "userId": userProfile?.userId ?? "",
 
-        // cursor
-        "projectId": initial
-            ? "000000000000000000000000"
-            : profileProjects[profileProjects.length - 1].id
-      };
-    } else {
-      reqBody = {
-        "token": token,
-        "searchBy": "title",
-        "sortBy": "recent",
-        "query": "",
-        "count": initial ? 8 : 4,
-        "initial": initial,
-        "userId": widget.userId ?? "",
+    var reqBody = {
+      "token": token,
+      "searchBy": "title",
+      "sortBy": "recent",
+      "query": "",
+      "count": initial ? 8 : 4,
+      "initial": initial,
+      "userId": widget.userId == null
+          ? userProfile?.userId ?? ""
+          : widget.userId ?? "",
 
-        // cursor
-        "projectId": initial
-            ? "000000000000000000000000"
-            : profileProjects[profileProjects.length - 1].id
-      };
-    }
+      // cursor
+      "projectId": initial
+          ? "000000000000000000000000"
+          : profileProjects[profileProjects.length - 1].id
+    };
 
     setState(() {
       isRetrievingProjects = true;
@@ -157,8 +140,6 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
-  void checkUrlPath() {}
-
   @override
   void initState() {
     super.initState();
@@ -167,9 +148,9 @@ class _ProfilePageState extends State<ProfilePage> {
       if (currentRoute != null) {
         final uri = Uri.parse(currentRoute);
         final id = uri.queryParameters['id'];
-        print("The current uri = " + uri.toString());
+        log("The current uri = " + uri.toString());
         if (id != null) {
-          print("The current ID = " + id);
+          log("The current ID = " + id);
         }
       }
     });
@@ -200,7 +181,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    log(profileProjects.length.toString());
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
@@ -272,7 +252,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     )),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 5, right: 10),
+                  padding: const EdgeInsets.only(left: 10, top: 5, right: 10),
                   child: Text(
                     "Projects",
                     style: TextStyle(
@@ -283,22 +263,28 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                 ),
-                Column(
-                  children: profileProjects.map((project) {
-                    return InkWell(
-                      child: ProjectTile(project: project),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ViewProject(
-                              project: project,
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  }).toList(),
+                Container(
+                  padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
+                  child: Column(
+                    children: profileProjects.map((project) {
+                      return Container(
+                        margin: const EdgeInsets.only(bottom: 10),
+                        child: InkWell(
+                          child: ProjectTile(project: project),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ViewProject(
+                                  project: project,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    }).toList(),
+                  ),
                 )
               ],
             ),
