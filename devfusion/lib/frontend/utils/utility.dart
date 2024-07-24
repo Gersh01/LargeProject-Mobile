@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const baseUrl = 'http://www.dev-fusion.com/api/mobile/';
+const baseUrl = 'https://dev-fusion-production-65209ae3025b.herokuapp.com/api/mobile/';
 //URLs for Users collection APIs
 const loginUrl = '${baseUrl}login';
 const registerUrl = '${baseUrl}register';
