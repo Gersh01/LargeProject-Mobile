@@ -29,6 +29,7 @@ class _ProfilePageState extends State<ProfilePage> {
   late Profile? userProfile = null;
   bool profile = true;
   bool loading = true;
+  bool projectLoading = true;
 
   late ScrollController scrollController;
   List<Project> profileProjects = [];
@@ -129,7 +130,7 @@ class _ProfilePageState extends State<ProfilePage> {
       }
 
       setState(() {
-        loading = false;
+        projectLoading = false;
         profileProjects = [...profileProjects, ...retrievedProjects];
         isRetrievingProjects = false;
       });
@@ -160,7 +161,6 @@ class _ProfilePageState extends State<ProfilePage> {
       profile = false;
       getTheirUserInfo();
     }
-
     scrollController = ScrollController()..addListener(onScroll);
     fetchUserProjects(true);
   }
@@ -173,7 +173,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void onScroll() {
     if (scrollController.position.extentAfter < 500) {
-      if (!isRetrievingProjects && !loading && !endOfProject) {
+      if (!isRetrievingProjects && !projectLoading && !endOfProject) {
         fetchUserProjects(false);
       }
     }
@@ -196,65 +196,28 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         backgroundColor: Theme.of(context).primaryColor,
       ),
-      body: loading
+      body: projectLoading
           ? const Center(child: CircularProgressIndicator())
           : ListView(
-              controller: scrollController,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(right: 10, left: 10),
-                  child: DividerLine(),
-                ),
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: ProfilePictures(
-                            imageUrl: userProfile?.link ?? "",
-                          ),
-                        ),
-                        Text(
-                          userProfile?.username ?? "",
-                          style: TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'League Spartan',
-                            color: Theme.of(context).hintColor,
-                          ),
-                        ),
-                      ]),
-                ),
-                Container(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        BioFields(
-                          myProfile: profile,
-                          bioMessage: userProfile?.bio ?? "",
-                          userProfile: userProfile,
-                        )
-                      ],
-                    )),
-                Container(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TechnologiesField(
-                          myProfile: profile,
-                          technologies: userProfile?.technologies ?? [],
-                          userInfo: userProfile,
-                        )
-                      ],
-                    )),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, top: 5, right: 10),
-                  child: Text(
-                    "Projects",
+        controller: scrollController,
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(right: 10, left: 10),
+            child: DividerLine(),
+          ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: ProfilePictures(
+                      imageUrl: userProfile?.link ?? "",
+                    ),
+                  ),
+                  Text(
+                    userProfile?.username ?? "",
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
@@ -262,32 +225,69 @@ class _ProfilePageState extends State<ProfilePage> {
                       color: Theme.of(context).hintColor,
                     ),
                   ),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
-                  child: Column(
-                    children: profileProjects.map((project) {
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 10),
-                        child: InkWell(
-                          child: ProjectTile(project: project),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ViewProject(
-                                  project: project,
-                                ),
-                              ),
-                            );
-                          },
+                ]),
+          ),
+          Container(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  BioFields(
+                    myProfile: profile,
+                    bioMessage: userProfile?.bio ?? "",
+                    userProfile: userProfile,
+                  )
+                ],
+              )),
+          Container(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TechnologiesField(
+                    myProfile: profile,
+                    technologies: userProfile?.technologies ?? [],
+                    userInfo: userProfile,
+                  )
+                ],
+              )),
+          Padding(
+            padding: const EdgeInsets.only(left: 10, top: 5, right: 10),
+            child: Text(
+              "Projects",
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'League Spartan',
+                color: Theme.of(context).hintColor,
+              ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
+            child: Column(
+              children: profileProjects.map((project) {
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  child: InkWell(
+                    child: ProjectTile(project: project),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ViewProject(
+                            project: project,
+                          ),
                         ),
                       );
-                    }).toList(),
+                    },
                   ),
-                )
-              ],
+                );
+              }).toList(),
             ),
+          )
+        ],
+      ),
     );
   }
 }
